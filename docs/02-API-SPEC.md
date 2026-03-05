@@ -534,10 +534,10 @@ Reglas:
 
 ### 3.1 Categoría: Consulta de Datos
 
-#### `get_resumen_alumno`
+#### `get_student_summary`
 ```json
 {
-  "name": "get_resumen_alumno",
+  "name": "get_student_summary",
   "description": "Devuelve un resumen consolidado del estado académico, asistencia y tareas pendientes de un alumno para el período indicado.",
   "input_schema": {
     "type": "object",
@@ -567,7 +567,7 @@ Reglas:
 **Ejemplo de invocación:**
 ```json
 {
-  "name": "get_resumen_alumno",
+  "name": "get_student_summary",
   "input": {
     "alumno_id": "alu_4b_mlopez",
     "periodo": "semana_anterior"
@@ -577,10 +577,10 @@ Reglas:
 
 ---
 
-#### `get_notas`
+#### `get_grades`
 ```json
 {
-  "name": "get_notas",
+  "name": "get_grades",
   "description": "Devuelve calificaciones de un alumno o de todo un grado, filtradas por materia y/o período.",
   "input_schema": {
     "type": "object",
@@ -617,10 +617,10 @@ Reglas:
 
 ---
 
-#### `get_asistencia`
+#### `get_attendance`
 ```json
 {
-  "name": "get_asistencia",
+  "name": "get_attendance",
   "description": "Consulta el registro de asistencia de uno o más alumnos.",
   "input_schema": {
     "type": "object",
@@ -642,10 +642,10 @@ Reglas:
 
 ---
 
-#### `get_estado_cuenta`
+#### `get_account_status`
 ```json
 {
-  "name": "get_estado_cuenta",
+  "name": "get_account_status",
   "description": "Devuelve el estado de cuenta de una familia: deuda, vencimientos y pagos recientes.",
   "input_schema": {
     "type": "object",
@@ -669,10 +669,10 @@ Reglas:
 
 ---
 
-#### `get_calendario`
+#### `get_calendar`
 ```json
 {
-  "name": "get_calendario",
+  "name": "get_calendar",
   "description": "Devuelve eventos del calendario escolar filtrados por período y opcionalmente por alumno/grado.",
   "input_schema": {
     "type": "object",
@@ -695,10 +695,10 @@ Reglas:
 
 ---
 
-#### `get_comunicados`
+#### `get_announcements`
 ```json
 {
-  "name": "get_comunicados",
+  "name": "get_announcements",
   "description": "Devuelve comunicados enviados/recibidos con estado de lectura.",
   "input_schema": {
     "type": "object",
@@ -716,10 +716,10 @@ Reglas:
 
 ---
 
-#### `get_tareas`
+#### `get_tasks`
 ```json
 {
-  "name": "get_tareas",
+  "name": "get_tasks",
   "description": "Devuelve las tareas y trabajos asignados a un alumno o grado.",
   "input_schema": {
     "type": "object",
@@ -739,10 +739,10 @@ Reglas:
 
 ### 3.2 Categoría: Acciones
 
-#### `registrar_ausencia`
+#### `record_absence`
 ```json
 {
-  "name": "registrar_ausencia",
+  "name": "record_absence",
   "description": "Registra la ausencia de uno o más alumnos para una fecha. Notifica a los tutores o a la docente según quién invoca.",
   "input_schema": {
     "type": "object",
@@ -769,10 +769,10 @@ Reglas:
 
 ---
 
-#### `enviar_comunicado`
+#### `send_announcement`
 ```json
 {
-  "name": "enviar_comunicado",
+  "name": "send_announcement",
   "description": "Envía un comunicado a un grupo de destinatarios. Siempre requiere confirmación previa del usuario antes de ejecutarse.",
   "input_schema": {
     "type": "object",
@@ -848,10 +848,10 @@ Reglas:
 
 ---
 
-#### `cargar_nota`
+#### `record_grade_batch`
 ```json
 {
-  "name": "cargar_nota",
+  "name": "record_grade_batch",
   "description": "Carga una o varias calificaciones para alumnos de un grado.",
   "input_schema": {
     "type": "object",
@@ -885,10 +885,10 @@ Reglas:
 
 ---
 
-#### `procesar_pago`
+#### `process_payment`
 ```json
 {
-  "name": "procesar_pago",
+  "name": "process_payment",
   "description": "Procesa un pago de cuota u otro concepto via Mercado Pago. Requiere confirmación explícita del usuario.",
   "input_schema": {
     "type": "object",
@@ -916,10 +916,10 @@ Reglas:
 
 ---
 
-#### `registrar_ausencia_asistencia_lista`
+#### `take_attendance`
 ```json
 {
-  "name": "tomar_asistencia_grado",
+  "name": "take_attendance",
   "description": "Toma la asistencia completa de un grado en una fecha, recibiendo la lista completa de estados.",
   "input_schema": {
     "type": "object",
@@ -948,10 +948,10 @@ Reglas:
 
 ---
 
-#### `firmar_autorizacion`
+#### `sign_authorization`
 ```json
 {
-  "name": "firmar_autorizacion",
+  "name": "sign_authorization",
   "description": "Registra la firma digital de un tutor para una autorización (salida educativa, evento).",
   "input_schema": {
     "type": "object",
@@ -970,10 +970,10 @@ Reglas:
 
 ---
 
-#### `confirmar_reinscripcion`
+#### `confirm_reenrollment`
 ```json
 {
-  "name": "confirmar_reinscripcion",
+  "name": "confirm_reenrollment",
   "description": "Confirma la reinscripción de un alumno para el ciclo lectivo siguiente.",
   "input_schema": {
     "type": "object",
@@ -991,10 +991,10 @@ Reglas:
 
 ---
 
-#### `registrar_observacion_pedagogica`
+#### `record_pedagogical_note`
 ```json
 {
-  "name": "registrar_observacion_pedagogica",
+  "name": "record_pedagogical_note",
   "description": "Registra una micro-observación pedagógica sobre un alumno para uso en informes trimestrales.",
   "input_schema": {
     "type": "object",
@@ -1019,10 +1019,10 @@ Reglas:
 
 ### 3.3 Categoría: Generación de Contenido
 
-#### `generar_informe_pedagogico`
+#### `generate_pedagogical_report`
 ```json
 {
-  "name": "generar_informe_pedagogico",
+  "name": "generate_pedagogical_report",
   "description": "Genera un borrador de informe pedagógico trimestral para un alumno basado en observaciones acumuladas, notas y asistencia. El borrador siempre requiere revisión y aprobación humana.",
   "input_schema": {
     "type": "object",
@@ -1050,10 +1050,10 @@ Reglas:
 
 ---
 
-#### `generar_actividad_educativa`
+#### `generate_learning_activity`
 ```json
 {
-  "name": "generar_actividad_educativa",
+  "name": "generate_learning_activity",
   "description": "Genera una actividad educativa gamificada lista para asignar a los alumnos.",
   "input_schema": {
     "type": "object",
@@ -1078,10 +1078,10 @@ Reglas:
 
 ---
 
-#### `generar_comunicado_borrador`
+#### `generate_announcement_draft`
 ```json
 {
-  "name": "generar_comunicado_borrador",
+  "name": "generate_announcement_draft",
   "description": "Genera un borrador de comunicado formal a partir de una instrucción en lenguaje natural. El usuario siempre revisa y aprueba antes de enviar.",
   "input_schema": {
     "type": "object",
@@ -1102,10 +1102,10 @@ Reglas:
 
 ---
 
-#### `generar_plan_estudio`
+#### `generate_study_plan`
 ```json
 {
-  "name": "generar_plan_estudio",
+  "name": "generate_study_plan",
   "description": "Genera un plan de estudio personalizado para un alumno basado en sus evaluaciones próximas y rendimiento actual.",
   "input_schema": {
     "type": "object",
@@ -1126,10 +1126,10 @@ Reglas:
 
 ### 3.4 Categoría: Analytics
 
-#### `get_dashboard_morosidad`
+#### `get_delinquency_dashboard`
 ```json
 {
-  "name": "get_dashboard_morosidad",
+  "name": "get_delinquency_dashboard",
   "description": "Devuelve el estado de morosidad de la institución con segmentación y totales.",
   "input_schema": {
     "type": "object",
@@ -1155,10 +1155,10 @@ Reglas:
 
 ---
 
-#### `get_riesgo_desercion`
+#### `get_dropout_risk`
 ```json
 {
-  "name": "get_riesgo_desercion",
+  "name": "get_dropout_risk",
   "description": "Devuelve el índice de riesgo de deserción de familias calculado cruzando morosidad, asistencia, lectura de comunicados y estado de reinscripción.",
   "input_schema": {
     "type": "object",
@@ -1179,10 +1179,10 @@ Reglas:
 
 ---
 
-#### `simular_escenario_financiero`
+#### `simulate_financial_scenario`
 ```json
 {
-  "name": "simular_escenario_financiero",
+  "name": "simulate_financial_scenario",
   "description": "Simula el impacto financiero de cambios en cuotas y/o matrícula.",
   "input_schema": {
     "type": "object",
@@ -1213,10 +1213,10 @@ Reglas:
 
 ---
 
-#### `get_alertas_institucionales`
+#### `get_institutional_alerts`
 ```json
 {
-  "name": "get_alertas_institucionales",
+  "name": "get_institutional_alerts",
   "description": "Devuelve alertas automáticas del sistema: alumnos con inasistencias críticas, caídas de notas, familias sin leer comunicados, etc.",
   "input_schema": {
     "type": "object",
