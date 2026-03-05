@@ -2443,23 +2443,3 @@ Convenciones:
   "receipt_id": "rec_456"
 }
 ```
-
-### Output
-```json
-{
-  "$id": "vujy.generate_event_album.output.v1",
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "type": "object",
-  "additionalProperties": false,
-  "properties": {
-    "status": { "type": "string", "enum": ["ready", "processing"] },
-    "album_id": { "type": "string" },
-    "album_url": { "type": ["string", "null"], "format": "uri" },
-    "job_id": { "type": ["string", "null"] },
-    "total_updates": { "type": "integer", "minimum": 0 },
-    "total_photos": { "type": "integer", "minimum": 0 },
-    "families_notified": { "type": "integer", "minimum": 0 }
-  },
-  "required": ["status", "album_id", "album_url", "job_id", "total_updates", "total_photos", "families_notified"]
-}
-```

@@ -1,0 +1,12 @@
+{
+  "name": "vujy-docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "validate:mcp-schemas": "node scripts/validate-mcp-schemas.js"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.0"
+  }
+}
