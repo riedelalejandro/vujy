@@ -48,7 +48,7 @@ El desarrollo sigue este ciclo en orden obligatorio:
 ## Convenciones de código
 
 - Los documentos de dominio (specs, planes, constitución) se escriben en **español**
-- El código fuente se escribe en **inglés**
+- Los artefactos técnicos se escriben en **inglés** (código, APIs, JSON, schemas, eventos, payloads, nombres de tablas/columnas/variables)
 - Los mensajes de commit siguen el formato convencional: `type: descripción`
 
 ## Estado de features

@@ -1,7 +1,7 @@
 # Vujy — Especificación de API del Asistente Conversacional
 
-**Versión:** 1.0
-**Fecha:** 3 de marzo de 2026
+**Versión:** 1.1
+**Fecha:** 5 de marzo de 2026
 **Stack:** Claude API · Function Calling · RAG · Multi-tenant
 
 ---
@@ -519,6 +519,19 @@ antes de responder al contenido.
 
 ---
 
+### 3.0 Naming canónico (v1)
+
+La definición vigente de tools/schemas está en:
+- `docs/09-MCP-DEFINITIONS.md`
+- `docs/10-MCP-SCHEMAS.md`
+
+Reglas:
+- Solo nombres canónicos `snake_case@v1`.
+- Sin aliases legacy.
+- Acciones con `idempotency_key` obligatorio.
+
+---
+
 ### 3.1 Categoría: Consulta de Datos
 
 #### `get_resumen_alumno`
@@ -791,6 +804,47 @@ antes de responder al contenido.
   "permisos": ["D", "Dir", "A", "S"]
 }
 ```
+
+---
+
+#### `create_collection_campaign`
+```json
+{
+  "name": "create_collection_campaign",
+  "canonical_name": "create_collection_campaign@v1",
+  "description": "Crea una campaña de cobranza segmentada con preview obligatorio antes de envío.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "escuela_id": { "type": "string" },
+      "segmento": {
+        "type": "string",
+        "enum": ["deuda_1_mes", "deuda_2_mas", "custom_ids"]
+      },
+      "familia_ids": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Requerido si segmento=custom_ids"
+      },
+      "canal": {
+        "type": "array",
+        "items": { "type": "string", "enum": ["app", "whatsapp", "email"] }
+      },
+      "mensaje_borrador": { "type": "string" },
+      "require_preview": { "type": "boolean", "const": true },
+      "idempotency_key": { "type": "string" }
+    },
+    "required": ["escuela_id", "segmento", "canal", "mensaje_borrador", "require_preview", "idempotency_key"]
+  },
+  "returns": "{ campaign_id, destinatarios_estimados, preview_mensaje, riesgo_envio, estado: draft|ready|blocked }",
+  "errores": ["FORBIDDEN_SCOPE", "CONFIRMATION_REQUIRED", "TEMPLATE_NOT_APPROVED", "OPTIN_REQUIRED"],
+  "permisos": ["A", "Dir"]
+}
+```
+
+**Reglas operativas:**
+- Si `canal` incluye WhatsApp, exige template aprobado y opt-in vigente.
+- Sin confirmación explícita, la campaña no pasa a estado `ready`.
 
 ---
 
@@ -1418,6 +1472,23 @@ Podés acceder a la misma información desde la app de Vujy."
 ```
 
 **Regla:** El asistente nunca inventa datos cuando el sistema falla. Si no tiene dato, lo dice.
+
+---
+
+### 6.5 Códigos de error estandarizados
+
+| Código | Uso |
+|---|---|
+| `VALIDATION_ERROR` | Input faltante o inválido |
+| `FORBIDDEN_SCOPE` | El usuario no tiene permisos por rol/RLS |
+| `NOT_FOUND` | Recurso no encontrado |
+| `DATA_UNAVAILABLE` | Dato no disponible temporalmente |
+| `CONFIRMATION_REQUIRED` | Falta confirmación explícita para acción crítica |
+| `DUPLICATE_REQUEST` | Se detecta duplicado por `idempotency_key` |
+| `PAYMENT_REJECTED` | Rechazo del gateway de pagos |
+| `TEMPLATE_NOT_APPROVED` | Template de WhatsApp no aprobado |
+| `OPTIN_REQUIRED` | No existe consentimiento válido para envío outbound |
+| `MODEL_UNAVAILABLE` | Servicio analítico no disponible |
 
 ---
 
