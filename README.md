@@ -14,6 +14,7 @@ El diferencial central es un **copiloto institucional** accesible desde lenguaje
 | [docs/04-WHATSAPP-API.md](docs/04-WHATSAPP-API.md) | Evaluación de integración WhatsApp Business API |
 | [docs/05-ARCHITECTURE.md](docs/05-ARCHITECTURE.md) | Arquitectura técnica: stack, multi-tenancy, auth, IA, infra |
 | [docs/06-AI-MODELS.md](docs/06-AI-MODELS.md) | Comparativa de modelos IA (Claude, GPT, Gemini, Grok) |
+| [docs/07-CDU.md](docs/07-CDU.md) | Casos de uso por perfil: flujos conversacionales, tools MCP, casos borde y notas de implementación (66 CDUs — Padre, Docente, Admin, Alumno, Cross) |
 | [docs/09-MCP-DEFINITIONS.md](docs/09-MCP-DEFINITIONS.md) | Borrador de catálogo MCP/tools por perfil, contratos I/O y errores |
 | [docs/10-MCP-SCHEMAS.md](docs/10-MCP-SCHEMAS.md) | JSON Schemas completos (input/output) para toolset MVP v1 |
 
