@@ -1799,6 +1799,19 @@ Convenciones:
 }
 ```
 
+#### Example (CDU-PAD-011)
+```json
+{
+  "page": 1,
+  "page_size": 2,
+  "total": 2,
+  "students": [
+    { "student_id": "stu_123", "full_name": "Ana Pérez", "grade": "4to", "section": "A" },
+    { "student_id": "stu_456", "full_name": "Luis Gómez", "grade": "1ro", "section": "B" }
+  ]
+}
+```
+
 ---
 
 ## 34) `get_grades@v1`
@@ -1851,6 +1864,20 @@ Convenciones:
     "total": { "type": "integer", "minimum": 0 }
   },
   "required": ["grades", "page", "page_size", "total"]
+}
+```
+
+#### Example (CDU-PAD-008)
+```json
+{
+  "page": 1,
+  "page_size": 3,
+  "total": 3,
+  "grades": [
+    { "grade_id": "g1", "subject": "Matemática", "score": 9, "scale": 10, "recorded_at": "2026-03-01T12:00:00Z", "term": "Q1" },
+    { "grade_id": "g2", "subject": "Lengua", "score": 8, "scale": 10, "recorded_at": "2026-03-02T12:00:00Z", "term": "Q1" },
+    { "grade_id": "g3", "subject": "Ciencias", "score": 7, "scale": 10, "recorded_at": "2026-03-03T12:00:00Z", "term": "Q1" }
+  ]
 }
 ```
 
@@ -1910,6 +1937,17 @@ Convenciones:
 }
 ```
 
+#### Example (CDU-PAD-009)
+```json
+{
+  "summary": { "present": 45, "absent": 2, "late": 1 },
+  "records": [
+    { "date": "2026-02-28", "status": "absent", "justification": "Enfermedad" },
+    { "date": "2026-03-04", "status": "late", "justification": null }
+  ]
+}
+```
+
 ---
 
 ## 36) `get_calendar@v1`
@@ -1956,6 +1994,16 @@ Convenciones:
     }
   },
   "required": ["events"]
+}
+```
+
+#### Example (CDU-PAD-002)
+```json
+{
+  "events": [
+    { "event_id": "ev1", "title": "Reunión padres 4to A", "start": "2026-03-10T18:00:00Z", "end": "2026-03-10T19:00:00Z", "location": "Sala Zoom", "requires_action": true },
+    { "event_id": "ev2", "title": "Excursión Museo", "start": "2026-03-15T12:00:00Z", "end": null, "location": "Museo Ciencias", "requires_action": true }
+  ]
 }
 ```
 
@@ -2012,6 +2060,19 @@ Convenciones:
 }
 ```
 
+#### Example (CDU-PAD-006)
+```json
+{
+  "page": 1,
+  "page_size": 2,
+  "total": 2,
+  "announcements": [
+    { "announcement_id": "a1", "title": "Salida educativa", "body": "Confirmar asistencia antes del viernes.", "sent_at": "2026-03-05T12:00:00Z", "requires_confirmation": true, "read": false },
+    { "announcement_id": "a2", "title": "Recordatorio uniforme", "body": "Llevar buzo institucional el lunes.", "sent_at": "2026-03-04T15:00:00Z", "requires_confirmation": false, "read": true }
+  ]
+}
+```
+
 ---
 
 ## 38) `get_institutional_alerts@v1`
@@ -2058,6 +2119,16 @@ Convenciones:
 }
 ```
 
+#### Example (CDU-ADM-007)
+```json
+{
+  "alerts": [
+    { "alert_id": "al1", "title": "Alerta morosidad >15%", "severity": "high", "created_at": "2026-03-03T10:00:00Z", "resolved": false },
+    { "alert_id": "al2", "title": "Servidor WA throttling", "severity": "critical", "created_at": "2026-03-04T08:00:00Z", "resolved": true }
+  ]
+}
+```
+
 ---
 
 ## 39) `generate_announcement_draft@v1`
@@ -2096,6 +2167,14 @@ Convenciones:
     "word_count": { "type": "integer", "minimum": 1 }
   },
   "required": ["draft", "word_count"]
+}
+```
+
+#### Example (CDU-DOC-003)
+```json
+{
+  "draft": "Estimadas familias, el viernes realizaremos una salida educativa al museo. Por favor confirmen asistencia antes del miércoles.",
+  "word_count": 27
 }
 ```
 
@@ -2143,6 +2222,15 @@ Convenciones:
 }
 ```
 
+#### Example (CDU-DOC-007)
+```json
+{
+  "status": "draft",
+  "activity": "Quiz de 8 preguntas sobre fracciones para 5to grado. Incluye ejercicios de simplificación y equivalencia.",
+  "estimated_time_minutes": 20
+}
+```
+
 ---
 
 ## 41) `generate_pedagogical_report@v1`
@@ -2183,6 +2271,17 @@ Convenciones:
     "next_steps": { "type": "array", "items": { "type": "string" } }
   },
   "required": ["status", "summary", "strengths", "improvements", "next_steps"]
+}
+```
+
+#### Example (CDU-DOC-006)
+```json
+{
+  "status": "draft",
+  "summary": "Ana consolidó lectura comprensiva, necesita reforzar división de fracciones.",
+  "strengths": ["Participa activamente", "Entrega tareas a tiempo"],
+  "improvements": ["Practicar división de fracciones", "Revisar acentuación"],
+  "next_steps": ["3 sesiones de práctica guiada", "Enviar ejercicios de acentuación"]
 }
 ```
 
@@ -2242,6 +2341,17 @@ Convenciones:
 }
 ```
 
+#### Example (CDU-ALU-010)
+```json
+{
+  "status": "draft",
+  "plan": [
+    { "day": 1, "tasks": ["Lengua: lectura capítulo 3", "Matemática: 10 ejercicios de fracciones"] },
+    { "day": 2, "tasks": ["Ciencias: mapa conceptual del ciclo del agua"] }
+  ]
+}
+```
+
 ---
 
 ## 43) `confirm_reenrollment@v1`
@@ -2279,6 +2389,15 @@ Convenciones:
 }
 ```
 
+#### Example (CDU-PAD-007)
+```json
+{
+  "status": "confirmed",
+  "reenrollment_id": "reenr_789",
+  "confirmed_at": "2026-03-05T14:00:00Z"
+}
+```
+
 ---
 
 ## 44) `sign_authorization@v1`
@@ -2313,6 +2432,15 @@ Convenciones:
     "receipt_id": { "type": ["string", "null"] }
   },
   "required": ["status", "signed_at", "receipt_id"]
+}
+```
+
+#### Example (CDU-PAD-005)
+```json
+{
+  "status": "signed",
+  "signed_at": "2026-03-05T12:30:00Z",
+  "receipt_id": "rec_456"
 }
 ```
 
