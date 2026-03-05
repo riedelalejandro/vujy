@@ -213,7 +213,7 @@ Fecha: {{datetime}}.
 ## Tono y personalidad
 Directo, eficiente, sin vueltas. La tratás de vos. No perdés tiempo con preámbulos.
 Si puede resolver algo en una línea, lo hacés en una línea. Vocabulario primaria:
-"grado", "boletín", "nota numérica", "trabajo práctico", "trimestre".
+"grado", "boletín", "nota numérica", "trabajo práctico", "term".
 
 ## Scope de datos
 - Alumnos de su grado/división con datos de contacto
@@ -250,7 +250,7 @@ Estás hablando con {{nombre_docente}}, profesor/a de {{materia}} en {{nombre_es
 Cursos a cargo: {{lista_cursos}}. Fecha: {{datetime}}.
 
 ## Tono y personalidad
-Profesional, conciso. Tratás de vos. Terminología secundaria: "curso", "materia",
+Profesional, conciso. Tratás de vos. Terminología secundaria: "curso", "subject",
 "nota trimestral", "trabajo práctico", "previa", "correlatividad", "orientación".
 
 ## Scope adicional vs. primaria
@@ -537,40 +537,40 @@ Reglas:
 #### `get_student_summary`
 ```json
 {
-  "name": "get_student_summary",
+  "name": "get_student_summary@v1",
   "description": "Devuelve un resumen consolidado del estado académico, asistencia y tareas pendientes de un alumno para el período indicado.",
   "input_schema": {
     "type": "object",
     "properties": {
-      "alumno_id": {
+      "student_id": {
         "type": "string",
         "description": "ID del alumno en el sistema"
       },
-      "periodo": {
+      "period": {
         "type": "string",
-        "enum": ["semana_actual", "semana_anterior", "trimestre_actual", "trimestre_anterior"],
+        "enum": ["current_week", "previous_week", "current_term", "previous_term"],
         "description": "Período de consulta"
       }
     },
-    "required": ["alumno_id", "periodo"]
+    "required": ["student_id", "period"]
   },
   "returns": {
-    "asistencia": "{ dias_presentes, dias_ausentes, ausencias_justificadas, llegadas_tarde }",
-    "notas_recientes": "Array de { materia, nota, fecha, comentario_docente }",
-    "tareas_pendientes": "Array de { descripcion, materia, fecha_entrega }",
-    "observaciones_docente": "Array de { texto, fecha, docente }"
+    "attendance": "{ days_present, days_absent, excused_absences, late_arrivals }",
+    "recent_grades": "Array of { subject, grade, date, teacher_comment }",
+    "pending_tasks": "Array of { description, subject, due_date }",
+    "teacher_observations": "Array of { text, date, teacher }"
   },
-  "permisos": ["P", "D", "Dir", "A"]
+  "permissions": ["P", "D", "Dir", "A"]
 }
 ```
 
 **Ejemplo de invocación:**
 ```json
 {
-  "name": "get_student_summary",
+  "name": "get_student_summary@v1",
   "input": {
-    "alumno_id": "alu_4b_mlopez",
-    "periodo": "semana_anterior"
+    "student_id": "alu_4b_mlopez",
+    "period": "previous_week"
   }
 }
 ```
@@ -580,32 +580,32 @@ Reglas:
 #### `get_grades`
 ```json
 {
-  "name": "get_grades",
+  "name": "get_grades@v1",
   "description": "Devuelve calificaciones de un alumno o de todo un grado, filtradas por materia y/o período.",
   "input_schema": {
     "type": "object",
     "properties": {
-      "alumno_id": {
+      "student_id": {
         "type": "string",
         "description": "ID del alumno. Omitir para consultar el grado completo (requiere permiso D)."
       },
-      "grado_id": {
+      "grade_id": {
         "type": "string",
         "description": "ID del grado/sección. Requerido si alumno_id está ausente."
       },
-      "materia": {
+      "subject": {
         "type": "string",
         "description": "Nombre o ID de la materia. Opcional — sin valor devuelve todas."
       },
-      "trimestre": {
+      "term": {
         "type": "integer",
         "enum": [1, 2, 3],
         "description": "Trimestre a consultar. Opcional — sin valor devuelve el trimestre en curso."
       }
     }
   },
-  "returns": "Array de { alumno, materia, nota, fecha, tipo_evaluacion, comentario }",
-  "permisos": {
+  "returns": "Array of { student, subject, grade, date, evaluation_type, comment }",
+  "permissions": {
     "P": "Solo alumnos propios",
     "D": "Alumnos de su grado/materia",
     "Dir": "Todos",
@@ -620,23 +620,23 @@ Reglas:
 #### `get_attendance`
 ```json
 {
-  "name": "get_attendance",
+  "name": "get_attendance@v1",
   "description": "Consulta el registro de asistencia de uno o más alumnos.",
   "input_schema": {
     "type": "object",
     "properties": {
-      "alumno_id": { "type": "string" },
-      "grado_id": { "type": "string" },
-      "desde": { "type": "string", "format": "date" },
-      "hasta": { "type": "string", "format": "date" },
-      "solo_ausencias": {
+      "student_id": { "type": "string" },
+      "grade_id": { "type": "string" },
+      "from": { "type": "string", "format": "date" },
+      "to": { "type": "string", "format": "date" },
+      "only_absences": {
         "type": "boolean",
         "description": "true = devuelve solo los días de ausencia"
       }
     }
   },
-  "returns": "Array de { fecha, estado: presente|ausente|tardanza, justificacion, observacion }",
-  "permisos": ["P", "D", "Pre", "Dir", "A"]
+  "returns": "Array of { date, status: present|absent|late, justification, note }",
+  "permissions": ["P", "D", "Pre", "Dir", "A"]
 }
 ```
 
@@ -645,21 +645,21 @@ Reglas:
 #### `get_account_status`
 ```json
 {
-  "name": "get_account_status",
+  "name": "get_account_status@v1",
   "description": "Devuelve el estado de cuenta de una familia: deuda, vencimientos y pagos recientes.",
   "input_schema": {
     "type": "object",
     "properties": {
-      "familia_id": { "type": "string" }
+      "family_id": { "type": "string" }
     },
-    "required": ["familia_id"]
+    "required": ["family_id"]
   },
   "returns": {
-    "saldo_pendiente": "number",
-    "items": "Array de { concepto, monto, vencimiento, estado: pendiente|pagado|vencido }",
-    "historial_pagos": "Array de { fecha, monto, concepto, comprobante_id }"
+    "pending_balance": "number",
+    "items": "Array of { concept, amount, due_date, status: pending|paid|overdue }",
+    "payment_history": "Array of { date, amount, concept, receipt_id }"
   },
-  "permisos": {
+  "permissions": {
     "P": "Solo su propia familia",
     "A": "Cualquier familia",
     "S": "Consulta (sin pago)"
@@ -672,24 +672,24 @@ Reglas:
 #### `get_calendar`
 ```json
 {
-  "name": "get_calendar",
+  "name": "get_calendar@v1",
   "description": "Devuelve eventos del calendario escolar filtrados por período y opcionalmente por alumno/grado.",
   "input_schema": {
     "type": "object",
     "properties": {
-      "desde": { "type": "string", "format": "date" },
-      "hasta": { "type": "string", "format": "date" },
-      "grado_id": { "type": "string", "description": "Filtra eventos del grado específico" },
-      "alumno_id": { "type": "string", "description": "Filtra eventos relevantes para el alumno" },
-      "tipo": {
+      "from": { "type": "string", "format": "date" },
+      "to": { "type": "string", "format": "date" },
+      "grade_id": { "type": "string", "description": "Filtra eventos del grado específico" },
+      "student_id": { "type": "string", "description": "Filtra eventos relevantes para el alumno" },
+      "type": {
         "type": "array",
-        "items": { "type": "string", "enum": ["acto", "evaluacion", "salida", "reunion_padres", "feriado", "evento_especial", "natacion"] },
+        "items": { "type": "string", "enum": ["ceremony", "exam", "field_trip", "parent_meeting", "holiday", "special_event", "swimming"] },
         "description": "Filtrar por tipo de evento"
       }
     }
   },
-  "returns": "Array de { fecha, hora, titulo, descripcion, tipo, grado_id, requiere_autorizacion, requiere_traer }",
-  "permisos": ["P", "D", "Dir", "A", "S", "Pre", "Al"]
+  "returns": "Array of { date, time, title, description, type, grade_id, requires_authorization, required_items }",
+  "permissions": ["P", "D", "Dir", "A", "S", "Pre", "Al"]
 }
 ```
 
@@ -698,19 +698,19 @@ Reglas:
 #### `get_announcements`
 ```json
 {
-  "name": "get_announcements",
+  "name": "get_announcements@v1",
   "description": "Devuelve comunicados enviados/recibidos con estado de lectura.",
   "input_schema": {
     "type": "object",
     "properties": {
-      "destinatario_id": { "type": "string" },
-      "grado_id": { "type": "string" },
-      "leidos": { "type": "boolean", "description": "null = todos, true = solo leídos, false = solo no leídos" },
-      "limite": { "type": "integer", "default": 10 }
+      "recipient_id": { "type": "string" },
+      "grade_id": { "type": "string" },
+      "read": { "type": "boolean", "description": "null = todos, true = solo leídos, false = solo no leídos" },
+      "limit": { "type": "integer", "default": 10 }
     }
   },
-  "returns": "Array de { id, titulo, cuerpo, fecha, remitente, leido, fecha_lectura }",
-  "permisos": ["P", "D", "Dir", "A", "S"]
+  "returns": "Array of { id, title, body, date, sender, read, read_at }",
+  "permissions": ["P", "D", "Dir", "A", "S"]
 }
 ```
 
@@ -719,19 +719,19 @@ Reglas:
 #### `get_tasks`
 ```json
 {
-  "name": "get_tasks",
+  "name": "get_tasks@v1",
   "description": "Devuelve las tareas y trabajos asignados a un alumno o grado.",
   "input_schema": {
     "type": "object",
     "properties": {
-      "alumno_id": { "type": "string" },
-      "grado_id": { "type": "string" },
-      "solo_pendientes": { "type": "boolean", "default": true },
-      "materia": { "type": "string" }
+      "student_id": { "type": "string" },
+      "grade_id": { "type": "string" },
+      "only_pending": { "type": "boolean", "default": true },
+      "subject": { "type": "string" }
     }
   },
-  "returns": "Array de { id, titulo, descripcion, materia, fecha_asignacion, fecha_entrega, estado: pendiente|entregado|atrasado, archivos_adjuntos }",
-  "permisos": ["P", "D", "Al", "Dir"]
+  "returns": "Array of { id, title, description, subject, assigned_date, due_date, status: pending|submitted|late, attachments }",
+  "permissions": ["P", "D", "Al", "Dir"]
 }
 ```
 
@@ -742,24 +742,24 @@ Reglas:
 #### `record_absence`
 ```json
 {
-  "name": "record_absence",
+  "name": "record_absence@v1",
   "description": "Registra la ausencia de uno o más alumnos para una fecha. Notifica a los tutores o a la docente según quién invoca.",
   "input_schema": {
     "type": "object",
     "properties": {
-      "alumno_ids": {
+      "student_ids": {
         "type": "array",
         "items": { "type": "string" }
       },
-      "fecha": { "type": "string", "format": "date" },
-      "motivo": { "type": "string", "description": "Motivo declarado de la ausencia (opcional)" },
-      "notificar_docente": { "type": "boolean", "default": true },
-      "notificar_tutores": { "type": "boolean", "default": false }
+      "date": { "type": "string", "format": "date" },
+      "reason": { "type": "string", "description": "Motivo declarado de la ausencia (opcional)" },
+      "notify_teacher": { "type": "boolean", "default": true },
+      "notify_guardians": { "type": "boolean", "default": false }
     },
-    "required": ["alumno_ids", "fecha"]
+    "required": ["student_ids", "date"]
   },
-  "returns": "{ success: boolean, ausencias_registradas: array, notificaciones_enviadas: array }",
-  "permisos": {
+  "returns": "{ success: boolean, recorded_absences: array, notifications_sent: array }",
+  "permissions": {
     "P": "Solo sus hijos",
     "D": "Alumnos de su grado",
     "Pre": "Alumnos de sus cursos"
@@ -772,36 +772,36 @@ Reglas:
 #### `send_announcement`
 ```json
 {
-  "name": "send_announcement",
+  "name": "send_announcement@v1",
   "description": "Envía un comunicado a un grupo de destinatarios. Siempre requiere confirmación previa del usuario antes de ejecutarse.",
   "input_schema": {
     "type": "object",
     "properties": {
-      "titulo": { "type": "string" },
-      "cuerpo": { "type": "string" },
-      "destinatarios": {
+      "title": { "type": "string" },
+      "body": { "type": "string" },
+      "recipients": {
         "type": "object",
         "properties": {
-          "grado_ids": { "type": "array", "items": { "type": "string" } },
-          "familia_ids": { "type": "array", "items": { "type": "string" } },
-          "todos": { "type": "boolean", "description": "Envía a toda la comunidad escolar" }
+          "grade_ids": { "type": "array", "items": { "type": "string" } },
+          "family_ids": { "type": "array", "items": { "type": "string" } },
+          "all": { "type": "boolean", "description": "Envía a toda la comunidad escolar" }
         }
       },
-      "prioridad": {
+      "priority": {
         "type": "string",
-        "enum": ["normal", "urgente"],
+        "enum": ["normal", "urgent"],
         "default": "normal"
       },
-      "canal": {
+      "channels": {
         "type": "array",
         "items": { "type": "string", "enum": ["app", "whatsapp", "email"] },
         "default": ["app"]
       }
     },
-    "required": ["titulo", "cuerpo", "destinatarios"]
+    "required": ["title", "body", "recipients"]
   },
-  "returns": "{ comunicado_id, destinatarios_count, canales_usados, timestamp }",
-  "permisos": ["D", "Dir", "A", "S"]
+  "returns": "{ announcement_id, recipients_count, channels_used, timestamp }",
+  "permissions": ["D", "Dir", "A", "S"]
 }
 ```
 
@@ -810,35 +810,35 @@ Reglas:
 #### `create_collection_campaign`
 ```json
 {
-  "name": "create_collection_campaign",
+  "name": "create_collection_campaign@v1",
   "canonical_name": "create_collection_campaign@v1",
   "description": "Crea una campaña de cobranza segmentada con preview obligatorio antes de envío.",
   "input_schema": {
     "type": "object",
     "properties": {
-      "escuela_id": { "type": "string" },
-      "segmento": {
+      "school_id": { "type": "string" },
+      "segment": {
         "type": "string",
-        "enum": ["deuda_1_mes", "deuda_2_mas", "custom_ids"]
+        "enum": ["debt_1_month", "debt_2_plus_months", "custom_ids"]
       },
-      "familia_ids": {
+      "family_ids": {
         "type": "array",
         "items": { "type": "string" },
         "description": "Requerido si segmento=custom_ids"
       },
-      "canal": {
+      "channels": {
         "type": "array",
         "items": { "type": "string", "enum": ["app", "whatsapp", "email"] }
       },
-      "mensaje_borrador": { "type": "string" },
+      "message_draft": { "type": "string" },
       "require_preview": { "type": "boolean", "const": true },
       "idempotency_key": { "type": "string" }
     },
-    "required": ["escuela_id", "segmento", "canal", "mensaje_borrador", "require_preview", "idempotency_key"]
+    "required": ["school_id", "segment", "channels", "message_draft", "require_preview", "idempotency_key"]
   },
-  "returns": "{ campaign_id, destinatarios_estimados, preview_mensaje, riesgo_envio, estado: draft|ready|blocked }",
-  "errores": ["FORBIDDEN_SCOPE", "CONFIRMATION_REQUIRED", "TEMPLATE_NOT_APPROVED", "OPTIN_REQUIRED"],
-  "permisos": ["A", "Dir"]
+  "returns": "{ campaign_id, estimated_recipients, message_preview, delivery_risk, status: draft|ready|blocked }",
+  "errors": ["FORBIDDEN_SCOPE", "CONFIRMATION_REQUIRED", "TEMPLATE_NOT_APPROVED", "OPTIN_REQUIRED"],
+  "permissions": ["A", "Dir"]
 }
 ```
 
@@ -851,35 +851,35 @@ Reglas:
 #### `record_grade_batch`
 ```json
 {
-  "name": "record_grade_batch",
+  "name": "record_grade_batch@v1",
   "description": "Carga una o varias calificaciones para alumnos de un grado.",
   "input_schema": {
     "type": "object",
     "properties": {
-      "grado_id": { "type": "string" },
-      "materia": { "type": "string" },
-      "tipo_evaluacion": {
+      "grade_id": { "type": "string" },
+      "subject": { "type": "string" },
+      "evaluation_type": {
         "type": "string",
-        "enum": ["evaluacion_escrita", "oral", "trabajo_practico", "proyecto", "participacion"]
+        "enum": ["written_exam", "oral", "practical_work", "project", "participation"]
       },
-      "fecha": { "type": "string", "format": "date" },
-      "notas": {
+      "date": { "type": "string", "format": "date" },
+      "grades": {
         "type": "array",
         "items": {
           "type": "object",
           "properties": {
-            "alumno_id": { "type": "string" },
-            "nota": { "type": "number", "minimum": 1, "maximum": 10 },
-            "comentario": { "type": "string" }
+            "student_id": { "type": "string" },
+            "grade": { "type": "number", "minimum": 1, "maximum": 10 },
+            "comment": { "type": "string" }
           },
-          "required": ["alumno_id", "nota"]
+          "required": ["student_id", "grade"]
         }
       }
     },
-    "required": ["grado_id", "materia", "tipo_evaluacion", "fecha", "notas"]
+    "required": ["grade_id", "subject", "evaluation_type", "date", "grades"]
   },
-  "returns": "{ success, notas_cargadas: number, alertas: array }",
-  "permisos": ["D"]
+  "returns": "{ success, grades_recorded: number, alerts: array }",
+  "permissions": ["D"]
 }
 ```
 
@@ -888,27 +888,27 @@ Reglas:
 #### `process_payment`
 ```json
 {
-  "name": "process_payment",
+  "name": "process_payment@v1",
   "description": "Procesa un pago de cuota u otro concepto via Mercado Pago. Requiere confirmación explícita del usuario.",
   "input_schema": {
     "type": "object",
     "properties": {
-      "familia_id": { "type": "string" },
+      "family_id": { "type": "string" },
       "items_ids": {
         "type": "array",
         "items": { "type": "string" },
         "description": "IDs de los ítems de cuenta a pagar"
       },
-      "metodo_pago": {
+      "payment_method": {
         "type": "string",
-        "enum": ["tarjeta_guardada", "nuevo_metodo"],
-        "default": "tarjeta_guardada"
+        "enum": ["saved_card", "new_method"],
+        "default": "saved_card"
       }
     },
-    "required": ["familia_id", "items_ids"]
+    "required": ["family_id", "items_ids"]
   },
-  "returns": "{ success, transaccion_id, monto_total, comprobante_url, timestamp }",
-  "permisos": {
+  "returns": "{ success, transaction_id, total_amount, receipt_url, timestamp }",
+  "permissions": {
     "P": "Solo su familia, solo tarjeta guardada o nueva"
   }
 }
@@ -919,30 +919,30 @@ Reglas:
 #### `take_attendance`
 ```json
 {
-  "name": "take_attendance",
+  "name": "take_attendance@v1",
   "description": "Toma la asistencia completa de un grado en una fecha, recibiendo la lista completa de estados.",
   "input_schema": {
     "type": "object",
     "properties": {
-      "grado_id": { "type": "string" },
-      "fecha": { "type": "string", "format": "date" },
-      "asistencias": {
+      "grade_id": { "type": "string" },
+      "date": { "type": "string", "format": "date" },
+      "attendance_entries": {
         "type": "array",
         "items": {
           "type": "object",
           "properties": {
-            "alumno_id": { "type": "string" },
-            "estado": { "type": "string", "enum": ["presente", "ausente", "tardanza"] },
-            "observacion": { "type": "string" }
+            "student_id": { "type": "string" },
+            "status": { "type": "string", "enum": ["present", "absent", "late"] },
+            "note": { "type": "string" }
           },
-          "required": ["alumno_id", "estado"]
+          "required": ["student_id", "status"]
         }
       }
     },
-    "required": ["grado_id", "fecha", "asistencias"]
+    "required": ["grade_id", "date", "attendance_entries"]
   },
-  "returns": "{ success, presentes: number, ausentes: number, notificaciones_enviadas: number }",
-  "permisos": ["D", "Pre"]
+  "returns": "{ success, present_count: number, absent_count: number, notifications_sent: number }",
+  "permissions": ["D", "Pre"]
 }
 ```
 
@@ -951,20 +951,20 @@ Reglas:
 #### `sign_authorization`
 ```json
 {
-  "name": "sign_authorization",
+  "name": "sign_authorization@v1",
   "description": "Registra la firma digital de un tutor para una autorización (salida educativa, evento).",
   "input_schema": {
     "type": "object",
     "properties": {
-      "autorizacion_id": { "type": "string" },
-      "familia_id": { "type": "string" },
-      "aprobado": { "type": "boolean" },
-      "observacion": { "type": "string", "description": "Comentario opcional del tutor" }
+      "authorization_id": { "type": "string" },
+      "family_id": { "type": "string" },
+      "approved": { "type": "boolean" },
+      "note": { "type": "string", "description": "Comentario opcional del tutor" }
     },
-    "required": ["autorizacion_id", "familia_id", "aprobado"]
+    "required": ["authorization_id", "family_id", "approved"]
   },
-  "returns": "{ success, timestamp, estado: aprobado|rechazado }",
-  "permisos": ["P"]
+  "returns": "{ success, timestamp, status: approved|rejected }",
+  "permissions": ["P"]
 }
 ```
 
@@ -973,19 +973,19 @@ Reglas:
 #### `confirm_reenrollment`
 ```json
 {
-  "name": "confirm_reenrollment",
+  "name": "confirm_reenrollment@v1",
   "description": "Confirma la reinscripción de un alumno para el ciclo lectivo siguiente.",
   "input_schema": {
     "type": "object",
     "properties": {
-      "alumno_id": { "type": "string" },
-      "ciclo_lectivo": { "type": "integer" },
-      "acepta_condiciones": { "type": "boolean" }
+      "student_id": { "type": "string" },
+      "school_year": { "type": "integer" },
+      "accepts_terms": { "type": "boolean" }
     },
-    "required": ["alumno_id", "ciclo_lectivo", "acepta_condiciones"]
+    "required": ["student_id", "school_year", "accepts_terms"]
   },
-  "returns": "{ success, confirmacion_id, grado_asignado, timestamp }",
-  "permisos": ["P", "S"]
+  "returns": "{ success, confirmation_id, assigned_grade, timestamp }",
+  "permissions": ["P", "S"]
 }
 ```
 
@@ -994,24 +994,24 @@ Reglas:
 #### `record_pedagogical_note`
 ```json
 {
-  "name": "record_pedagogical_note",
+  "name": "record_pedagogical_note@v1",
   "description": "Registra una micro-observación pedagógica sobre un alumno para uso en informes trimestrales.",
   "input_schema": {
     "type": "object",
     "properties": {
-      "alumno_id": { "type": "string" },
-      "texto": { "type": "string", "description": "Observación en lenguaje natural" },
+      "student_id": { "type": "string" },
+      "text": { "type": "string", "description": "Observación en lenguaje natural" },
       "area": {
         "type": "string",
         "description": "Área de desarrollo o materia relacionada",
-        "enum": ["cognitivo", "socioemocional", "motricidad", "lenguaje", "matematica", "ciencias", "lengua", "general"]
+        "enum": ["cognitive", "socioemotional", "motor_skills", "language", "math", "science", "language_arts", "general"]
       },
-      "fecha": { "type": "string", "format": "date" }
+      "date": { "type": "string", "format": "date" }
     },
-    "required": ["alumno_id", "texto"]
+    "required": ["student_id", "text"]
   },
-  "returns": "{ observacion_id, alumno, fecha, preview_informe_actualizado: boolean }",
-  "permisos": ["D"]
+  "returns": "{ note_id, student, date, report_preview_updated: boolean }",
+  "permissions": ["D"]
 }
 ```
 
@@ -1022,29 +1022,29 @@ Reglas:
 #### `generate_pedagogical_report`
 ```json
 {
-  "name": "generate_pedagogical_report",
+  "name": "generate_pedagogical_report@v1",
   "description": "Genera un borrador de informe pedagógico trimestral para un alumno basado en observaciones acumuladas, notas y asistencia. El borrador siempre requiere revisión y aprobación humana.",
   "input_schema": {
     "type": "object",
     "properties": {
-      "alumno_id": { "type": "string" },
-      "trimestre": { "type": "integer", "enum": [1, 2, 3] },
-      "anio": { "type": "integer" },
-      "estilo": {
+      "student_id": { "type": "string" },
+      "term": { "type": "integer", "enum": [1, 2, 3] },
+      "year": { "type": "integer" },
+      "style": {
         "type": "string",
-        "enum": ["narrativo_inicial", "descriptivo_primaria", "analitico_secundaria"],
+        "enum": ["narrative_initial", "descriptive_primary", "analytic_secondary"],
         "description": "Estilo del informe según nivel educativo"
       },
-      "incluir_areas": {
+      "included_areas": {
         "type": "array",
         "items": { "type": "string" },
         "description": "Áreas a incluir en el informe. Por defecto todas."
       }
     },
-    "required": ["alumno_id", "trimestre", "anio", "estilo"]
+    "required": ["student_id", "term", "year", "style"]
   },
-  "returns": "{ borrador_texto, observaciones_usadas: number, calificaciones_incluidas: number, advertencia: 'Requiere revisión docente antes de publicar' }",
-  "permisos": ["D", "Dir"]
+  "returns": "{ draft_text, observations_used: number, included_grades: number, warning: 'Requires teacher review before publishing' }",
+  "permissions": ["D", "Dir"]
 }
 ```
 
@@ -1053,26 +1053,26 @@ Reglas:
 #### `generate_learning_activity`
 ```json
 {
-  "name": "generate_learning_activity",
+  "name": "generate_learning_activity@v1",
   "description": "Genera una actividad educativa gamificada lista para asignar a los alumnos.",
   "input_schema": {
     "type": "object",
     "properties": {
-      "tema": { "type": "string" },
-      "materia": { "type": "string" },
-      "grado_id": { "type": "string" },
-      "tipo": {
+      "topic": { "type": "string" },
+      "subject": { "type": "string" },
+      "grade_id": { "type": "string" },
+      "type": {
         "type": "string",
-        "enum": ["trivia", "verdadero_falso", "completar_espacios", "ordenar_secuencia", "asociar_conceptos", "pregunta_abierta", "sopa_letras", "calculo_mental", "comprension_lectora"]
+        "enum": ["trivia", "true_false", "fill_in_blanks", "order_sequence", "match_concepts", "open_question", "word_search", "mental_math", "reading_comprehension"]
       },
-      "cantidad_preguntas": { "type": "integer", "minimum": 3, "maximum": 20 },
-      "dificultad": { "type": "string", "enum": ["facil", "media", "dificil"] },
-      "tiempo_minutos": { "type": "integer", "description": "Tiempo estimado para completar" }
+      "question_count": { "type": "integer", "minimum": 3, "maximum": 20 },
+      "difficulty": { "type": "string", "enum": ["easy", "medium", "hard"] },
+      "duration_minutes": { "type": "integer", "description": "Tiempo estimado para completar" }
     },
-    "required": ["tema", "materia", "grado_id", "tipo"]
+    "required": ["topic", "subject", "grade_id", "type"]
   },
-  "returns": "{ actividad_id, titulo, instrucciones, items: array, respuestas_correctas: array, tiempo_estimado, publicada: false }",
-  "permisos": ["D"]
+  "returns": "{ activity_id, title, instructions, items: array, correct_answers: array, estimated_time, published: false }",
+  "permissions": ["D"]
 }
 ```
 
@@ -1081,22 +1081,22 @@ Reglas:
 #### `generate_announcement_draft`
 ```json
 {
-  "name": "generate_announcement_draft",
+  "name": "generate_announcement_draft@v1",
   "description": "Genera un borrador de comunicado formal a partir de una instrucción en lenguaje natural. El usuario siempre revisa y aprueba antes de enviar.",
   "input_schema": {
     "type": "object",
     "properties": {
-      "instruccion": {
+      "instruction": {
         "type": "string",
         "description": "Descripción en lenguaje natural del comunicado. Ej: 'el viernes hay acto, vengan de blanco, traigan algo para compartir'"
       },
-      "destinatarios_descripcion": { "type": "string", "description": "Ej: '3ro B', 'toda la primaria'" },
-      "tono": { "type": "string", "enum": ["formal", "cordial", "urgente"], "default": "cordial" }
+      "recipients_description": { "type": "string", "description": "Ej: '3ro B', 'toda la primaria'" },
+      "tone": { "type": "string", "enum": ["formal", "friendly", "urgent"], "default": "friendly" }
     },
-    "required": ["instruccion", "destinatarios_descripcion"]
+    "required": ["instruction", "recipients_description"]
   },
-  "returns": "{ titulo_sugerido, cuerpo_borrador, tono_aplicado }",
-  "permisos": ["D", "Dir", "A", "S"]
+  "returns": "{ suggested_title, draft_body, applied_tone }",
+  "permissions": ["D", "Dir", "A", "S"]
 }
 ```
 
@@ -1105,20 +1105,20 @@ Reglas:
 #### `generate_study_plan`
 ```json
 {
-  "name": "generate_study_plan",
+  "name": "generate_study_plan@v1",
   "description": "Genera un plan de estudio personalizado para un alumno basado en sus evaluaciones próximas y rendimiento actual.",
   "input_schema": {
     "type": "object",
     "properties": {
-      "alumno_id": { "type": "string" },
-      "evaluacion_id": { "type": "string", "description": "Evaluación objetivo (opcional)" },
-      "dias_disponibles": { "type": "integer", "description": "Días hasta la evaluación" },
-      "horas_diarias": { "type": "number" }
+      "student_id": { "type": "string" },
+      "evaluation_id": { "type": "string", "description": "Evaluación objetivo (opcional)" },
+      "available_days": { "type": "integer", "description": "Días hasta la evaluación" },
+      "daily_hours": { "type": "number" }
     },
-    "required": ["alumno_id"]
+    "required": ["student_id"]
   },
-  "returns": "{ plan: Array de { dia, actividad, duracion_minutos, tema, recurso_id } }",
-  "permisos": ["Al", "D", "P"]
+  "returns": "{ plan: Array of { day, activity, duration_minutes, topic, resource_id } }",
+  "permissions": ["Al", "D", "P"]
 }
 ```
 
@@ -1129,27 +1129,27 @@ Reglas:
 #### `get_delinquency_dashboard`
 ```json
 {
-  "name": "get_delinquency_dashboard",
+  "name": "get_delinquency_dashboard@v1",
   "description": "Devuelve el estado de morosidad de la institución con segmentación y totales.",
   "input_schema": {
     "type": "object",
     "properties": {
-      "escuela_id": { "type": "string" },
-      "segmentacion": {
+      "school_id": { "type": "string" },
+      "segmentation": {
         "type": "string",
-        "enum": ["resumen", "por_familia", "por_grado"],
-        "default": "resumen"
+        "enum": ["summary", "by_family", "by_grade"],
+        "default": "summary"
       }
     },
-    "required": ["escuela_id"]
+    "required": ["school_id"]
   },
   "returns": {
-    "al_dia": "{ cantidad, porcentaje }",
-    "deuda_1_mes": "{ cantidad, monto_total, familias: array }",
-    "deuda_2_mas": "{ cantidad, monto_total, familias: array }",
-    "total_vencido": "number"
+    "up_to_date": "{ count, percentage }",
+    "debt_1_month": "{ count, total_amount, families: array }",
+    "debt_2_plus_months": "{ count, total_amount, families: array }",
+    "total_overdue": "number"
   },
-  "permisos": ["A"]
+  "permissions": ["A"]
 }
 ```
 
@@ -1158,22 +1158,22 @@ Reglas:
 #### `get_dropout_risk`
 ```json
 {
-  "name": "get_dropout_risk",
+  "name": "get_dropout_risk@v1",
   "description": "Devuelve el índice de riesgo de deserción de familias calculado cruzando morosidad, asistencia, lectura de comunicados y estado de reinscripción.",
   "input_schema": {
     "type": "object",
     "properties": {
-      "escuela_id": { "type": "string" },
-      "umbral_riesgo": {
+      "school_id": { "type": "string" },
+      "risk_threshold": {
         "type": "string",
-        "enum": ["alto", "medio", "todos"],
-        "default": "alto"
+        "enum": ["high", "medium", "all"],
+        "default": "high"
       }
     },
-    "required": ["escuela_id"]
+    "required": ["school_id"]
   },
-  "returns": "Array de { familia_id, nombre_familia, indice_riesgo: 0-100, factores: array, recomendacion }",
-  "permisos": ["A", "Dir"]
+  "returns": "Array of { family_id, family_name, risk_index: 0-100, factors: array, recommendation }",
+  "permissions": ["A", "Dir"]
 }
 ```
 
@@ -1182,32 +1182,32 @@ Reglas:
 #### `simulate_financial_scenario`
 ```json
 {
-  "name": "simulate_financial_scenario",
+  "name": "simulate_financial_scenario@v1",
   "description": "Simula el impacto financiero de cambios en cuotas y/o matrícula.",
   "input_schema": {
     "type": "object",
     "properties": {
-      "escuela_id": { "type": "string" },
-      "variacion_cuota_pct": { "type": "number", "description": "Porcentaje de aumento/baja. Ej: 15 = +15%" },
-      "variacion_alumnos": { "type": "integer", "description": "Cambio en cantidad de alumnos. Negativo = bajas." },
-      "concepto_adicional": {
+      "school_id": { "type": "string" },
+      "tuition_change_pct": { "type": "number", "description": "Porcentaje de aumento/baja. Ej: 15 = +15%" },
+      "student_count_change": { "type": "integer", "description": "Cambio en cantidad de alumnos. Negativo = bajas." },
+      "additional_concept": {
         "type": "object",
         "properties": {
-          "nombre": { "type": "string" },
-          "monto": { "type": "number" }
+          "name": { "type": "string" },
+          "amount": { "type": "number" }
         }
       }
     },
-    "required": ["escuela_id"]
+    "required": ["school_id"]
   },
   "returns": {
-    "recaudacion_actual": "number",
-    "recaudacion_proyectada": "number",
-    "diferencia": "number",
-    "punto_equilibrio": "number",
-    "detalle": "string"
+    "current_revenue": "number",
+    "projected_revenue": "number",
+    "difference": "number",
+    "break_even_point": "number",
+    "detail": "string"
   },
-  "permisos": ["A"]
+  "permissions": ["A"]
 }
 ```
 
@@ -1216,25 +1216,25 @@ Reglas:
 #### `get_institutional_alerts`
 ```json
 {
-  "name": "get_institutional_alerts",
+  "name": "get_institutional_alerts@v1",
   "description": "Devuelve alertas automáticas del sistema: alumnos con inasistencias críticas, caídas de notas, familias sin leer comunicados, etc.",
   "input_schema": {
     "type": "object",
     "properties": {
-      "escuela_id": { "type": "string" },
-      "tipo": {
+      "school_id": { "type": "string" },
+      "type": {
         "type": "array",
         "items": {
           "type": "string",
-          "enum": ["inasistencias_criticas", "caida_notas", "comunicados_sin_leer", "riesgo_desercion", "morosidad_nueva"]
+          "enum": ["critical_absences", "grade_drop", "unread_announcements", "dropout_risk", "new_delinquency"]
         }
       },
-      "limite": { "type": "integer", "default": 20 }
+      "limit": { "type": "integer", "default": 20 }
     },
-    "required": ["escuela_id"]
+    "required": ["school_id"]
   },
-  "returns": "Array de { tipo, severidad: alta|media|baja, descripcion, alumno_id, familia_id, fecha, accion_sugerida }",
-  "permisos": ["A", "Dir", "D"]
+  "returns": "Array of { type, severity: high|medium|low, description, student_id, family_id, date, suggested_action }",
+  "permissions": ["A", "Dir", "D"]
 }
 ```
 
@@ -1266,16 +1266,16 @@ Cada query al índice vectorial incluye metadatos de filtro obligatorios:
 ```python
 # Ejemplo de filtro para padre
 {
-  "escuela_id": "esc_san_martin",
-  "familia_id": "fam_lopez",            # Solo documentos de su familia
-  "alumno_ids": ["alu_4b_mlopez"],      # Solo sus hijos
+  "school_id": "esc_san_martin",
+  "family_id": "fam_lopez",            # Solo documentos de su familia
+  "student_ids": ["alu_4b_mlopez"],      # Solo sus hijos
   "tipos_excluidos": ["legajo_confidencial", "datos_financieros_otros"]
 }
 
 # Ejemplo de filtro para docente
 {
-  "escuela_id": "esc_san_martin",
-  "grado_ids": ["4B", "3A"],            # Solo sus grados
+  "school_id": "esc_san_martin",
+  "grade_ids": ["4B", "3A"],            # Solo sus grados
   "tipos_excluidos": ["datos_financieros", "legajos_confidenciales"]
 }
 ```
