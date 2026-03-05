@@ -8,7 +8,7 @@ Este documento cierra `TODO(MCP_DEFINITIONS)`. Es la especificación operativa d
 - Tools base: `docs/02-API-SPEC.md`
 
 **Total tools canónicas:** 44 (28 MVP v1 + 16 v2.0)
-**Schemas JSON publicados:** 32 tools en `docs/10-MCP-SCHEMAS.md`
+**Schemas JSON publicados:** 44 tools en `docs/10-MCP-SCHEMAS.md`
 
 Estado: **especificación implementable** — pendiente validación legal (ver §13).
 
@@ -393,8 +393,7 @@ Notas:
 1. Validación legal formal del esquema de base legal, transferencias internacionales (DPA Anthropic) y retención con asesoría especializada.
 2. Cerrar `TEMPLATE_LIBRARY` para `create_collection_campaign@v1` y canales WhatsApp — aprobación Meta.
 3. Casos E2E P0 disponibles en `docs/.tmp-mcp-insumos-7-8-10.md §Insumo 10` — mover a CI pipeline antes de lanzamiento.
-4. Publicar schemas JSON faltantes para cobertura 100% del catálogo canónico en `docs/10-MCP-SCHEMAS.md`.
-5. DPA con Anthropic (transferencia internacional de datos para Claude API) — BLOQUEANTE antes de datos reales.
+4. DPA con Anthropic (transferencia internacional de datos para Claude API) — BLOQUEANTE antes de datos reales.
 
 ---
 

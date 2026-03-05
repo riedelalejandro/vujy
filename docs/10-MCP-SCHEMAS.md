@@ -2,7 +2,7 @@
 
 Alcance de este documento:
 - Esquemas publicados de input/output para tools canónicas del catálogo.
-- **Total publicado:** 32 tools con schema.
+- **Total publicado:** 44 tools con schema (cobertura completa del catálogo).
 - Catálogo completo de referencia: `docs/09-MCP-DEFINITIONS.md` (44 tools).
 - Canonical-only: no legacy aliases.
 
@@ -1748,6 +1748,571 @@ Convenciones:
     "idempotency_key": { "type": "string", "minLength": 8 }
   },
   "required": ["event_id", "idempotency_key"]
+}
+```
+
+---
+
+## 33) `get_my_students@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.get_my_students.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "page": { "type": "integer", "minimum": 1, "default": 1 },
+    "page_size": { "type": "integer", "minimum": 1, "maximum": 50, "default": 20 }
+  }
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.get_my_students.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "students": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "student_id": { "type": "string" },
+          "full_name": { "type": "string" },
+          "grade": { "type": "string" },
+          "section": { "type": "string" }
+        },
+        "required": ["student_id", "full_name", "grade"]
+      }
+    },
+    "page": { "type": "integer", "minimum": 1 },
+    "page_size": { "type": "integer", "minimum": 1 },
+    "total": { "type": "integer", "minimum": 0 }
+  },
+  "required": ["students", "page", "page_size", "total"]
+}
+```
+
+---
+
+## 34) `get_grades@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.get_grades.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "student_id": { "type": "string", "minLength": 1 },
+    "term": { "type": ["string", "null"], "enum": ["Q1", "Q2", "Q3", "Q4", "FINAL", null] },
+    "subject": { "type": ["string", "null"], "minLength": 1 },
+    "page": { "type": "integer", "minimum": 1, "default": 1 },
+    "page_size": { "type": "integer", "minimum": 1, "maximum": 100, "default": 50 }
+  },
+  "required": ["student_id"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.get_grades.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "grades": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "grade_id": { "type": "string" },
+          "subject": { "type": "string" },
+          "score": { "type": "number" },
+          "scale": { "type": "number" },
+          "recorded_at": { "type": "string", "format": "date-time" },
+          "term": { "type": ["string", "null"] },
+          "comment": { "type": ["string", "null"], "maxLength": 500 }
+        },
+        "required": ["grade_id", "subject", "score", "recorded_at"]
+      }
+    },
+    "page": { "type": "integer", "minimum": 1 },
+    "page_size": { "type": "integer", "minimum": 1 },
+    "total": { "type": "integer", "minimum": 0 }
+  },
+  "required": ["grades", "page", "page_size", "total"]
+}
+```
+
+---
+
+## 35) `get_attendance@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.get_attendance.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "student_id": { "type": "string", "minLength": 1 },
+    "start_date": { "type": ["string", "null"], "format": "date" },
+    "end_date": { "type": ["string", "null"], "format": "date" }
+  },
+  "required": ["student_id"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.get_attendance.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "present": { "type": "integer", "minimum": 0 },
+        "absent": { "type": "integer", "minimum": 0 },
+        "late": { "type": "integer", "minimum": 0 }
+      },
+      "required": ["present", "absent", "late"]
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "date": { "type": "string", "format": "date" },
+          "status": { "type": "string", "enum": ["present", "absent", "late"] },
+          "justification": { "type": ["string", "null"], "maxLength": 500 }
+        },
+        "required": ["date", "status"]
+      }
+    }
+  },
+  "required": ["summary", "records"]
+}
+```
+
+---
+
+## 36) `get_calendar@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.get_calendar.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "student_id": { "type": ["string", "null"], "minLength": 1 },
+    "from": { "type": "string", "format": "date" },
+    "to": { "type": "string", "format": "date" }
+  },
+  "required": ["from", "to"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.get_calendar.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "event_id": { "type": "string" },
+          "title": { "type": "string" },
+          "start": { "type": "string", "format": "date-time" },
+          "end": { "type": ["string", "null"], "format": "date-time" },
+          "location": { "type": ["string", "null"] },
+          "requires_action": { "type": "boolean", "default": false }
+        },
+        "required": ["event_id", "title", "start", "requires_action"]
+      }
+    }
+  },
+  "required": ["events"]
+}
+```
+
+---
+
+## 37) `get_announcements@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.get_announcements.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "audience": { "type": "string", "enum": ["guardian", "teacher", "admin", "student"] },
+    "unread_only": { "type": "boolean", "default": false },
+    "page": { "type": "integer", "minimum": 1, "default": 1 },
+    "page_size": { "type": "integer", "minimum": 1, "maximum": 100, "default": 50 }
+  },
+  "required": ["audience"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.get_announcements.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "announcements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "announcement_id": { "type": "string" },
+          "title": { "type": "string" },
+          "body": { "type": "string" },
+          "sent_at": { "type": "string", "format": "date-time" },
+          "requires_confirmation": { "type": "boolean" },
+          "read": { "type": "boolean" }
+        },
+        "required": ["announcement_id", "title", "body", "sent_at", "requires_confirmation", "read"]
+      }
+    },
+    "page": { "type": "integer", "minimum": 1 },
+    "page_size": { "type": "integer", "minimum": 1 },
+    "total": { "type": "integer", "minimum": 0 }
+  },
+  "required": ["announcements", "page", "page_size", "total"]
+}
+```
+
+---
+
+## 38) `get_institutional_alerts@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.get_institutional_alerts.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "severity": { "type": ["string", "null"], "enum": ["low", "medium", "high", "critical", null] },
+    "only_unresolved": { "type": "boolean", "default": true }
+  }
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.get_institutional_alerts.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "alerts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "alert_id": { "type": "string" },
+          "title": { "type": "string" },
+          "severity": { "type": "string", "enum": ["low", "medium", "high", "critical"] },
+          "created_at": { "type": "string", "format": "date-time" },
+          "resolved": { "type": "boolean" }
+        },
+        "required": ["alert_id", "title", "severity", "created_at", "resolved"]
+      }
+    }
+  },
+  "required": ["alerts"]
+}
+```
+
+---
+
+## 39) `generate_announcement_draft@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.generate_announcement_draft.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "audience": { "type": "string", "enum": ["families", "teachers", "all_staff"] },
+    "purpose": { "type": "string", "minLength": 5, "maxLength": 200 },
+    "tone": { "type": ["string", "null"], "enum": ["formal", "friendly", "urgent", null], "default": "formal" },
+    "channels": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["app", "web", "whatsapp", "email"] },
+      "minItems": 1
+    },
+    "idempotency_key": { "type": "string", "minLength": 8 }
+  },
+  "required": ["audience", "purpose", "channels", "idempotency_key"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.generate_announcement_draft.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "draft": { "type": "string" },
+    "word_count": { "type": "integer", "minimum": 1 }
+  },
+  "required": ["draft", "word_count"]
+}
+```
+
+---
+
+## 40) `generate_learning_activity@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.generate_learning_activity.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "activity_type": { "type": "string", "enum": ["quiz", "worksheet", "project", "flashcards", "exam_simulation"] },
+    "subject": { "type": "string", "minLength": 2 },
+    "topic": { "type": "string", "minLength": 2 },
+    "grade_level": { "type": "string", "minLength": 1 },
+    "learning_objectives": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 3 },
+      "minItems": 1
+    },
+    "duration_minutes": { "type": ["integer", "null"], "minimum": 5 },
+    "idempotency_key": { "type": "string", "minLength": 8 }
+  },
+  "required": ["activity_type", "subject", "topic", "grade_level", "learning_objectives", "idempotency_key"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.generate_learning_activity.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "status": { "type": "string", "enum": ["draft"] },
+    "activity": { "type": "string" },
+    "estimated_time_minutes": { "type": ["integer", "null"], "minimum": 5 }
+  },
+  "required": ["status", "activity"]
+}
+```
+
+---
+
+## 41) `generate_pedagogical_report@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.generate_pedagogical_report.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "student_id": { "type": "string", "minLength": 1 },
+    "period": { "type": "string", "minLength": 1 },
+    "observations": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 3 },
+      "default": []
+    },
+    "idempotency_key": { "type": "string", "minLength": 8 }
+  },
+  "required": ["student_id", "period", "idempotency_key"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.generate_pedagogical_report.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "status": { "type": "string", "enum": ["draft"] },
+    "summary": { "type": "string" },
+    "strengths": { "type": "array", "items": { "type": "string" } },
+    "improvements": { "type": "array", "items": { "type": "string" } },
+    "next_steps": { "type": "array", "items": { "type": "string" } }
+  },
+  "required": ["status", "summary", "strengths", "improvements", "next_steps"]
+}
+```
+
+---
+
+## 42) `generate_study_plan@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.generate_study_plan.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "student_id": { "type": "string", "minLength": 1 },
+    "timeframe_days": { "type": "integer", "minimum": 1, "maximum": 60, "default": 7 },
+    "subjects": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 2 },
+      "minItems": 1
+    },
+    "goals": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 3 },
+      "minItems": 1
+    },
+    "idempotency_key": { "type": "string", "minLength": 8 }
+  },
+  "required": ["student_id", "subjects", "goals", "idempotency_key"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.generate_study_plan.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "status": { "type": "string", "enum": ["draft"] },
+    "plan": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "day": { "type": "integer", "minimum": 1 },
+          "tasks": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["day", "tasks"]
+      }
+    }
+  },
+  "required": ["status", "plan"]
+}
+```
+
+---
+
+## 43) `confirm_reenrollment@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.confirm_reenrollment.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "student_id": { "type": "string", "minLength": 1 },
+    "cycle_year": { "type": "integer", "minimum": 2024 },
+    "payment_plan_id": { "type": ["string", "null"] },
+    "idempotency_key": { "type": "string", "minLength": 8 }
+  },
+  "required": ["student_id", "cycle_year", "idempotency_key"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.confirm_reenrollment.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "status": { "type": "string", "enum": ["confirmed"] },
+    "reenrollment_id": { "type": "string" },
+    "confirmed_at": { "type": "string", "format": "date-time" }
+  },
+  "required": ["status", "reenrollment_id", "confirmed_at"]
+}
+```
+
+---
+
+## 44) `sign_authorization@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.sign_authorization.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "authorization_id": { "type": "string", "minLength": 1 },
+    "student_id": { "type": "string", "minLength": 1 },
+    "signature_method": { "type": "string", "enum": ["tap", "otp", "digital_signature"], "default": "otp" },
+    "idempotency_key": { "type": "string", "minLength": 8 }
+  },
+  "required": ["authorization_id", "student_id", "signature_method", "idempotency_key"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.sign_authorization.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "status": { "type": "string", "enum": ["signed"] },
+    "signed_at": { "type": "string", "format": "date-time" },
+    "receipt_id": { "type": ["string", "null"] }
+  },
+  "required": ["status", "signed_at", "receipt_id"]
 }
 ```
 
