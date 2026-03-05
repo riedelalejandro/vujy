@@ -22,7 +22,7 @@ Follow-up TODOs:
   - TODO(RATIFICATION_DATE): Set to 2026-03-04 (today); confirm with team if different date applies
 -->
 
-# Vuji Constitution
+# Vujy Constitution
 
 ## Core Principles
 
@@ -34,7 +34,7 @@ secundarias y opcionales. Una funcionalidad NO está completa si requiere abando
 para ejecutarse. El asistente de cada perfil MUST poder resolver las acciones clave de ese
 perfil sin salir de la conversación.
 
-Rationale: La propuesta de valor central de Vuji es el copiloto institucional conversacional.
+Rationale: La propuesta de valor central de Vujy es el copiloto institucional conversacional.
 Cualquier funcionalidad que no sea conversacional degrada el diferencial competitivo.
 
 ### II. Ubicuidad Multicanal
@@ -114,7 +114,7 @@ correspondiente con justificación explícita.
 
 ## Flujo de Desarrollo de Producto
 
-El desarrollo de Vuji sigue el ciclo speckit en orden obligatorio:
+El desarrollo de Vujy sigue el ciclo speckit en orden obligatorio:
 
 1. `/speckit.specify` — definir user stories y criterios de aceptación
 2. `/speckit.clarify` — resolver ambigüedades antes del diseño
@@ -133,7 +133,7 @@ Todo PR MUST referenciar el `spec.md` correspondiente y pasar el Constitution Ch
 
 ## Governance
 
-Esta constitución es el documento rector de Vuji y supersede cualquier otra guía o práctica
+Esta constitución es el documento rector de Vujy y supersede cualquier otra guía o práctica
 de desarrollo. Es vinculante para todos los contribuidores humanos y agentes de IA del
 proyecto.
 

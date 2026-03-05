@@ -591,17 +591,19 @@ Canal prioritario: **WhatsApp primero** → adopción inmediata, sin fricción, 
 
 ## 13. Pendientes / Próximas iteraciones
 
-- [x] Definir nombre del producto → **Vuji** · dominio: vuji.app
+- [x] Definir nombre del producto → **Vujy** · dominio: vujy.app
 - [ ] Detallar arquitectura técnica (base de datos, infraestructura, seguridad)
 - [ ] Diseñar flujos de usuario detallados (wireframes)
 - [ ] Definir feature map con priorización MoSCoW para MVP
-- [x] Especificar API del asistente (tools, prompts por perfil) → ver API-SPEC.md
+- [x] Especificar API del asistente (tools, prompts por perfil) → ver [02-API-SPEC.md](02-API-SPEC.md)
 - [ ] Investigar regulación argentina sobre datos de menores
-- [x] Benchmarking detallado de competidores (features, precios, adopción) → ver BENCHMARKING.md
+- [x] Benchmarking detallado de competidores (features, precios, adopción) → ver [03-BENCHMARKING.md](03-BENCHMARKING.md)
 - [ ] Definir métricas de éxito (KPIs por actor)
 - [ ] Diseñar sistema de gamificación detallado por nivel
 - [ ] Prototipar conversaciones del asistente por perfil
-- [ ] Evaluar integraciones necesarias (SIS existentes, Mercado Pago, WhatsApp API)
+- [x] Evaluar integración WhatsApp API → ver [04-WHATSAPP-API.md](04-WHATSAPP-API.md)
+- [ ] Evaluar integración Mercado Pago
+- [ ] Evaluar integración SIS existentes (Acadeu, Colegium, etc.)
 
 ---
 
