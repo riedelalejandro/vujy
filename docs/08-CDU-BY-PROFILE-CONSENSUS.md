@@ -1,4 +1,7 @@
-# Definicion CDU por Perfil (Consenso Multiagente)
+# Definicion CDU por Perfil (Consenso Multiagente — Historico)
+
+> Documento historico de trabajo (iteracion previa de 32 CDUs).
+> El catalogo vigente y definitivo esta en `docs/cdu/README.md` (73 CDUs, v2.0).
 
 Base: sintesis de 3 agentes en paralelo (Conservador, Mid-Level, Super Creativo) con convergencia sobre riesgo, valor MVP y factibilidad.
 

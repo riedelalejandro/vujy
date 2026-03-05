@@ -2,7 +2,7 @@
 
 **Versión:** 1.0
 **Fecha:** 4 de marzo de 2026
-**Relacionado con:** SPEC.md §7 · SPEC.md §13 · constitution.md (TODO(CDU_BY_PROFILE), TODO(MCP_DEFINITIONS), TODO(MIGRATIONS_STRATEGY), TODO(DATA_REGULATION))
+**Relacionado con:** SPEC.md §7 · SPEC.md §13 · constitution.md (TODO(WHATSAPP_NUMBER_STRATEGY), TODO(TEMPLATE_LIBRARY), TODO(OPTIN_FLOW), TODO(DATA_REGULATION))
 
 ---
 
@@ -165,15 +165,9 @@ Claude responde con el saldo exacto + opción de pagar
 se obtienen siempre vía function calling — nunca vía RAG. Esto garantiza precisión y datos
 en tiempo real.
 
-> **TODO(MCP_DEFINITIONS):** Definir el catálogo completo de MCPs/tools por perfil de usuario,
-> una vez cerrados los CDU por perfil (`TODO(CDU_BY_PROFILE)`).
-> Ver [02-API-SPEC.md](02-API-SPEC.md) para referencia de tools existentes. Incluir:
-> - Tools del padre: consultas académicas, pagos, ausencias, calendario
-> - Tools del docente: asistencia, notas, comunicados, observaciones, actividades
-> - Tools del admin: morosidad, proyecciones, alertas, reportes regulatorios
-> - Tools del alumno: actividades, progreso, tutor IA
-> - Contratos de input/output de cada tool
-> - Manejo de errores y fallbacks conversacionales
+> Catálogo canónico vigente de tools: [09-MCP-DEFINITIONS.md](09-MCP-DEFINITIONS.md).
+> Schemas JSON publicados: [10-MCP-SCHEMAS.md](10-MCP-SCHEMAS.md).
+> Este documento mantiene la arquitectura de alto nivel; el detalle operativo vive en esos dos documentos.
 
 ### RAG (uso limitado)
 
@@ -241,12 +235,12 @@ Expo EAS build (iOS + Android) → submit a App Store / Play Store
 
 | ID | Descripción | Prioridad |
 |----|-------------|-----------|
-| `TODO(CDU_BY_PROFILE)` | Definir y cerrar todos los casos de uso (CDU) por perfil (padre, docente, admin, alumno) como insumo de tools/permisos | **Alta — prerequisito para MCP_DEFINITIONS** |
-| `TODO(MCP_DEFINITIONS)` | Definir catálogo completo de MCPs/tools por perfil (padre, docente, admin, alumno) con contratos de input/output, derivado de CDU_BY_PROFILE | **Alta — bloqueante para implementación del asistente** |
+| `TODO(CDU_BY_PROFILE)` | **CERRADO** — catálogo consolidado en `docs/cdu/README.md` (73 CDUs) | Cerrado |
+| `TODO(MCP_DEFINITIONS)` | **CERRADO** — catálogo canónico en `docs/09-MCP-DEFINITIONS.md` | Cerrado |
 | `TODO(WHATSAPP_NUMBER_STRATEGY)` | ¿Número virtual nuevo por escuela o migración de número existente? Ver [04-WHATSAPP-API.md](04-WHATSAPP-API.md) | Media |
 | `TODO(TEMPLATE_LIBRARY)` | Definir set mínimo de templates de WhatsApp para MVP y someterlos a aprobación de Meta | Media |
 | `TODO(OPTIN_FLOW)` | Diseñar flujo de consentimiento explícito de padres integrado con onboarding de la escuela | Media |
-| `TODO(MIGRATIONS_STRATEGY)` | Definir estrategia de migraciones de Supabase para schema multi-tenant con RLS | Alta |
+| `TODO(MIGRATIONS_STRATEGY)` | **CERRADO** — estrategia publicada en `docs/15-MIGRATIONS-STRATEGY.md` | Cerrado |
 | `TODO(DATA_REGULATION)` | Investigar normativa argentina sobre datos de menores — impacta diseño de RLS y retención | Alta |
 
 ---

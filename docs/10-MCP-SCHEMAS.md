@@ -1,8 +1,9 @@
-# Vujy — MCP JSON Schemas (MVP v1)
+# Vujy — MCP JSON Schemas (Publicados)
 
 Alcance de este documento:
-- Esquemas completos de input/output para todas las tools del catálogo (v1 MVP + v2.0).
-- **Total:** 43 tools — 27 MVP v1 + 16 v2.0 nuevas.
+- Esquemas publicados de input/output para tools canónicas del catálogo.
+- **Total publicado:** 32 tools con schema.
+- Catálogo completo de referencia: `docs/09-MCP-DEFINITIONS.md` (44 tools).
 - Canonical-only: no legacy aliases.
 
 Convenciones:

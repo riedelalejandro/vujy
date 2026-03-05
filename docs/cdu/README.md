@@ -1,7 +1,7 @@
 # Vujy — CDU: Índice de Casos de Uso
 
 **Versión:** 2.0 | **Fecha:** 2026-03-05 | **Total CDUs:** 73
-[Convenciones y leyenda](conventions.md) · [Matriz de tools](tools-matrix.md) · [Notas de implementación](implementation-notes.md) · [Decisiones 90/10](../12-CDU-DECISOR-90-10.md)
+[Convenciones y leyenda](conventions.md) · [Matriz de tools (histórico)](tools-matrix.md) · [Notas de implementación (histórico)](implementation-notes.md) · [Decisiones 90/10](../12-CDU-DECISOR-90-10.md)
 
 > **v2.0:** +7 CDUs añadidos por decisor 90/10 — 3 BLOQUEANTES legales (SEC) + 4 de producto (ADM-016, PAD-017, DOC-017, CROSS-007). Ver [12-CDU-DECISOR-90-10.md](../12-CDU-DECISOR-90-10.md) para razonamiento completo.
 

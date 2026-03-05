@@ -36,7 +36,7 @@
 |--------|-----|-----|----------|
 | Padre / Tutor | Sí | Sí | Sí |
 | Docente | Sí | Sí | Sí |
-| Administrador / Directivo | Sí | Sí | No |
+| Administrador / Directivo | Sí | Sí | Sí (solo comunicaciones institucionales/operativas) |
 | Alumno | Sí | No | **No** (menores — NON-NEGOTIABLE) |
 
 ## Nota sobre Principio III (Privacidad de Menores)

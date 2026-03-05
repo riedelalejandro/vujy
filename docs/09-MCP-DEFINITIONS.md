@@ -7,8 +7,8 @@ Este documento cierra `TODO(MCP_DEFINITIONS)`. Es la especificación operativa d
 - Decisiones 90/10: `docs/12-CDU-DECISOR-90-10.md`
 - Tools base: `docs/02-API-SPEC.md`
 
-**Total tools:** 43 (27 MVP v1 + 16 v2.0)
-**Schemas JSON:** `docs/10-MCP-SCHEMAS.md`
+**Total tools canónicas:** 44 (28 MVP v1 + 16 v2.0)
+**Schemas JSON publicados:** 32 tools en `docs/10-MCP-SCHEMAS.md`
 
 Estado: **especificación implementable** — pendiente validación legal (ver §13).
 
@@ -139,7 +139,8 @@ Cuando intervienen proveedores externos fuera de Argentina:
 Regla de naming obligatoria:
 - Solo nombres canónicos `snake_case@v1`.
 - No se aceptan aliases legacy.
-- `docs/09-MCP-DEFINITIONS.md` y `docs/10-MCP-SCHEMAS.md` son la fuente de verdad.
+- `docs/09-MCP-DEFINITIONS.md` es la fuente de verdad del catálogo.
+- `docs/10-MCP-SCHEMAS.md` contiene los schemas publicados del catálogo.
 
 ---
 
@@ -386,13 +387,13 @@ Notas:
 
 ## 13. Estado y pendientes
 
-**v2.0 — cerrado:** catálogo canónico completo (44 tools totales), error taxonomy con 20 códigos, mapeo CDU→toolset completo, schemas JSON en `docs/10-MCP-SCHEMAS.md`, política de proactive messaging (§14), mapeo datasource+SLA en `docs/13-CDU-DATASOURCE-SLA.md`, casos E2E P0 en `docs/.tmp-mcp-insumos-7-8-10.md §Insumo 10`.
+**v2.0 — cerrado:** catálogo canónico completo (44 tools totales), error taxonomy con 20 códigos, mapeo CDU→toolset completo, política de proactive messaging (§14), mapeo datasource+SLA en `docs/13-CDU-DATASOURCE-SLA.md`, casos E2E P0 en `docs/.tmp-mcp-insumos-7-8-10.md §Insumo 10`.
 
 **Pendientes pre-lanzamiento:**
 1. Validación legal formal del esquema de base legal, transferencias internacionales (DPA Anthropic) y retención con asesoría especializada.
 2. Cerrar `TEMPLATE_LIBRARY` para `create_collection_campaign@v1` y canales WhatsApp — aprobación Meta.
 3. Casos E2E P0 disponibles en `docs/.tmp-mcp-insumos-7-8-10.md §Insumo 10` — mover a CI pipeline antes de lanzamiento.
-4. Migrar `docs/02-API-SPEC.md` para reflejar únicamente nombres canónicos `@v1`.
+4. Publicar schemas JSON faltantes para cobertura 100% del catálogo canónico en `docs/10-MCP-SCHEMAS.md`.
 5. DPA con Anthropic (transferencia internacional de datos para Claude API) — BLOQUEANTE antes de datos reales.
 
 ---

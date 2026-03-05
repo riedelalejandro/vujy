@@ -1684,4 +1684,4 @@ Vujy: [genera 5 preguntas de práctica con corrección automática]
 
 ---
 
-*Documento vivo — Vujy · vujy.app — v1.0 · 3 de marzo de 2026*
+*Documento vivo — Vujy · vujy.app — v1.1 · 5 de marzo de 2026*
