@@ -39,3 +39,4 @@ Asistente: [llama firmar_autorizacion(autorizacion_id, familia_id, aprobado=true
 | El padre rechaza | Registra aprobado=false, notifica a la docente |
 | Plazo de firma vencido | "El plazo venció el [fecha]. Contactá a secretaría." |
 | El padre tiene una pregunta antes de firmar | Ofrece redirigir la consulta a la docente dentro del sistema |
+| La escuela requiere firma de múltiples tutores | Muestra el estado de firmas: "Ya firmó [Tutor A]. Falta la firma de [Tutor B]." — no se registra como aprobada hasta completar todas las firmas requeridas |

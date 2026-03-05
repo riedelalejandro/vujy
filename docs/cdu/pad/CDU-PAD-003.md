@@ -21,8 +21,16 @@ Asistente: [llama get_estado_cuenta(familia_id)]
    | Concepto         | Monto   | Vencimiento | Estado    |
    | Cuota marzo      | $42.000 | 31/3        | Pendiente |
    | Salida educativa | $4.500  | 13/3        | Pendiente |
-   Total: $46.500
-   ¿Pagamos ahora?"
+   Total: $46.500"
+
+           — Verificar can_make_payments en guardian_students para este tutor.
+
+           Si can_make_payments=false →
+→ "Si querés realizar el pago, cualquier otro tutor autorizado de la familia puede hacerlo."
+   [No ofrecer opción de pago; fin de flujo de cobro]
+
+           Si can_make_payments=true →
+→ "¿Pagamos ahora?"
 
 Padre: "Sí, todo"
 
@@ -37,11 +45,12 @@ Asistente: [llama procesar_pago(familia_id, items_ids=[...], metodo_pago="tarjet
 
 **Tool MCP requerida:**
 - `get_estado_cuenta`
-- `procesar_pago` (solo con confirmación explícita del usuario)
+- `procesar_pago` (solo con confirmación explícita del usuario; solo si `can_make_payments=true`)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |
 |-----------|------------------------|
+| Tutor sin `can_make_payments` | Muestra el saldo pero no ofrece la opción de pago: "Si querés realizar el pago, cualquier otro tutor autorizado de la familia puede hacerlo." |
 | Sin método de pago guardado | "No tenés tarjeta guardada. Podés agregar una desde la sección de pagos." |
 | Pago parcial | Lista los ítems y deja elegir cuál pagar |
 | El pago falla (error Mercado Pago) | "Hubo un problema. El cargo no se realizó. Intentá de nuevo o usá otro método." — nunca registra el pago como exitoso si falló |

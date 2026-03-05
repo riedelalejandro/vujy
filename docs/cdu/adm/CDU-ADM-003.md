@@ -32,6 +32,13 @@ Asistente: [llama enviar_comunicado(destinatarios=[...], cuerpo=..., prioridad="
 → "Recordatorios enviados ✅. En 48hs te digo cuántos pagaron."
 ```
 
+**Lógica de destinatarios por familia morosa:**
+Para cada familia morosa, los recordatorios se envían únicamente a los tutores que cumplen ambas condiciones en `guardian_students`:
+- `can_make_payments = true` (son quienes pueden resolver la deuda)
+- `receives_notifications = true` (tienen habilitadas las notificaciones)
+
+Los tutores que no cumplen estas condiciones no reciben el recordatorio de mora.
+
 **Tool MCP requerida:**
 - `get_dashboard_morosidad`
 - `get_riesgo_desercion`
@@ -42,4 +49,5 @@ Asistente: [llama enviar_comunicado(destinatarios=[...], cuerpo=..., prioridad="
 | Situación | Respuesta del asistente |
 |-----------|------------------------|
 | Familia con plan de pago vigente | El sistema las excluye automáticamente del envío |
+| Familia morosa sin ningún tutor con `can_make_payments=true AND receives_notifications=true` | Se marca para gestión manual por secretaría |
 | Admin quiere tono más firme | Genera una versión más directa pero siempre dentro de parámetros institucionales |

@@ -16,6 +16,12 @@
 ```
 Madre: "Quiero ver cómo viene Mati desde que entró al colegio"
 
+Asistente: [llama get_my_students(guardian_id)]
+           — Si el tutor tiene >1 hijo Y la consulta no nombra al hijo explícitamente
+             Y no hay contexto previo en el thread → preguntar:
+             "¿Me preguntás por [Nombre1] o [Nombre2]?"
+           — Si nombra explícitamente al hijo → resolver directamente.
+
 Asistente: [llama get_notas(alumno_id, todos_los_trimestres=true)]
            [RAG sobre observaciones pedagógicas históricas]
 → "Trayectoria de Mati en Colegio San Martín (2022 — 2026):
@@ -31,6 +37,7 @@ Asistente: [llama get_notas(alumno_id, todos_los_trimestres=true)]
 ```
 
 **Tool MCP requerida:**
+- `get_my_students` (para desambiguación multi-hijo al inicio del flujo)
 - `get_notas` (histórico multi-año)
 - RAG sobre observaciones pedagógicas acumuladas
 - `get_asistencia` (histórica)
@@ -38,5 +45,7 @@ Asistente: [llama get_notas(alumno_id, todos_los_trimestres=true)]
 **Casos borde:**
 | Situación | Respuesta del asistente |
 |-----------|------------------------|
+| El padre tiene múltiples hijos y la consulta es genérica | "¿Me preguntás por [Nombre1] o [Nombre2]?" — siempre antes de llamar la tool académica |
+| Hay contexto previo en el thread sobre un hijo | Asume el hijo mencionado sin preguntar |
 | Datos incompletos (migración desde otra plataforma) | "Solo tenemos datos desde 2024, cuando ingresaste a Vujy." |
 | Alumno recién inscripto | Muestra lo que hay desde la fecha de inscripción |

@@ -32,6 +32,13 @@ Asistente: [ajusta el plan con 4 cuotas]
 → "Plan actualizado. Enviando propuesta a la familia Pérez ✅."
 ```
 
+**Lógica de notificación del plan acordado:**
+Al enviar la propuesta de plan de pago, el sistema:
+1. Contacta primero al tutor con `is_primary_contact = true` de la familia.
+2. Copia la comunicación a todos los demás tutores de la familia con `can_make_payments = true`.
+
+Cualquier tutor con `can_make_payments = true` puede efectuar los pagos del plan.
+
 **Tool MCP requerida:**
 - `get_estado_cuenta`
 - `generar_comunicado_borrador` (propuesta al tutor)
@@ -42,3 +49,4 @@ Asistente: [ajusta el plan con 4 cuotas]
 |-----------|------------------------|
 | La familia ya tiene un plan activo | Informa el plan existente y pregunta si se desea modificar |
 | La familia rechaza el plan | Registra el rechazo y escala a directivo si hay riesgo de deserción |
+| La familia no tiene tutor con `is_primary_contact=true` | Notifica a todos los tutores con `can_make_payments=true` |

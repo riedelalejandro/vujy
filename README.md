@@ -15,6 +15,7 @@ El diferencial central es un **copiloto institucional** accesible desde lenguaje
 | [docs/05-ARCHITECTURE.md](docs/05-ARCHITECTURE.md) | Arquitectura técnica: stack, multi-tenancy, auth, IA, infra |
 | [docs/06-AI-MODELS.md](docs/06-AI-MODELS.md) | Comparativa de modelos IA (Claude, GPT, Gemini, Grok) |
 | [docs/cdu/README.md](docs/cdu/README.md) | Catálogo de CDUs por perfil (66 casos de uso) |
+| [docs/08-DATA-MODEL.md](docs/08-DATA-MODEL.md) | Modelo de datos: familias, tutores y alumnos (schema, permisos, casos de borde) |
 | [docs/09-MCP-DEFINITIONS.md](docs/09-MCP-DEFINITIONS.md) | Borrador de catálogo MCP/tools por perfil, contratos I/O y errores |
 | [docs/10-MCP-SCHEMAS.md](docs/10-MCP-SCHEMAS.md) | JSON Schemas completos (input/output) para toolset MVP v1 |
 

@@ -16,6 +16,13 @@
 ```
 Padre: "¿Cómo le fue a Mati esta semana?"
 
+Asistente: [llama get_my_students(guardian_id)]
+           — Si el tutor tiene >1 hijo Y la consulta no nombra al hijo explícitamente
+             Y no hay contexto previo en el thread → preguntar:
+             "¿Me preguntás por [Nombre1] o [Nombre2]?"
+           — Si nombra explícitamente al hijo → resolver directamente.
+           — Si pide resumen de "los dos" / "todos" → responder con ambos.
+
 Asistente: [llama get_resumen_alumno(alumno_id, periodo="semana_actual")]
 → "Semana de Mati (4to B):
    Asistencia: 4/5 días (faltó el miércoles, ya justificado).
@@ -31,6 +38,7 @@ Asistente: [llama get_notas(alumno_id, trimestre=actual)]
 ```
 
 **Tool MCP requerida:**
+- `get_my_students` (para desambiguación multi-hijo al inicio del flujo)
 - `get_resumen_alumno` (periodo: semana_actual)
 - `get_notas` (si el padre profundiza)
 - `get_tareas` (si el padre pregunta por pendientes)
@@ -38,7 +46,9 @@ Asistente: [llama get_notas(alumno_id, trimestre=actual)]
 **Casos borde:**
 | Situación | Respuesta del asistente |
 |-----------|------------------------|
-| El padre tiene múltiples hijos | "¿Para cuál de tus hijos: Mati o Sofi?" — siempre antes de llamar la tool |
+| El padre tiene múltiples hijos y la consulta es genérica | "¿Me preguntás por [Nombre1] o [Nombre2]?" — siempre antes de llamar la tool académica |
+| Hay contexto previo en el thread sobre un hijo | Asume el hijo mencionado sin preguntar |
+| El padre pide resumen de "los dos" | Responde con el resumen de ambos hijos |
 | Semana recién iniciada (pocos datos) | Responde con lo disponible y aclara "Es temprano en la semana" |
 | Docente no dejó observaciones | Responde con asistencia y notas, omite observaciones sin fabricar contenido |
 | Error de backend | "No pude obtener ese dato ahora. Intentá en unos minutos o consultá a secretaría." |

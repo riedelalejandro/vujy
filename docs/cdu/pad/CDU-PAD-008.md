@@ -16,6 +16,21 @@
 ```
 Padre: "¿Cómo viene Mati en el trimestre?"
 
+Asistente: [llama get_my_students(guardian_id)]
+           — Si el tutor tiene >1 hijo Y la consulta no nombra al hijo explícitamente
+             Y no hay contexto previo en el thread → preguntar:
+             "¿Me preguntás por [Nombre1] o [Nombre2]?"
+           — Si nombra explícitamente al hijo → resolver directamente.
+           — Si pide notas de "los dos" / "todos" → responder con ambos.
+           — Verificar can_view_grades=true en guardian_students para el alumno.
+
+           Si can_view_grades=false →
+→ "No tenés habilitado el acceso a las calificaciones de [nombre].
+   Para más información, comunicate con secretaría."
+   [Fin del flujo]
+
+           Si can_view_grades=true →
+
 Asistente: [llama get_notas(alumno_id, trimestre=actual)]
 → "Mati en el 1er trimestre:
    | Materia      | Promedio | Tendencia    |
@@ -31,13 +46,18 @@ Asistente: [llama get_notas(alumno_id, trimestre=anterior)]
 ```
 
 **Tool MCP requerida:**
+- `get_my_students` (para desambiguación multi-hijo y verificación de permisos al inicio del flujo)
 - `get_notas` (trimestre actual + anterior para comparación)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |
 |-----------|------------------------|
+| El padre tiene múltiples hijos y la consulta es genérica | "¿Me preguntás por [Nombre1] o [Nombre2]?" — siempre antes de llamar la tool académica |
+| Hay contexto previo en el thread sobre un hijo | Asume el hijo mencionado sin preguntar |
+| El padre pide notas de "los dos" | Responde con las notas de ambos (verificando `can_view_grades` para cada uno) |
+| Tutor sin `can_view_grades` para ese alumno | "No tenés habilitado el acceso a las calificaciones de [nombre]. Para más información, comunicate con secretaría." |
 | Notas no liberadas (config. del tenant) | Informa la política de visibilidad de la institución |
 | Alumno de nivel inicial | Reemplaza notas por hitos de desarrollo — lenguaje diferente |
 | Caída significativa entre trimestres | Alerta contextual + contexto de observaciones pedagógicas si las hay |
 
-**Principio III:** Solo el tutor puede ver notas de sus propios hijos.
+**Principio III:** Solo el tutor con `can_view_grades=true` puede ver notas de sus propios hijos.

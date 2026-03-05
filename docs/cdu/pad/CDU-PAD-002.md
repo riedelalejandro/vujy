@@ -16,6 +16,13 @@
 ```
 Padre: "¿Qué tiene mañana Mati?"
 
+Asistente: [llama get_my_students(guardian_id)]
+           — Si el tutor tiene >1 hijo Y la consulta no nombra al hijo explícitamente
+             Y no hay contexto previo en el thread → preguntar:
+             "¿Me preguntás por [Nombre1] o [Nombre2]?"
+           — Si nombra explícitamente al hijo → resolver directamente.
+           — Si pide la agenda de "los dos" / "todos" → responder con ambos.
+
 Asistente: [llama get_calendario(alumno_id, desde=mañana, hasta=mañana)]
            [llama get_tareas(alumno_id, solo_pendientes=true) en paralelo]
 → "Mañana jueves Mati tiene:
@@ -32,6 +39,7 @@ Asistente: [recupera el adjunto del sistema y lo envía]
 ```
 
 **Tool MCP requerida:**
+- `get_my_students` (para desambiguación multi-hijo al inicio del flujo)
 - `get_calendario`
 - `get_tareas`
 - `get_comunicados` (para recordatorios de materiales a llevar)
@@ -39,6 +47,9 @@ Asistente: [recupera el adjunto del sistema y lo envía]
 **Casos borde:**
 | Situación | Respuesta del asistente |
 |-----------|------------------------|
+| El padre tiene múltiples hijos y la consulta es genérica | "¿Me preguntás por [Nombre1] o [Nombre2]?" — siempre antes de llamar la tool académica |
+| Hay contexto previo en el thread sobre un hijo | Asume el hijo mencionado sin preguntar |
+| El padre pide la agenda de "los dos" | Responde con la agenda de ambos hijos |
 | La fecha consultada es feriado | "El lunes es feriado, no hay clases." |
 | El padre consulta por "esta semana" | Devuelve resumen de los próximos 5 días hábiles |
 | No hay nada especial ese día | Responde con el horario estándar del grado si está disponible |

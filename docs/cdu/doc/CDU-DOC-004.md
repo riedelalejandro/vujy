@@ -46,3 +46,5 @@ Asistente: [llama cargar_nota(grado_id, materia, tipo_evaluacion, fecha, notas=[
 | Tipo de evaluación no especificado | "¿Es evaluación escrita, oral o TP?" |
 
 **Principio III:** El docente solo puede cargar notas de sus propios alumnos/grados.
+
+**Nota:** La visibilidad de estas calificaciones para tutores está sujeta al permiso `can_view_grades` en el vínculo tutor↔alumno (`guardian_students`). Calificaciones cargadas correctamente pueden no ser visibles para tutores cuyo vínculo tenga `can_view_grades = false`.
