@@ -59,7 +59,10 @@ El desarrollo sigue este ciclo en orden obligatorio:
 
 ## TODOs pendientes antes de implementar
 
-- `TODO(AUTH_STRATEGY)`: método de autenticación por definir (SSO institucional deseable)
-- `TODO(DB_STRATEGY)`: base de datos y storage por definir
-- `TODO(INFRA)`: infraestructura, CI/CD y deployment por definir
+- `TODO(CDU_BY_PROFILE)`: definir y cerrar todos los casos de uso por perfil (padre, docente, admin, alumno) antes de bajar a MCPs/tools
+- `TODO(MCP_DEFINITIONS)`: definir catálogo completo de MCPs/tools por perfil con contratos de input/output (derivado de CDU_BY_PROFILE)
+- `TODO(MIGRATIONS_STRATEGY)`: definir estrategia de migraciones de Supabase para esquema multi-tenant con RLS
 - `TODO(DATA_REGULATION)`: investigar normativa argentina sobre datos de menores de edad (impacta FR-020 y FR-023)
+- `TODO(WHATSAPP_NUMBER_STRATEGY)`: número virtual nuevo por escuela vs migración de número existente
+- `TODO(TEMPLATE_LIBRARY)`: definir set mínimo de templates de WhatsApp para MVP y aprobación de Meta
+- `TODO(OPTIN_FLOW)`: diseñar flujo de consentimiento explícito de padres integrado con onboarding de la escuela

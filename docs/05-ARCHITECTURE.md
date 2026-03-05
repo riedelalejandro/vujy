@@ -2,7 +2,7 @@
 
 **Versión:** 1.0
 **Fecha:** 4 de marzo de 2026
-**Relacionado con:** SPEC.md §7 · SPEC.md §13 · constitution.md (TODO(DB_STRATEGY), TODO(AUTH_STRATEGY), TODO(INFRA))
+**Relacionado con:** SPEC.md §7 · SPEC.md §13 · constitution.md (TODO(CDU_BY_PROFILE), TODO(MCP_DEFINITIONS), TODO(MIGRATIONS_STRATEGY), TODO(DATA_REGULATION))
 
 ---
 
@@ -83,7 +83,7 @@ routing de conexión.
 | Alumno | App | Magic link o PIN simple | PIN para niveles inicial y primaria |
 
 **SSO institucional** (Google Workspace / Microsoft del colegio): diferido a tier Enterprise.
-No forma parte del MVP. `TODO(AUTH_STRATEGY)` resuelto para MVP.
+No forma parte del MVP. La estrategia de autenticación del MVP está resuelta.
 
 **Implementación:** Supabase Auth maneja magic links, OTP por SMS y OAuth2. El JWT incluye
 `school_id` y `role` para que las políticas de RLS puedan aplicarse automáticamente.
@@ -165,7 +165,8 @@ Claude responde con el saldo exacto + opción de pagar
 se obtienen siempre vía function calling — nunca vía RAG. Esto garantiza precisión y datos
 en tiempo real.
 
-> **TODO(MCP_DEFINITIONS):** Definir el catálogo completo de MCPs/tools por perfil de usuario.
+> **TODO(MCP_DEFINITIONS):** Definir el catálogo completo de MCPs/tools por perfil de usuario,
+> una vez cerrados los CDU por perfil (`TODO(CDU_BY_PROFILE)`).
 > Ver [02-API-SPEC.md](02-API-SPEC.md) para referencia de tools existentes. Incluir:
 > - Tools del padre: consultas académicas, pagos, ausencias, calendario
 > - Tools del docente: asistencia, notas, comunicados, observaciones, actividades
@@ -240,7 +241,8 @@ Expo EAS build (iOS + Android) → submit a App Store / Play Store
 
 | ID | Descripción | Prioridad |
 |----|-------------|-----------|
-| `TODO(MCP_DEFINITIONS)` | Definir catálogo completo de MCPs/tools por perfil (padre, docente, admin, alumno) con contratos de input/output | **Alta — bloqueante para implementación del asistente** |
+| `TODO(CDU_BY_PROFILE)` | Definir y cerrar todos los casos de uso (CDU) por perfil (padre, docente, admin, alumno) como insumo de tools/permisos | **Alta — prerequisito para MCP_DEFINITIONS** |
+| `TODO(MCP_DEFINITIONS)` | Definir catálogo completo de MCPs/tools por perfil (padre, docente, admin, alumno) con contratos de input/output, derivado de CDU_BY_PROFILE | **Alta — bloqueante para implementación del asistente** |
 | `TODO(WHATSAPP_NUMBER_STRATEGY)` | ¿Número virtual nuevo por escuela o migración de número existente? Ver [04-WHATSAPP-API.md](04-WHATSAPP-API.md) | Media |
 | `TODO(TEMPLATE_LIBRARY)` | Definir set mínimo de templates de WhatsApp para MVP y someterlos a aprobación de Meta | Media |
 | `TODO(OPTIN_FLOW)` | Diseñar flujo de consentimiento explícito de padres integrado con onboarding de la escuela | Media |

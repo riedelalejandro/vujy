@@ -14,10 +14,11 @@ Templates checked:
   ✅ .specify/templates/spec-template.md — No constitution-specific refs; no updates needed
   ✅ .specify/templates/tasks-template.md — No constitution-specific refs; no updates needed
   ✅ .specify/templates/agent-file-template.md — No outdated refs; no updates needed
-  ⚠ README.md — Does not exist yet; create alongside first feature delivery
+  ✅ README.md — Present and aligned with current documentation set
 Follow-up TODOs:
-  - TODO(AUTH_STRATEGY): Authentication method not defined (SPEC.md §7 says "por definir")
-  - TODO(DB_STRATEGY): Database and storage not defined (SPEC.md §7 says "por definir")
+  - TODO(CDU_BY_PROFILE): Define and close all use cases by role before finalizing MCP/tool catalog
+  - TODO(MCP_DEFINITIONS): Define full MCP/tool catalog by role with I/O contracts
+  - TODO(MIGRATIONS_STRATEGY): Define Supabase migrations strategy for multi-tenant schema + RLS
   - TODO(DATA_REGULATION): Argentine minor data regulation research pending (SPEC.md §13)
   - TODO(RATIFICATION_DATE): Set to 2026-03-04 (today); confirm with team if different date applies
 -->
@@ -105,9 +106,10 @@ Decisiones de stack aprobadas (SPEC.md §7):
 
 Decisiones pendientes que MUST ser resueltas antes de iniciar implementación:
 
-- TODO(AUTH_STRATEGY): SSO institucional deseable; método concreto por definir
-- TODO(DB_STRATEGY): Base de datos y storage por definir
-- TODO(INFRA): Infraestructura, CI/CD y estrategia de deployment por definir
+- TODO(CDU_BY_PROFILE): Definir y cerrar todos los casos de uso por perfil (padre, docente, admin, alumno)
+- TODO(MCP_DEFINITIONS): Definir catálogo completo de MCPs/tools por perfil con contratos de input/output
+- TODO(MIGRATIONS_STRATEGY): Definir estrategia de migraciones de Supabase para esquema multi-tenant con RLS
+- TODO(DATA_REGULATION): Investigar normativa argentina sobre datos de menores y su impacto en retención/RLS
 
 Toda decisión de arquitectura MUST ser documentada en el `plan.md` de la feature
 correspondiente con justificación explícita.

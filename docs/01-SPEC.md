@@ -476,9 +476,9 @@ En todos los niveles, el alumno siente que avanza:
 | Frontend mobile | React Native o Flutter |
 | Frontend web | Web responsive |
 | Pagos | Mercado Pago |
-| Autenticación | Por definir (SSO institucional deseable) |
-| Storage | Por definir |
-| Base de datos | Por definir |
+| Autenticación | Supabase Auth (magic link + OTP por WhatsApp en MVP). SSO institucional diferido a tier Enterprise |
+| Storage | Supabase Storage |
+| Base de datos | Supabase Postgres multi-tenant con RLS |
 
 ---
 
