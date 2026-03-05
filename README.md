@@ -12,6 +12,7 @@ El diferencial central es un **copiloto institucional** accesible desde lenguaje
 | [docs/02-API-SPEC.md](docs/02-API-SPEC.md) | API del asistente: system prompts, tools, RAG, guardarraíles |
 | [docs/03-BENCHMARKING.md](docs/03-BENCHMARKING.md) | Benchmarking competitivo del mercado EdTech argentino |
 | [docs/04-WHATSAPP-API.md](docs/04-WHATSAPP-API.md) | Evaluación de integración WhatsApp Business API |
+| [docs/05-ARCHITECTURE.md](docs/05-ARCHITECTURE.md) | Arquitectura técnica: stack, multi-tenancy, auth, IA, infra |
 
 ## Especificaciones de features
 

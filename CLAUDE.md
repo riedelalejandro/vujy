@@ -7,8 +7,11 @@ Guía de contexto para agentes IA trabajando en este repositorio.
 **Vujy** es una plataforma educativa SaaS B2B para escuelas privadas argentinas (inicial, primaria, secundaria). El diferencial es un asistente conversacional IA multicanal (WhatsApp + app + web) que sirve a todos los actores: administradores, docentes, padres y alumnos.
 
 - Dominio: vujy.app
-- Stack aprobado: Claude API + RAG + function calling · WhatsApp Business API · backend multi-tenant · React Native o Flutter · Mercado Pago
-- Decisiones pendientes: autenticación (TODO(AUTH_STRATEGY)), base de datos (TODO(DB_STRATEGY)), infraestructura (TODO(INFRA))
+- Stack: Next.js + TypeScript (Vercel) · React Native + Expo · Supabase (Postgres + RLS + Auth + Storage) · Claude API + function calling/MCPs · Twilio (WhatsApp MVP) · Mercado Pago
+- Multi-tenancy: shared DB + Row Level Security (school_id en todas las tablas)
+- Auth: magic link (staff/padres app+web) · OTP por teléfono (padres WhatsApp)
+- IA: function calling como primario (datos estructurados en tiempo real) · pgvector RAG solo para contenido no estructurado (observaciones docentes, documentos)
+- Ver decisiones completas en `docs/05-ARCHITECTURE.md`
 
 ## Documentos clave
 
@@ -17,10 +20,9 @@ Guía de contexto para agentes IA trabajando en este repositorio.
 | `docs/01-SPEC.md` | Especificación de producto completa (fuente de verdad de negocio) |
 | `docs/02-API-SPEC.md` | System prompts, tools por perfil, estrategia RAG, guardarraíles |
 | `docs/03-BENCHMARKING.md` | Análisis competitivo del mercado EdTech argentino |
+| `docs/04-WHATSAPP-API.md` | Evaluación WhatsApp API · decisión: Twilio MVP → Meta Cloud API a escala |
+| `docs/05-ARCHITECTURE.md` | Arquitectura técnica — fuente de verdad de decisiones de stack |
 | `.specify/memory/constitution.md` | Constitución del proyecto — principios rectores, vinculante |
-| `specs/###-feature-name/spec.md` | Especificación de cada feature |
-| `specs/###-feature-name/plan.md` | Plan de implementación de cada feature |
-| `specs/###-feature-name/tasks.md` | Tareas de implementación de cada feature |
 
 ## Principios rectores (constitución v1.0.0)
 

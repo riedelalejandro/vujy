@@ -592,7 +592,7 @@ Canal prioritario: **WhatsApp primero** → adopción inmediata, sin fricción, 
 ## 13. Pendientes / Próximas iteraciones
 
 - [x] Definir nombre del producto → **Vujy** · dominio: vujy.app
-- [ ] Detallar arquitectura técnica (base de datos, infraestructura, seguridad)
+- [x] Detallar arquitectura técnica (base de datos, infraestructura, seguridad) → ver [05-ARCHITECTURE.md](05-ARCHITECTURE.md)
 - [ ] Diseñar flujos de usuario detallados (wireframes)
 - [ ] Definir feature map con priorización MoSCoW para MVP
 - [x] Especificar API del asistente (tools, prompts por perfil) → ver [02-API-SPEC.md](02-API-SPEC.md)
