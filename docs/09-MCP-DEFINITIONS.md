@@ -1,12 +1,16 @@
-# Vujy — MCP Definitions (Borrador v0.2)
+# Vujy — MCP Definitions v2.0
 
 ## 1. Alcance
 
-Este documento baja `TODO(MCP_DEFINITIONS)` a una especificación operativa inicial, derivada de:
-- CDU cerrados por perfil: `docs/08-CDU-BY-PROFILE-CONSENSUS.md`
-- Tools base existentes: `docs/02-API-SPEC.md`
+Este documento cierra `TODO(MCP_DEFINITIONS)`. Es la especificación operativa del catálogo completo de tools MCP, derivado de:
+- CDU v2.0 cerrados (73 CDUs): `docs/cdu/README.md`
+- Decisiones 90/10: `docs/12-CDU-DECISOR-90-10.md`
+- Tools base: `docs/02-API-SPEC.md`
 
-Estado: **borrador implementable** (requiere validación final legal con asesoría especializada).
+**Total tools:** 43 (27 MVP v1 + 16 v2.0)
+**Schemas JSON:** `docs/10-MCP-SCHEMAS.md`
+
+Estado: **especificación implementable** — pendiente validación legal (ver §13).
 
 ---
 
@@ -62,8 +66,11 @@ Cuando intervienen proveedores externos fuera de Argentina:
 
 ## 4. Catálogo Canónico de Tools
 
+### 4.1 Tools MVP (v1 — activas)
+
 | Tool canónica | Tipo | Estado |
 |---|---|---|
+| `get_my_students@v1` | Query | Active |
 | `get_student_summary@v1` | Query | Active |
 | `get_grades@v1` | Query | Active |
 | `get_attendance@v1` | Query | Active |
@@ -74,11 +81,14 @@ Cuando intervienen proveedores externos fuera de Argentina:
 | `record_absence@v1` | Action | Active |
 | `take_attendance@v1` | Action | Active |
 | `send_announcement@v1` | Action | Active |
+| `confirm_announcement_read@v1` | Action | Active |
 | `record_grade_batch@v1` | Action | Active |
 | `process_payment@v1` | Action | Active |
+| `create_payment_plan@v1` | Action | Active |
 | `sign_authorization@v1` | Action | Active |
 | `confirm_reenrollment@v1` | Action | Active |
 | `record_pedagogical_note@v1` | Action | Active |
+| `escalate_wellbeing@v1` | Action | Active |
 | `generate_pedagogical_report@v1` | Generate | Active |
 | `generate_learning_activity@v1` | Generate | Active |
 | `generate_announcement_draft@v1` | Generate | Active |
@@ -88,6 +98,39 @@ Cuando intervienen proveedores externos fuera de Argentina:
 | `simulate_financial_scenario@v1` | Analytics | Active |
 | `get_institutional_alerts@v1` | Analytics | Active |
 | `create_collection_campaign@v1` | Action | Active |
+
+### 4.2 Tools v2.0 (nuevas — CDUs añadidos)
+
+| Tool canónica | Tipo | CDU | Roles | Confirma? | Idempotente? |
+|---|---|---|---|---|---|
+| `revoke_guardian_access@v1` | Action | CDU-ADM-015 | A, Dir, S | Sí (irreversible) | Sí |
+| `search_guardian@v1` | Query | CDU-ADM-015 | A, Dir, S | No | No |
+| `register_consent@v1` | Action | CDU-CROSS-005 | P, S, A | No | Sí |
+| `get_consent_status@v1` | Query | CDU-CROSS-005 | P, S, A, D | No | No |
+| `export_user_data@v1` | Action | CDU-CROSS-006 | P (propios), A | No | Sí |
+| `request_data_rectification@v1` | Action | CDU-CROSS-006 | P (propios), A | No | Sí |
+| `request_data_deletion@v1` | Action | CDU-CROSS-006 | P (propios), A | Sí (irreversible) | Sí |
+| `get_reenrollment_status@v1` | Query | CDU-ADM-016 | A, Dir, S | No | No |
+| `create_reenrollment_campaign@v1` | Action | CDU-ADM-016 | A, Dir | Sí | Sí |
+| `get_daily_journal@v1` | Query | CDU-PAD-017, CDU-DOC-012 | P, D, Dir | No | No |
+| `publish_daily_journal@v1` | Action | CDU-DOC-012 | D | No | Sí |
+| `get_teacher_portfolio@v1` | Query | CDU-DOC-017 | D (propio), Dir, A | No | No |
+| `generate_teacher_portfolio_pdf@v1` | Generate | CDU-DOC-017 | D (propio), Dir, A | No | Sí |
+| `activate_event_mode@v1` | Action | CDU-CROSS-007 | D, Dir, A | No | Sí |
+| `publish_event_update@v1` | Action | CDU-CROSS-007 | D, Dir, A | No | Sí |
+| `generate_event_album@v1` | Generate | CDU-CROSS-007 | D, Dir, A | No | Sí |
+
+### 4.3 Notas de tools críticas
+
+**`escalate_wellbeing@v1`** (CDU-ALU-016, CDU-DOC-016) — Escalada de señales de malestar emocional al personal autorizado. NON-NEGOTIABLE: CDU-ALU-016 es P1 por constitución. Dispara alerta a coordinador/directivo + crea registro inmutable. Solo roles habilitados reciben el detalle del alumno. Nunca se ejecuta en modo automático sin supervisión humana (Principio IV).
+
+**`confirm_announcement_read@v1`** (CDU-PAD-006, CDU-DOC-010) — Registra la lectura explícita de un comunicado por parte de un tutor. Tool de escritura separada de `get_announcements@v1` (que es solo Query). Idempotente por `(guardian_id, announcement_id)`.
+
+**`create_payment_plan@v1`** (CDU-ADM-004) — Genera un plan de pago personalizado para una familia morosa. Requiere confirmación admin antes de activar. Crea cuotas futuras en el estado de cuenta. Bloquea envío de recordatorios automáticos de deuda mientras el plan esté vigente.
+
+**`get_my_students@v1`** (7 CDUs-PAD) — Devuelve la lista de alumnos vinculados a un tutor dentro del tenant. Es el prerequisito para CDU-PAD-001/002/004/008/009/011/016 antes de pasar `student_id` a otras tools. RLS garantiza `guardian_students.guardian_id` = JWT del usuario. Máx 10 alumnos (casos de familia extendida). Sin datos financieros ni de contacto — solo `student_id`, nombre y curso.
+
+**`generate_learning_activity@v1`** — Enum `activity_type` extendido en v2.0: agrega `flashcards` (CDU-ALU-006) y `exam_simulation` (CDU-ALU-011) a los tipos existentes. Output siempre en `status: "draft"` hasta aprobación docente.
 
 ---
 
@@ -104,15 +147,17 @@ Regla de naming obligatoria:
 
 | Perfil | Tools P0 obligatorias | Tools P1/P2 |
 |---|---|---|
-| Padre/Tutor | `get_student_summary@v1`, `record_absence@v1`, `get_account_status@v1`, `process_payment@v1` | `get_calendar@v1`, `get_announcements@v1`, `generate_study_plan@v1` |
-| Docente | `take_attendance@v1`, `record_grade_batch@v1`, `send_announcement@v1`, `record_pedagogical_note@v1` | `generate_pedagogical_report@v1`, `generate_learning_activity@v1`, `get_institutional_alerts@v1` |
-| Admin/Directivo | `get_delinquency_dashboard@v1`, `simulate_financial_scenario@v1`, `get_dropout_risk@v1`, `get_institutional_alerts@v1` | `send_announcement@v1`, `get_announcements@v1` |
-| Alumno | `get_tasks@v1`, `get_student_summary@v1` (vista alumno), `generate_study_plan@v1` | `generate_learning_activity@v1` (modo práctica guiada) |
+| Padre/Tutor | `get_consent_status@v1` (gate), `get_student_summary@v1`, `record_absence@v1`, `get_account_status@v1`, `process_payment@v1` | `get_calendar@v1`, `get_announcements@v1`, `confirm_announcement_read@v1`, `generate_study_plan@v1`, `get_daily_journal@v1` |
+| Docente | `take_attendance@v1`, `record_grade_batch@v1`, `send_announcement@v1`, `record_pedagogical_note@v1` | `generate_pedagogical_report@v1`, `generate_learning_activity@v1`, `get_institutional_alerts@v1`, `publish_daily_journal@v1`, `get_teacher_portfolio@v1` |
+| Admin/Directivo | `revoke_guardian_access@v1`, `get_delinquency_dashboard@v1`, `simulate_financial_scenario@v1`, `get_dropout_risk@v1`, `get_institutional_alerts@v1` | `create_collection_campaign@v1`, `create_payment_plan@v1`, `get_reenrollment_status@v1`, `create_reenrollment_campaign@v1` |
+| Alumno | `get_tasks@v1`, `get_student_summary@v1` (vista alumno), `generate_study_plan@v1` | `generate_learning_activity@v1` (modo práctica guiada), `escalate_wellbeing@v1` (autoreporte) |
 
 Notas:
+- `get_consent_status@v1` es el gate de todos los CDUs — sin `has_active_consent=true`, ninguna tool de datos de alumnos ejecuta.
 - `process_payment@v1` solo `P` y su propia familia.
 - `send_announcement@v1` siempre con confirmación previa.
 - `get_student_summary@v1` para `Al` devuelve versión acotada (sin datos familiares/financieros).
+- `revoke_guardian_access@v1` solo roles administrativos (`A`, `Dir`, `S`).
 
 ---
 
@@ -238,25 +283,89 @@ Mínimos requeridos:
 | `TEMPLATE_NOT_APPROVED` | WhatsApp template no habilitado | Cambiar a canal permitido o solicitar aprobación |
 | `MODEL_UNAVAILABLE` | Analytics/modelo no disponible | Fallback a reporte básico sin score |
 | `OPTIN_REQUIRED` | Acción outbound sin consentimiento válido | Solicitar/derivar flujo de consentimiento |
+| `ACCESS_ALREADY_REVOKED` | `revoke_guardian_access@v1` con tutor ya bloqueado | Informar estado actual, no ejecutar de nuevo |
+| `CONSENT_ALREADY_ACTIVE` | `register_consent@v1` con versión ya aceptada | Confirmar consentimiento vigente, no duplicar |
+| `ARCO_REQUEST_ALREADY_OPEN` | Solicitud ARCO duplicada para mismo campo | Informar ticket en curso con referencia |
+| `EXPORT_IN_PROGRESS` | `export_user_data@v1` con job previo activo | Derivar a polling del job existente |
+| `EVENT_MODE_NOT_ACTIVE` | `publish_event_update@v1` sin modo evento activo | Informar que el modo acto no está activado |
+| `EVENT_MODE_ALREADY_ACTIVE` | `activate_event_mode@v1` con modo ya activo | Informar que ya está activo + link al modo |
+| `PHOTO_BLOCKED_BY_POLICY` | Foto con `photo_blocked=true` en el evento | Warning no bloqueante — publicar texto sin foto |
+| `REENROLLMENT_ALREADY_CONFIRMED` | `confirm_reenrollment@v1` duplicado | Confirmar reinscripción ya registrada |
+| `INSUFFICIENT_DATA_FOR_GENERATION` | Generación sin datos históricos suficientes | Informar mínimo de datos necesario y fecha estimada |
+| `ASYNC_JOB_QUEUED` | Proceso asincrónico iniciado correctamente | Informar `job_id` para polling y tiempo estimado |
 
 ---
 
-## 11. Mapeo CDU -> Toolset (Top 12 MVP)
+## 11. Mapeo CDU -> Toolset
 
-| CDU | Tools canónicas |
-|---|---|
-| CDU-P-01 | `get_student_summary@v1`, `get_grades@v1`, `get_attendance@v1`, `get_tasks@v1` |
-| CDU-P-02 | `record_absence@v1` |
-| CDU-P-03 | `get_account_status@v1` |
-| CDU-P-04 | `process_payment@v1` |
-| CDU-D-01 | `take_attendance@v1` |
-| CDU-D-02 | `record_grade_batch@v1` |
-| CDU-D-03 | `generate_announcement_draft@v1`, `send_announcement@v1` |
-| CDU-D-04 | `record_pedagogical_note@v1` |
-| CDU-A-01 | `get_delinquency_dashboard@v1` |
-| CDU-A-02 | `create_collection_campaign@v1`, `send_announcement@v1` |
-| CDU-A-03 | `simulate_financial_scenario@v1` |
-| CDU-L-01 | `get_tasks@v1` |
+### P0 BLOQUEANTES (implementar primero)
+
+| CDU | Nombre | Tools canónicas |
+|---|---|---|
+| CDU-ADM-015 | Revocación de acceso de tutor | `search_guardian@v1`, `revoke_guardian_access@v1` |
+| CDU-CROSS-005 | Consentimiento informado onboarding | `register_consent@v1`, `get_consent_status@v1` |
+| CDU-CROSS-006 | Solicitud ARCO | `export_user_data@v1`, `request_data_rectification@v1`, `request_data_deletion@v1` |
+
+### P1 MVP — Padre/Tutor
+
+| CDU | Nombre | Tools canónicas |
+|---|---|---|
+| CDU-PAD-001 | Resumen semanal | `get_student_summary@v1`, `get_grades@v1`, `get_attendance@v1`, `get_tasks@v1` |
+| CDU-PAD-002 | Agenda del día siguiente | `get_calendar@v1`, `get_tasks@v1` |
+| CDU-PAD-003 | Estado de cuenta y pago | `get_account_status@v1`, `process_payment@v1` |
+| CDU-PAD-004 | Aviso de ausencia | `record_absence@v1` |
+| CDU-PAD-005 | Firma de autorización digital | `sign_authorization@v1` |
+| CDU-PAD-006 | Lectura de comunicados | `get_announcements@v1`, `confirm_announcement_read@v1` |
+| CDU-PAD-007 | Reinscripción ciclo siguiente | `confirm_reenrollment@v1`, `get_account_status@v1` |
+| CDU-PAD-008 | Consulta de calificaciones | `get_grades@v1` |
+| CDU-PAD-015 | Urgencia: incidente escolar | `get_student_summary@v1`, `get_calendar@v1` |
+| CDU-PAD-017 | Diario visual diario (nivel inicial) | `get_daily_journal@v1` |
+
+### P1 MVP — Docente
+
+| CDU | Nombre | Tools canónicas |
+|---|---|---|
+| CDU-DOC-001 | Toma de asistencia por voz | `take_attendance@v1` |
+| CDU-DOC-002 | Toma de asistencia por lista | `take_attendance@v1` |
+| CDU-DOC-003 | Envío de comunicado | `generate_announcement_draft@v1`, `send_announcement@v1` |
+| CDU-DOC-004 | Carga de calificaciones | `record_grade_batch@v1` |
+| CDU-DOC-005 | Registro de observación | `record_pedagogical_note@v1` |
+| CDU-DOC-006 | Informe pedagógico trimestral | `generate_pedagogical_report@v1` |
+| CDU-DOC-007 | Actividad educativa gamificada | `generate_learning_activity@v1` |
+| CDU-DOC-012 | Diario visual del día | `publish_daily_journal@v1`, `get_daily_journal@v1` |
+
+### P1 MVP — Admin/Directivo
+
+| CDU | Nombre | Tools canónicas |
+|---|---|---|
+| CDU-ADM-001 | Dashboard de pulso institucional | `get_institutional_alerts@v1`, `get_delinquency_dashboard@v1` |
+| CDU-ADM-002 | Estado de morosidad | `get_delinquency_dashboard@v1` |
+| CDU-ADM-003 | Recordatorio de cobro | `create_collection_campaign@v1`, `send_announcement@v1` |
+| CDU-ADM-004 | Plan de pago para familia morosa | `create_payment_plan@v1`, `get_account_status@v1` |
+| CDU-ADM-005 | Riesgo de deserción | `get_dropout_risk@v1` |
+| CDU-ADM-006 | Simulación financiera | `simulate_financial_scenario@v1` |
+| CDU-ADM-007 | Alertas tempranas automáticas | `get_institutional_alerts@v1` |
+| CDU-ADM-016 | Campaña de reinscripción | `get_reenrollment_status@v1`, `create_reenrollment_campaign@v1` |
+
+### P1 MVP — Alumno
+
+| CDU | Nombre | Tools canónicas |
+|---|---|---|
+| CDU-ALU-007 | Agenda académica (Secundaria) | `get_calendar@v1`, `get_tasks@v1` |
+| CDU-ALU-008 | Situación académica propia | `get_student_summary@v1`, `get_grades@v1`, `get_attendance@v1` |
+| CDU-ALU-010 | Plan de estudio personalizado | `generate_study_plan@v1` |
+| CDU-ALU-011 | Simulacro de examen | `generate_learning_activity@v1` (activity_type: exam_simulation) |
+| CDU-ALU-016 | Detección malestar emocional | `escalate_wellbeing@v1` |
+
+### P2+ — Seleccionados
+
+| CDU | Nombre | Tools canónicas |
+|---|---|---|
+| CDU-PAD-009 | Asistencia acumulada | `get_attendance@v1` |
+| CDU-ALU-006 | Flashcards para estudio | `generate_learning_activity@v1` (activity_type: flashcards) |
+| CDU-DOC-017 | Portfolio de impacto docente | `get_teacher_portfolio@v1`, `generate_teacher_portfolio_pdf@v1` |
+| CDU-CROSS-002 | Suspensión de clases | `send_announcement@v1` (priority: urgent, channels: all) |
+| CDU-CROSS-007 | Corresponsal en eventos | `activate_event_mode@v1`, `publish_event_update@v1`, `generate_event_album@v1` |
 
 ---
 
@@ -275,10 +384,76 @@ Notas:
 
 ---
 
-## 13. Pendientes para cerrar v1 final
+## 13. Estado y pendientes
 
-1. Validación legal formal del esquema de base legal, transferencias y retención.
-2. Cerrar `OPTIN_FLOW` y `TEMPLATE_LIBRARY` para `create_collection_campaign@v1`.
-3. Publicar especificación JSON completa por tool MVP (cerrado en `docs/10-MCP-SCHEMAS.md`).
-4. Publicar casos E2E por cada CDU P0 con payload real y test de permisos.
-5. Migrar `docs/02-API-SPEC.md` para reflejar únicamente nombres canónicos `@v1`.
+**v2.0 — cerrado:** catálogo canónico completo (44 tools totales), error taxonomy con 20 códigos, mapeo CDU→toolset completo, schemas JSON en `docs/10-MCP-SCHEMAS.md`, política de proactive messaging (§14), mapeo datasource+SLA en `docs/13-CDU-DATASOURCE-SLA.md`, casos E2E P0 en `docs/.tmp-mcp-insumos-7-8-10.md §Insumo 10`.
+
+**Pendientes pre-lanzamiento:**
+1. Validación legal formal del esquema de base legal, transferencias internacionales (DPA Anthropic) y retención con asesoría especializada.
+2. Cerrar `TEMPLATE_LIBRARY` para `create_collection_campaign@v1` y canales WhatsApp — aprobación Meta.
+3. Casos E2E P0 disponibles en `docs/.tmp-mcp-insumos-7-8-10.md §Insumo 10` — mover a CI pipeline antes de lanzamiento.
+4. Migrar `docs/02-API-SPEC.md` para reflejar únicamente nombres canónicos `@v1`.
+5. DPA con Anthropic (transferencia internacional de datos para Claude API) — BLOQUEANTE antes de datos reales.
+
+---
+
+## 14. Política de Proactive Messaging
+
+Un mensaje es **proactivo** cuando el sistema lo inicia sin acción explícita del usuario en esa sesión. Los mensajes reactivos (respuesta a consulta del usuario) no están sujetos a esta política.
+
+### Throttle global por perfil
+
+| Perfil | Límite diario | Límite semanal | Observación |
+|--------|--------------|----------------|-------------|
+| PAD | 5/día | 15/semana | Por tutor — 2 hijos = 1 tutor para el contador |
+| DOC | 3/día | 10/semana | Por docente |
+| ADM | 5/día | Sin límite semanal | Alertas críticas no cuentan |
+| ALU | 2/día | 8/semana | Solo App — ALU no recibe proactivos por WhatsApp |
+
+Reseteo: 00:00 ART (UTC-3). Mensajes retenidos se procesan al inicio del siguiente período con contenido actualizado.
+
+### Jerarquía de urgencia — mensajes que rompen el throttle
+
+| Nivel | Tipo | CDUs |
+|-------|------|------|
+| CRÍTICO | Incidente seguridad / integridad física | CDU-PAD-015, CDU-ALU-016 nivel 2 |
+| URGENTE | Suspensión de clases | CDU-CROSS-002 |
+| ALTO | Bienestar emocional nivel 2 | CDU-ALU-016, CDU-DOC-016 |
+| MEDIO | Alertas institucionales umbral crítico | CDU-ADM-007 |
+
+**No rompen throttle:** CDU-PAD-012 (resumen semanal), CDU-PAD-014 (caída académica), CDU-ADM-016 (reinscripción).
+
+### CDUs proactivos — resumen operativo
+
+| CDU | Disparador técnico | Canal | Frecuencia máx. | Opt-in | Opt-out |
+|-----|--------------------|-------|-----------------|--------|---------|
+| CDU-PAD-012 | `cron` semanal `student_weekly_summary_view` | WhatsApp → Push | 1/semana/alumno | Sí | Ajustes |
+| CDU-PAD-013/017 | `INSERT diary_entries` publicado por docente | Push → App | 1/día de clase | Sí (implícito) | Ajustes |
+| CDU-PAD-014 | `grade_trend_job` semanal (delta ≥ 2 pts) | Push → App → WA | 1/trimestre/materia | Sí | Ajustes |
+| CDU-PAD-015 | `INSERT incidents` severity medium/high/critical | Push + WA simultáneos | Sin límite | No | No disponible |
+| CDU-DOC-014 | `cron` diario: evaluación en ≤3 días sin repaso | Push → App | 1/evaluación | Sí | Ajustes docente |
+| CDU-DOC-016 | `wellbeing_signal_job` diario | Push discreto | 1/alumno/semana | No (protocolo) | No disponible |
+| CDU-DOC-017 | `cron` semanal `course_stats_weekly_view` | Push → App | Máx 4/mes | Sí | Ajustes docente |
+| CDU-ADM-007 | `institutional_alert_job` diario 6:00am | Push → App/Web | Configurable | No | Parcial |
+| CDU-ADM-016 | Manual o `reenrollment_reminder_job` | WhatsApp → Push | Máx 3/familia/período | Sí (WA opt-in) | STOP WA |
+| CDU-ALU-016 | Guardarraíl asistente durante conversación | Push interno | Sin límite nivel 2 | No | No disponible |
+| CDU-CROSS-002 | `INSERT school_alerts` tipo `class_suspension` | WA + Push + App | Sin límite | No | No disponible |
+| CDU-CROSS-007 | `INSERT event_updates` con `event_mode='active'` | Push → App | Sin límite (mín 5 min) | Sí (implícito) | Ajustes |
+
+### Ventanas horarias (ART, UTC-3)
+
+| Tipo | Días | Ventana | Excepción |
+|------|------|---------|-----------|
+| Resumen semanal (PAD-012) | Lun o Vie (config. tenant) | 07:30–09:00 | — |
+| Diario visual (PAD-013/017) | Lun–Vie | 15:00–19:00 | — |
+| Caída académica (PAD-014) | Mar–Sáb | 09:00–20:00 | — |
+| Incidente (PAD-015) + Suspensión (CROSS-002) | Todos | 24/7 | Emergencia |
+| Sugerencia repaso (DOC-014) | Lun–Vie | 08:00–18:00 | — |
+| Mensajes en cola docente (DOC-015) | Lun–Vie | 07:45–08:30 | — |
+| Bienestar docente (DOC-016) | Lun–Vie | 08:00–16:00 | Nivel 2: 24/7 |
+| Hito pedagógico (DOC-017) | Viernes | 17:00–19:00 | — |
+| Alertas admin (ADM-007) | Lun–Vie | 06:00–08:00 resumen | Críticas: 24/7 |
+| Reinscripción (ADM-016) | Mar–Jue | 10:00–12:00 o 18:00–20:00 | — |
+| Acto escolar (CROSS-007) | Durante evento | Mientras `event_mode='active'` | — |
+
+**Referencia de datasource y SLA por CDU:** ver `docs/13-CDU-DATASOURCE-SLA.md` — tabla completa para los 73 CDUs con fuente (SQL/RLS, RAG, GEN-IA), SLA máx. en ms y columna RLS de control.

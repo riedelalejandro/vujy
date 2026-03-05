@@ -1,7 +1,9 @@
 # Vujy — CDU: Índice de Casos de Uso
 
-**Versión:** 1.0 | **Fecha:** 2026-03-05
-[Convenciones y leyenda](conventions.md) · [Matriz de tools](tools-matrix.md) · [Notas de implementación](implementation-notes.md)
+**Versión:** 2.0 | **Fecha:** 2026-03-05 | **Total CDUs:** 73
+[Convenciones y leyenda](conventions.md) · [Matriz de tools](tools-matrix.md) · [Notas de implementación](implementation-notes.md) · [Decisiones 90/10](../12-CDU-DECISOR-90-10.md)
+
+> **v2.0:** +7 CDUs añadidos por decisor 90/10 — 3 BLOQUEANTES legales (SEC) + 4 de producto (ADM-016, PAD-017, DOC-017, CROSS-007). Ver [12-CDU-DECISOR-90-10.md](../12-CDU-DECISOR-90-10.md) para razonamiento completo.
 
 ---
 
@@ -25,6 +27,7 @@
 | [CDU-PAD-014](pad/CDU-PAD-014.md) | Alerta proactiva: hijo con caída académica | P2 | Innovation | Push · App · WhatsApp |
 | [CDU-PAD-015](pad/CDU-PAD-015.md) | Urgencia: alumno con incidente en la escuela | P1 | Innovation | Push · App · WhatsApp |
 | [CDU-PAD-016](pad/CDU-PAD-016.md) | Trayectoria acumulada del hijo (multi-año) | P3 | Innovation | App · WhatsApp |
+| [CDU-PAD-017](pad/CDU-PAD-017.md) ⚡ | Diario visual diario del hijo (nivel inicial) | P1 | Innovation | App · WhatsApp |
 
 ## Docente (CDU-DOC)
 
@@ -46,6 +49,7 @@
 | [CDU-DOC-014](doc/CDU-DOC-014.md) | Sugerencia proactiva de actividad de repaso antes de evaluación | P2 | Innovation | App |
 | [CDU-DOC-015](doc/CDU-DOC-015.md) | Barrera de horarios: filtrar mensajes de padres fuera de horario laboral | P2 | Innovation | App · WhatsApp |
 | [CDU-DOC-016](doc/CDU-DOC-016.md) | Alerta de bienestar emocional de alumno | P2 | Innovation | App |
+| [CDU-DOC-017](doc/CDU-DOC-017.md) ⚡ | Portfolio de impacto docente | P2 | Innovation | App · Web |
 
 ## Admin / Directivo (CDU-ADM)
 
@@ -65,6 +69,8 @@
 | [CDU-ADM-012](adm/CDU-ADM-012.md) | Encuestas de satisfacción / NPS escolar | P2 | Extension | App · Web |
 | [CDU-ADM-013](adm/CDU-ADM-013.md) | Proyección de flujo de caja | P2 | Innovation | App · Web |
 | [CDU-ADM-014](adm/CDU-ADM-014.md) | Benchmark entre escuelas de la red | P3 | Innovation | Web · App |
+| [CDU-ADM-015](adm/CDU-ADM-015.md) ⚡🔴 | Revocación de acceso de tutor — urgente | **P0 BLOQUEANTE** | Seguridad | App · Web |
+| [CDU-ADM-016](adm/CDU-ADM-016.md) ⚡ | Campaña de reinscripción proactiva con IA | P1 | Innovation | App · Web · WhatsApp |
 
 ## Alumno (CDU-ALU)
 
@@ -95,3 +101,8 @@
 | [CDU-CROSS-002](cross/CDU-CROSS-002.md) | Suspensión de clases: alerta masiva en cascada | P1 | Base · Extension | WhatsApp · App · Push |
 | [CDU-CROSS-003](cross/CDU-CROSS-003.md) | El alumno no entiende algo y la docente recibe el dato | P2 | Innovation | App |
 | [CDU-CROSS-004](cross/CDU-CROSS-004.md) | Biblioteca de actividades compartida entre escuelas | P3 | Innovation | App |
+| [CDU-CROSS-005](cross/CDU-CROSS-005.md) ⚡🔴 | Consentimiento informado en onboarding | **P0 BLOQUEANTE** | Seguridad | App · Web · WhatsApp |
+| [CDU-CROSS-006](cross/CDU-CROSS-006.md) ⚡🔴 | Solicitud ARCO — datos personales | **P0** | Seguridad | App · Web |
+| [CDU-CROSS-007](cross/CDU-CROSS-007.md) ⚡🎲 | Modo corresponsal en eventos escolares [10%] | P2 | Innovation | App · WhatsApp · Push |
+
+> ⚡ = nuevo en v2.0 · 🔴 = BLOQUEANTE MVP · 🎲 = apuesta 10% (ver decisor)

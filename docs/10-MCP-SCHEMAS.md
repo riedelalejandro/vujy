@@ -1,7 +1,8 @@
 # Vujy — MCP JSON Schemas (MVP v1)
 
 Alcance de este documento:
-- Esquemas completos de input/output para el set MVP (Top 12 CDU + `create_collection_campaign@v1`).
+- Esquemas completos de input/output para todas las tools del catálogo (v1 MVP + v2.0).
+- **Total:** 43 tools — 27 MVP v1 + 16 v2.0 nuevas.
 - Canonical-only: no legacy aliases.
 
 Convenciones:
@@ -31,7 +32,17 @@ Convenciones:
         "PAYMENT_REJECTED",
         "TEMPLATE_NOT_APPROVED",
         "OPTIN_REQUIRED",
-        "MODEL_UNAVAILABLE"
+        "MODEL_UNAVAILABLE",
+        "ACCESS_ALREADY_REVOKED",
+        "CONSENT_ALREADY_ACTIVE",
+        "ARCO_REQUEST_ALREADY_OPEN",
+        "EXPORT_IN_PROGRESS",
+        "EVENT_MODE_NOT_ACTIVE",
+        "EVENT_MODE_ALREADY_ACTIVE",
+        "PHOTO_BLOCKED_BY_POLICY",
+        "REENROLLMENT_ALREADY_CONFIRMED",
+        "INSUFFICIENT_DATA_FOR_GENERATION",
+        "ASYNC_JOB_QUEUED"
       ]
     },
     "message": { "type": "string" },
@@ -598,7 +609,8 @@ Convenciones:
 ```
 
 ## 13) `create_collection_campaign@v1`
-Legacy alias: none
+
+
 
 ### Input
 ```json
@@ -652,5 +664,1108 @@ Legacy alias: none
     "status": { "type": "string", "enum": ["draft", "ready", "blocked"] }
   },
   "required": ["campaign_id", "estimated_recipients", "message_preview", "delivery_risk", "status"]
+}
+```
+
+---
+
+## Críticas MVP faltantes (v2.0)
+
+## 14) `escalate_wellbeing@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.escalate_wellbeing.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "student_id": { "type": "string", "minLength": 1 },
+    "signal_type": {
+      "type": "string",
+      "enum": [
+        "self_reported_distress",
+        "teacher_observation",
+        "behavioral_pattern",
+        "peer_report"
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"]
+    },
+    "signal_description": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 2000
+    },
+    "escalate_to_roles": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": ["coordinator", "director", "counselor", "admin"]
+      }
+    },
+    "notify_guardian": {
+      "type": "boolean",
+      "default": false,
+      "description": "Solo activar en casos de baja severidad donde la institución lo autorice"
+    },
+    "idempotency_key": { "type": "string", "minLength": 8 }
+  },
+  "required": ["student_id", "signal_type", "severity", "signal_description", "escalate_to_roles", "idempotency_key"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.escalate_wellbeing.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "alert_id": { "type": "string" },
+    "student_id": { "type": "string" },
+    "escalated_at": { "type": "string", "format": "date-time" },
+    "notified_roles": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "protocol_reference": {
+      "type": "string",
+      "description": "Referencia al protocolo institucional activado"
+    },
+    "guardian_notified": { "type": "boolean" },
+    "requires_human_followup": {
+      "type": "boolean",
+      "const": true,
+      "description": "Siempre true — este CDU nunca se resuelve de forma autónoma por el asistente"
+    }
+  },
+  "required": ["alert_id", "student_id", "escalated_at", "notified_roles", "guardian_notified", "requires_human_followup"]
+}
+```
+
+---
+
+## 15) `confirm_announcement_read@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.confirm_announcement_read.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "announcement_id": { "type": "string", "minLength": 1 },
+    "guardian_id": { "type": "string", "minLength": 1 },
+    "channel": {
+      "type": "string",
+      "enum": ["app", "web", "whatsapp"],
+      "description": "Canal desde donde se confirmó la lectura"
+    },
+    "idempotency_key": { "type": "string", "minLength": 8 }
+  },
+  "required": ["announcement_id", "guardian_id", "channel", "idempotency_key"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.confirm_announcement_read.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "success": { "type": "boolean" },
+    "announcement_id": { "type": "string" },
+    "guardian_id": { "type": "string" },
+    "read_at": { "type": "string", "format": "date-time" },
+    "was_already_read": {
+      "type": "boolean",
+      "description": "true si idempotency aplicó — ya estaba registrada la lectura"
+    }
+  },
+  "required": ["success", "announcement_id", "guardian_id", "read_at", "was_already_read"]
+}
+```
+
+---
+
+## 16) `create_payment_plan@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.create_payment_plan.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "family_id": { "type": "string", "minLength": 1 },
+    "overdue_item_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" },
+      "description": "IDs de las cuotas vencidas a incluir en el plan"
+    },
+    "installments": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 12,
+      "description": "Cantidad de cuotas del plan"
+    },
+    "first_installment_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha del primer vencimiento del plan"
+    },
+    "interest_rate_pct": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Tasa de interés mensual aplicada. 0 para plan sin interés."
+    },
+    "notes": { "type": "string", "maxLength": 500 },
+    "explicit_confirmation": { "type": "boolean", "const": true },
+    "idempotency_key": { "type": "string", "minLength": 8 }
+  },
+  "required": ["family_id", "overdue_item_ids", "installments", "first_installment_date", "interest_rate_pct", "explicit_confirmation", "idempotency_key"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.create_payment_plan.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "plan_id": { "type": "string" },
+    "family_id": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": ["active"],
+      "description": "El plan queda activo inmediatamente tras la confirmación"
+    },
+    "total_amount": { "type": "number", "minimum": 0 },
+    "installments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "installment_number": { "type": "integer", "minimum": 1 },
+          "due_date": { "type": "string", "format": "date" },
+          "amount": { "type": "number", "minimum": 0 }
+        },
+        "required": ["installment_number", "due_date", "amount"]
+      }
+    },
+    "automatic_reminders_paused": {
+      "type": "boolean",
+      "const": true,
+      "description": "Siempre true — los recordatorios automáticos de deuda se suspenden mientras el plan esté vigente"
+    },
+    "created_at": { "type": "string", "format": "date-time" }
+  },
+  "required": ["plan_id", "family_id", "status", "total_amount", "installments", "automatic_reminders_paused", "created_at"]
+}
+```
+
+---
+
+## Tools v2.0 — Nuevas (CDUs añadidos)
+
+## 17) `revoke_guardian_access@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.revoke_guardian_access.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "guardian_id": { "type": "string", "minLength": 1 },
+    "reason": {
+      "type": "string",
+      "enum": ["legal_request", "custody_dispute", "security_incident", "school_policy", "guardian_request", "other"]
+    },
+    "reason_notes": { "type": "string", "maxLength": 500 },
+    "notify_guardian": { "type": "boolean", "default": false },
+    "explicit_confirmation": { "type": "boolean", "const": true },
+    "idempotency_key": { "type": "string", "minLength": 8 }
+  },
+  "required": ["guardian_id", "reason", "explicit_confirmation", "idempotency_key"],
+  "if": { "properties": { "reason": { "const": "other" } } },
+  "then": { "required": ["reason_notes"] }
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.revoke_guardian_access.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "success": { "type": "boolean" },
+    "guardian_id": { "type": "string" },
+    "revoked_at": { "type": "string", "format": "date-time" },
+    "channels_blocked": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["app", "web", "whatsapp"] }
+    },
+    "audit_event_id": { "type": "string" },
+    "reactivation_requires": { "type": "string", "const": "manual_admin_action" }
+  },
+  "required": ["success", "guardian_id", "revoked_at", "channels_blocked", "audit_event_id", "reactivation_requires"]
+}
+```
+
+---
+
+## 18) `search_guardian@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.search_guardian.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "query": { "type": "string", "minLength": 2, "maxLength": 100 },
+    "query_type": { "type": "string", "enum": ["name", "dni", "email", "phone"], "default": "name" },
+    "include_inactive": { "type": "boolean", "default": false }
+  },
+  "required": ["query"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.search_guardian.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "results": {
+      "type": "array",
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "guardian_id": { "type": "string" },
+          "full_name": { "type": "string" },
+          "dni": { "type": "string" },
+          "access_status": { "type": "string", "enum": ["active", "revoked", "pending_verification"] },
+          "linked_students": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "student_id": { "type": "string" },
+                "student_name": { "type": "string" },
+                "grade": { "type": "string" }
+              },
+              "required": ["student_id", "student_name"]
+            }
+          }
+        },
+        "required": ["guardian_id", "full_name", "access_status", "linked_students"]
+      }
+    },
+    "total_found": { "type": "integer", "minimum": 0 },
+    "truncated": { "type": "boolean" }
+  },
+  "required": ["results", "total_found", "truncated"]
+}
+```
+
+---
+
+## 19) `register_consent@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.register_consent.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "guardian_id": { "type": "string", "minLength": 1 },
+    "document_version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "ip_address": { "type": "string" },
+    "channel": { "type": "string", "enum": ["app", "web", "whatsapp", "in_person"] },
+    "consent_options": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "terms_accepted": { "type": "boolean", "const": true },
+        "privacy_policy_accepted": { "type": "boolean", "const": true },
+        "whatsapp_communications": { "type": "boolean" },
+        "educational_data_use": { "type": "boolean" },
+        "photo_publication": { "type": "boolean" }
+      },
+      "required": ["terms_accepted", "privacy_policy_accepted"]
+    },
+    "idempotency_key": { "type": "string", "minLength": 8 }
+  },
+  "required": ["guardian_id", "document_version", "channel", "consent_options", "idempotency_key"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.register_consent.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "consent_id": { "type": "string" },
+    "guardian_id": { "type": "string" },
+    "document_version": { "type": "string" },
+    "registered_at": { "type": "string", "format": "date-time" },
+    "status": { "type": "string", "enum": ["active", "superseded"] },
+    "whatsapp_optin": { "type": "boolean" }
+  },
+  "required": ["consent_id", "guardian_id", "document_version", "registered_at", "status", "whatsapp_optin"]
+}
+```
+
+---
+
+## 20) `get_consent_status@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.get_consent_status.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "guardian_id": { "type": "string", "minLength": 1 },
+    "required_document_version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" }
+  },
+  "required": ["guardian_id"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.get_consent_status.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "has_active_consent": { "type": "boolean" },
+    "guardian_id": { "type": "string" },
+    "document_version": { "type": ["string", "null"] },
+    "accepted_at": { "type": ["string", "null"], "format": "date-time" },
+    "consent_options": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "whatsapp_communications": { "type": "boolean" },
+        "educational_data_use": { "type": "boolean" },
+        "photo_publication": { "type": "boolean" }
+      }
+    },
+    "requires_renewal": { "type": "boolean" }
+  },
+  "required": ["has_active_consent", "guardian_id", "document_version", "accepted_at", "requires_renewal"]
+}
+```
+
+---
+
+## 21) `export_user_data@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.export_user_data.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "subject_guardian_id": { "type": "string", "minLength": 1 },
+    "include_sections": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": ["profile", "linked_students", "payment_history", "communications", "consents", "conversations", "access_log"]
+      },
+      "default": ["profile", "linked_students", "payment_history", "communications", "consents"]
+    },
+    "format": { "type": "string", "enum": ["json", "zip"], "default": "json" },
+    "arco_request_reference": { "type": "string" },
+    "idempotency_key": { "type": "string", "minLength": 8 }
+  },
+  "required": ["subject_guardian_id", "idempotency_key"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.export_user_data.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "status": { "type": "string", "enum": ["ready", "processing"] },
+    "export_id": { "type": "string" },
+    "download_url": { "type": ["string", "null"], "format": "uri" },
+    "job_id": { "type": ["string", "null"] },
+    "estimated_ready_at": { "type": ["string", "null"], "format": "date-time" },
+    "sections_included": { "type": "array", "items": { "type": "string" } },
+    "generated_at": { "type": "string", "format": "date-time" }
+  },
+  "required": ["status", "export_id", "download_url", "job_id", "sections_included", "generated_at"]
+}
+```
+
+---
+
+## 22) `request_data_rectification@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.request_data_rectification.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "subject_guardian_id": { "type": "string", "minLength": 1 },
+    "fields_to_rectify": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "field_name": { "type": "string" },
+          "current_value": { "type": "string" },
+          "requested_value": { "type": "string" },
+          "supporting_document_url": { "type": "string", "format": "uri" }
+        },
+        "required": ["field_name", "requested_value"]
+      }
+    },
+    "requester_note": { "type": "string", "maxLength": 1000 },
+    "idempotency_key": { "type": "string", "minLength": 8 }
+  },
+  "required": ["subject_guardian_id", "fields_to_rectify", "idempotency_key"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.request_data_rectification.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "ticket_id": { "type": "string" },
+    "status": { "type": "string", "enum": ["received", "duplicate"] },
+    "created_at": { "type": "string", "format": "date-time" },
+    "sla_response_deadline": { "type": "string", "format": "date-time" },
+    "assigned_to_role": { "type": "string", "enum": ["admin", "secretaria"] },
+    "tracking_url": { "type": ["string", "null"], "format": "uri" }
+  },
+  "required": ["ticket_id", "status", "created_at", "sla_response_deadline", "assigned_to_role"]
+}
+```
+
+---
+
+## 23) `request_data_deletion@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.request_data_deletion.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "subject_guardian_id": { "type": "string", "minLength": 1 },
+    "scope": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": ["profile_data", "conversation_history", "communications", "access_log"]
+      }
+    },
+    "deletion_reason": {
+      "type": "string",
+      "enum": ["arco_right", "no_longer_enrolled", "data_minimization", "other"]
+    },
+    "requester_note": { "type": "string", "maxLength": 1000 },
+    "explicit_confirmation": { "type": "boolean", "const": true },
+    "idempotency_key": { "type": "string", "minLength": 8 }
+  },
+  "required": ["subject_guardian_id", "scope", "deletion_reason", "explicit_confirmation", "idempotency_key"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.request_data_deletion.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "request_id": { "type": "string" },
+    "status": { "type": "string", "enum": ["pending_review", "duplicate"] },
+    "created_at": { "type": "string", "format": "date-time" },
+    "sla_response_deadline": { "type": "string", "format": "date-time" },
+    "scope_requested": { "type": "array", "items": { "type": "string" } },
+    "excluded_data_note": { "type": "string" },
+    "admin_notified": { "type": "boolean" }
+  },
+  "required": ["request_id", "status", "created_at", "sla_response_deadline", "scope_requested", "excluded_data_note", "admin_notified"]
+}
+```
+
+---
+
+## 24) `get_reenrollment_status@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.get_reenrollment_status.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "school_id": { "type": "string", "minLength": 1 },
+    "cycle": { "type": "string", "pattern": "^\\d{4}$" },
+    "segmentation": { "type": "string", "enum": ["summary", "by_grade", "by_risk"], "default": "summary" },
+    "risk_filter": { "type": "string", "enum": ["all", "high_risk", "no_response"], "default": "all" }
+  },
+  "required": ["school_id", "cycle"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.get_reenrollment_status.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "cycle": { "type": "string" },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "total_students": { "type": "integer", "minimum": 0 },
+        "confirmed": { "type": "integer", "minimum": 0 },
+        "pending": { "type": "integer", "minimum": 0 },
+        "no_response": { "type": "integer", "minimum": 0 },
+        "withdrawn": { "type": "integer", "minimum": 0 },
+        "conversion_rate_pct": { "type": "number", "minimum": 0, "maximum": 100 }
+      },
+      "required": ["total_students", "confirmed", "pending", "no_response", "withdrawn", "conversion_rate_pct"]
+    },
+    "segments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "segment_label": { "type": "string" },
+          "count": { "type": "integer", "minimum": 0 },
+          "risk_level": { "type": "string", "enum": ["low", "medium", "high"] },
+          "family_ids": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["segment_label", "count", "risk_level"]
+      }
+    },
+    "last_updated_at": { "type": "string", "format": "date-time" }
+  },
+  "required": ["cycle", "summary", "segments", "last_updated_at"]
+}
+```
+
+---
+
+## 25) `create_reenrollment_campaign@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.create_reenrollment_campaign.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "school_id": { "type": "string", "minLength": 1 },
+    "cycle": { "type": "string", "pattern": "^\\d{4}$" },
+    "target_segment": {
+      "type": "string",
+      "enum": ["pending", "no_response", "high_risk", "custom_ids"]
+    },
+    "family_ids": { "type": "array", "items": { "type": "string" } },
+    "message_template": {
+      "type": "string",
+      "enum": ["friendly_reminder", "urgency_notice", "personalized_offer"]
+    },
+    "channels": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "enum": ["app", "whatsapp", "email"] }
+    },
+    "deadline_date": { "type": "string", "format": "date" },
+    "require_preview": { "type": "boolean", "const": true },
+    "explicit_confirmation": { "type": "boolean", "const": true },
+    "idempotency_key": { "type": "string", "minLength": 8 }
+  },
+  "required": ["school_id", "cycle", "target_segment", "message_template", "channels", "require_preview", "explicit_confirmation", "idempotency_key"],
+  "if": { "properties": { "target_segment": { "const": "custom_ids" } } },
+  "then": { "required": ["family_ids"] }
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.create_reenrollment_campaign.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "campaign_id": { "type": "string" },
+    "status": { "type": "string", "enum": ["draft", "ready", "blocked"] },
+    "estimated_recipients": { "type": "integer", "minimum": 0 },
+    "blocked_recipients": { "type": "integer", "minimum": 0 },
+    "message_preview": { "type": "string" },
+    "scheduled_at": { "type": ["string", "null"], "format": "date-time" },
+    "delivery_risk": { "type": "string", "enum": ["low", "medium", "high"] }
+  },
+  "required": ["campaign_id", "status", "estimated_recipients", "blocked_recipients", "message_preview", "delivery_risk"]
+}
+```
+
+---
+
+## 26) `get_daily_journal@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.get_daily_journal.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "student_id": { "type": "string", "minLength": 1 },
+    "grade_id": { "type": "string", "minLength": 1 },
+    "date": { "type": "string", "format": "date" }
+  },
+  "anyOf": [
+    { "required": ["student_id"] },
+    { "required": ["grade_id"] }
+  ]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.get_daily_journal.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "date": { "type": "string", "format": "date" },
+    "grade_id": { "type": "string" },
+    "published": { "type": "boolean" },
+    "published_at": { "type": ["string", "null"], "format": "date-time" },
+    "activities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "time_slot": { "type": "string" },
+          "subject": { "type": "string" },
+          "description": { "type": "string" },
+          "photo_urls": { "type": "array", "items": { "type": "string", "format": "uri" } }
+        },
+        "required": ["description"]
+      }
+    },
+    "emotional_checkin": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "overall_mood": { "type": "string", "enum": ["very_positive", "positive", "neutral", "needs_attention"] },
+        "notes": { "type": "string" }
+      },
+      "required": ["overall_mood"]
+    },
+    "teacher_narrative": { "type": ["string", "null"] }
+  },
+  "required": ["date", "grade_id", "published", "published_at", "activities"]
+}
+```
+
+---
+
+## 27) `publish_daily_journal@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.publish_daily_journal.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "grade_id": { "type": "string", "minLength": 1 },
+    "date": { "type": "string", "format": "date" },
+    "activities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "time_slot": { "type": "string" },
+          "subject": { "type": "string" },
+          "description": { "type": "string", "minLength": 5 },
+          "photo_upload_ids": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["description"]
+      }
+    },
+    "emotional_checkin": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "overall_mood": { "type": "string", "enum": ["very_positive", "positive", "neutral", "needs_attention"] },
+        "notes": { "type": "string" }
+      },
+      "required": ["overall_mood"]
+    },
+    "teacher_narrative": { "type": "string", "maxLength": 2000 },
+    "notify_guardians": { "type": "boolean", "default": true },
+    "idempotency_key": { "type": "string", "minLength": 8 }
+  },
+  "required": ["grade_id", "date", "activities", "idempotency_key"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.publish_daily_journal.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "success": { "type": "boolean" },
+    "journal_id": { "type": "string" },
+    "published_at": { "type": "string", "format": "date-time" },
+    "notifications_sent": { "type": "integer", "minimum": 0 },
+    "is_update": { "type": "boolean" }
+  },
+  "required": ["success", "journal_id", "published_at", "notifications_sent", "is_update"]
+}
+```
+
+---
+
+## 28) `get_teacher_portfolio@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.get_teacher_portfolio.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "teacher_id": { "type": "string", "minLength": 1 },
+    "period": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "from": { "type": "string", "format": "date" },
+        "to": { "type": "string", "format": "date" }
+      },
+      "required": ["from", "to"]
+    },
+    "view_mode": { "type": "string", "enum": ["internal", "external"], "default": "internal" }
+  },
+  "required": ["teacher_id", "period"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.get_teacher_portfolio.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "teacher_id": { "type": "string" },
+    "teacher_name": { "type": "string" },
+    "period": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "from": { "type": "string", "format": "date" },
+        "to": { "type": "string", "format": "date" }
+      },
+      "required": ["from", "to"]
+    },
+    "activities_published": { "type": "integer", "minimum": 0 },
+    "reports_generated": { "type": "integer", "minimum": 0 },
+    "observations_recorded": { "type": "integer", "minimum": 0 },
+    "institutional_metrics": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "avg_attendance_taken_minutes": { "type": "number" },
+        "announcement_read_rate_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "communication_response_rate_pct": { "type": "number", "minimum": 0, "maximum": 100 }
+      }
+    },
+    "highlights": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "type": { "type": "string", "enum": ["activity", "report", "observation", "announcement"] },
+          "title": { "type": "string" },
+          "date": { "type": "string", "format": "date" },
+          "description": { "type": "string" }
+        },
+        "required": ["type", "title", "date"]
+      }
+    }
+  },
+  "required": ["teacher_id", "teacher_name", "period", "activities_published", "reports_generated", "observations_recorded", "highlights"]
+}
+```
+
+---
+
+## 29) `generate_teacher_portfolio_pdf@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.generate_teacher_portfolio_pdf.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "teacher_id": { "type": "string", "minLength": 1 },
+    "period": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "from": { "type": "string", "format": "date" },
+        "to": { "type": "string", "format": "date" }
+      },
+      "required": ["from", "to"]
+    },
+    "mode": { "type": "string", "enum": ["internal", "external"] },
+    "include_highlights_count": { "type": "integer", "minimum": 1, "maximum": 20, "default": 5 },
+    "idempotency_key": { "type": "string", "minLength": 8 }
+  },
+  "required": ["teacher_id", "period", "mode", "idempotency_key"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.generate_teacher_portfolio_pdf.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "status": { "type": "string", "enum": ["ready", "processing"] },
+    "pdf_url": { "type": ["string", "null"], "format": "uri" },
+    "job_id": { "type": ["string", "null"] },
+    "estimated_ready_at": { "type": ["string", "null"], "format": "date-time" },
+    "generated_at": { "type": ["string", "null"], "format": "date-time" },
+    "mode": { "type": "string", "enum": ["internal", "external"] }
+  },
+  "required": ["status", "pdf_url", "job_id", "mode"]
+}
+```
+
+---
+
+## 30) `activate_event_mode@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.activate_event_mode.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "event_id": { "type": "string", "minLength": 1 },
+    "correspondent_user_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "photo_blocked": { "type": "boolean", "default": false },
+    "active_window": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "start_at": { "type": "string", "format": "date-time" },
+        "end_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["start_at", "end_at"]
+    },
+    "target_audience": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "grade_ids": { "type": "array", "items": { "type": "string" } },
+        "all_school": { "type": "boolean" }
+      }
+    },
+    "idempotency_key": { "type": "string", "minLength": 8 }
+  },
+  "required": ["event_id", "correspondent_user_ids", "photo_blocked", "active_window", "idempotency_key"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.activate_event_mode.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "success": { "type": "boolean" },
+    "event_id": { "type": "string" },
+    "event_mode_id": { "type": "string" },
+    "activated_at": { "type": "string", "format": "date-time" },
+    "photo_blocked": { "type": "boolean" },
+    "active_until": { "type": "string", "format": "date-time" },
+    "correspondents_enabled": { "type": "integer", "minimum": 1 }
+  },
+  "required": ["success", "event_id", "event_mode_id", "activated_at", "photo_blocked", "active_until", "correspondents_enabled"]
+}
+```
+
+---
+
+## 31) `publish_event_update@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.publish_event_update.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "event_id": { "type": "string", "minLength": 1 },
+    "text": { "type": "string", "minLength": 1, "maxLength": 1000 },
+    "photo_upload_ids": { "type": "array", "items": { "type": "string" } },
+    "update_type": { "type": "string", "enum": ["text", "photo", "milestone"], "default": "text" },
+    "idempotency_key": { "type": "string", "minLength": 8 }
+  },
+  "required": ["event_id", "text", "idempotency_key"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.publish_event_update.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "success": { "type": "boolean" },
+    "update_id": { "type": "string" },
+    "published_at": { "type": "string", "format": "date-time" },
+    "photo_blocked_warning": { "type": "boolean" },
+    "recipients_notified": { "type": "integer", "minimum": 0 }
+  },
+  "required": ["success", "update_id", "published_at", "photo_blocked_warning", "recipients_notified"]
+}
+```
+
+---
+
+## 32) `generate_event_album@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.generate_event_album.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "event_id": { "type": "string", "minLength": 1 },
+    "include_text_updates": { "type": "boolean", "default": true },
+    "share_with_families": { "type": "boolean", "default": true },
+    "idempotency_key": { "type": "string", "minLength": 8 }
+  },
+  "required": ["event_id", "idempotency_key"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.generate_event_album.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "status": { "type": "string", "enum": ["ready", "processing"] },
+    "album_id": { "type": "string" },
+    "album_url": { "type": ["string", "null"], "format": "uri" },
+    "job_id": { "type": ["string", "null"] },
+    "total_updates": { "type": "integer", "minimum": 0 },
+    "total_photos": { "type": "integer", "minimum": 0 },
+    "families_notified": { "type": "integer", "minimum": 0 }
+  },
+  "required": ["status", "album_id", "album_url", "job_id", "total_updates", "total_photos", "families_notified"]
 }
 ```

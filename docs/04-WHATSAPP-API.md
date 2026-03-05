@@ -1,7 +1,8 @@
 # Vujy — Evaluación de Integración WhatsApp Business API
 
-**Versión:** 1.0
-**Fecha:** 4 de marzo de 2026
+**Versión:** 2.0
+**Fecha:** 2026-03-05 (v1.0: 2026-03-04)
+**Decisión cerrada:** Meta Cloud API directo desde MVP · Opción A (número virtual por escuela)
 **Relacionado con:** SPEC.md §13 · constitution.md Principio II (Ubicuidad Multicanal)
 
 ---
@@ -363,51 +364,76 @@ bienvenida. Costo de número virtual: $0–5 USD/mes según el proveedor de tele
 
 ---
 
-## 7. Recomendación
+## 7. Decisión — v2.0 (2026-03-05)
 
-### Decisión para MVP
+> **Cambio respecto a v1.0**: la recomendación original era Twilio para MVP. La decisión definitiva es Meta Cloud API directa desde el primer día.
 
-**Usar Twilio como BSP para el MVP**, migrando a Meta Cloud API (Tech Provider) al superar
-las 20–30 escuelas activas.
+### Decisiones cerradas
 
-**Justificación:**
+| Decisión | Resolución |
+|----------|-----------|
+| **Proveedor** | **Meta Cloud API (Tech Provider Program)** — sin BSP intermediario |
+| **Número por escuela** | **Opción A: número virtual nuevo por escuela** |
+| **Migración de número existente** | No aplica para MVP — solo nuevos números |
+
+### Justificación del cambio a Meta Cloud API directo
 
 | Factor | Detalle |
 |--------|---------|
-| Time-to-market | Twilio: integración en días. Meta Tech Provider: 60-90 días de revisión. |
-| DX | SDK de Twilio para Node.js/Python es superior; menor fricción para el primer producto |
-| Costo incremental | El sobrecosto de Twilio vs. Meta directo es ~$15–20/escuela/mes. Con 10 escuelas en MVP: $150-200/mes total. Ruido frente al riesgo de retraso. |
-| Escalabilidad | Twilio Subaccounts permite aislamiento real de tenants con facturación separada |
-| Soporte | Soporte 24/7 de Twilio reduce el riesgo operativo en el MVP |
-| Migración | La migración a Meta directo es posible sin cambiar la arquitectura de webhooks ni los números de las escuelas |
+| **Costo** | $0 de BSP fees — solo tarifa Meta ($0.026/msg utility). A 10 escuelas MVP, ahorro de ~$70–120 USD/mes vs. Twilio |
+| **Sin dependencia de terceros** | Arquitectura más simple; un proveedor menos que gestionar |
+| **Control total** | Acceso directo a la Graph API, webhooks propios, sin limitaciones del SDK de Twilio |
+| **Escala** | No hay migración pendiente — la misma arquitectura escala hasta N escuelas |
+| **Número virtual nuevo** | Más simple de provisionar; costo $0–5/mes por número; eliminamos el riesgo de migración de número existente |
 
-### Hoja de ruta
+### Implicación crítica: verificación como Tech Provider
 
-| Fase | Proveedor | Trigger |
-|------|-----------|---------|
-| **MVP (0–20 escuelas)** | Twilio | Desde el día 1 |
-| **Escala temprana (20–50 escuelas)** | 360dialog Partner | Cuando el costo BSP supere $1.500 USD/mes |
-| **Escala (50+ escuelas)** | Meta Cloud API Tech Provider | Cuando el proceso de verificación valga el esfuerzo |
+El proceso de verificación de Vujy como **Meta Tech Provider** toma **60–90 días**. Este proceso debe iniciarse **inmediatamente** — es el único bloqueante de esta decisión.
+
+```
+Vujy se registra como Tech Provider en Meta Business Platform
+→ Meta revisa y aprueba (60-90 días)
+→ Vujy puede provisionar WABAs para sus escuelas clientes sin que cada escuela vaya al Business Manager
+→ Cada escuela obtiene un número virtual + WABA propio en el panel de Vujy
+```
+
+Sin la verificación de Tech Provider, cada escuela debe verificar su propio Facebook Business Manager manualmente — el flujo de onboarding se vuelve inviable a escala.
+
+### Arquitectura de integración (Opción A — número virtual por escuela)
+
+```
+Vujy (Tech Provider verificado por Meta)
+    ├── Escuela A: WABA-001 · número virtual · display "Colegio San Martín"
+    ├── Escuela B: WABA-002 · número virtual · display "Instituto Belgrano"
+    └── Escuela C: WABA-003 · número virtual · display "Jardín Los Pinos"
+
+Webhook único de Vujy → routing por número de destino (WABA ID) → tenant correcto
+```
+
+Cada número virtual cuesta $0–5 USD/mes (proveedor de telefonía, no Meta). Meta no cobra por el número.
+
+### Costo total WhatsApp/escuela/mes (actualizado)
+
+| Concepto | Costo |
+|----------|-------|
+| Meta fees (utility templates, escenario base) | ~$25–32 USD |
+| BSP fees | **$0** |
+| Número virtual | ~$0–5 USD |
+| **Total** | **~$25–37 USD/escuela/mes** |
+
+Con batching + triggers inteligentes (ver §5): **~$16–22 USD/escuela/mes**.
 
 ### Próximos pasos técnicos
 
-1. **Registrar cuenta Twilio** y activar el canal WhatsApp Business
-2. **Crear un WABA de prueba** con un número virtual de sandbox para el primer piloto
-3. **Definir los templates** que necesitan pre-aprobación (resumen semanal, recordatorio de cuota,
-   bienvenida, comunicado escolar)
-4. **Implementar el handler de webhooks** con routing multi-tenant por número de destino
-5. **Diseñar el flujo de opt-in** para padres al momento de inscripción (consentimiento explícito,
-   opción STOP)
-6. **Medir el volumen real** de utility templates en el primer mes de piloto para ajustar
-   la estimación de costos antes de escalar
+1. **Iniciar verificación como Tech Provider en Meta** — URGENTE, 60-90 días de lead time
+2. **Definir los templates MVP** para pre-aprobación (ver `TODO(TEMPLATE_LIBRARY)`)
+3. **Implementar el handler de webhooks** con routing multi-tenant por WABA ID
+4. **Provisionar número virtual de sandbox** para desarrollo y pruebas (puede hacerse antes de la verificación con un número de prueba)
+5. **Diseñar el flujo de onboarding de escuela** que provisioné el WABA + número desde el panel de Vujy
 
 ### Decisiones pendientes derivadas
 
-- `TODO(WHATSAPP_NUMBER_STRATEGY)`: ¿número virtual nuevo por escuela o migración de número existente?
-  Depende del primer colegio piloto.
 - `TODO(TEMPLATE_LIBRARY)`: definir el set mínimo de templates para MVP y someterlos a aprobación de Meta
-- `TODO(OPTIN_FLOW)`: diseñar el flujo de consentimiento explícito de padres integrado con el
-  onboarding de la escuela
 
 ---
 

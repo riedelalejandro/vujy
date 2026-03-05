@@ -7,7 +7,7 @@ Guía de contexto para agentes IA trabajando en este repositorio.
 **Vujy** es una plataforma educativa SaaS B2B para escuelas privadas argentinas (inicial, primaria, secundaria). El diferencial es un asistente conversacional IA multicanal (WhatsApp + app + web) que sirve a todos los actores: administradores, docentes, padres y alumnos.
 
 - Dominio: vujy.app
-- Stack: Next.js + TypeScript (Vercel) · React Native + Expo · Supabase (Postgres + RLS + Auth + Storage) · Claude API + function calling/MCPs · Twilio (WhatsApp MVP) · Mercado Pago
+- Stack: Next.js + TypeScript (Vercel) · React Native + Expo · Supabase (Postgres + RLS + Auth + Storage) · Claude API + function calling/MCPs · Meta Cloud API directo (WhatsApp, sin BSP) · Mercado Pago
 - Multi-tenancy: shared DB + Row Level Security (school_id en todas las tablas)
 - Auth: magic link (staff/padres app+web) · OTP por teléfono (padres WhatsApp)
 - IA: function calling como primario (datos estructurados en tiempo real) · pgvector RAG solo para contenido no estructurado (observaciones docentes, documentos)
@@ -20,8 +20,16 @@ Guía de contexto para agentes IA trabajando en este repositorio.
 | `docs/01-SPEC.md` | Especificación de producto completa (fuente de verdad de negocio) |
 | `docs/02-API-SPEC.md` | System prompts, tools por perfil, estrategia RAG, guardarraíles |
 | `docs/03-BENCHMARKING.md` | Análisis competitivo del mercado EdTech argentino |
-| `docs/04-WHATSAPP-API.md` | Evaluación WhatsApp API · decisión: Twilio MVP → Meta Cloud API a escala |
+| `docs/04-WHATSAPP-API.md` | WhatsApp API · decisión: Meta Cloud API directo desde MVP · Opción A (número virtual por escuela) |
 | `docs/05-ARCHITECTURE.md` | Arquitectura técnica — fuente de verdad de decisiones de stack |
+| `docs/09-MCP-DEFINITIONS.md` | Catálogo canónico de 43 tools MCP — roles, errores, mapeo CDU→tool |
+| `docs/10-MCP-SCHEMAS.md` | JSON Schemas Draft 2020-12 para todas las tools |
+| `docs/cdu/README.md` | Índice de los 73 CDUs por perfil (v2.0) |
+| `docs/12-CDU-DECISOR-90-10.md` | Decisiones 90/10 sobre CDUs — rationale de cada elección |
+| `docs/13-CDU-DATASOURCE-SLA.md` | Mapeo CDU→fuente de datos (SQL/RAG/GEN-IA) + SLA máx. en ms para los 73 CDUs |
+| `docs/14-WHATSAPP-TEMPLATE-LIBRARY.md` | 11 templates de WhatsApp con spec completa (variables, botones, categoría Meta) |
+| `docs/15-MIGRATIONS-STRATEGY.md` | Estrategia de migraciones Supabase CLI · esquema completo · RLS policies · acceso admin |
+| `docs/16-DATA-REGULATION-BRIEF.md` | Brief legal para asesor: base legal menores, DPA Anthropic, retención, consentimiento · PENDIENTE validación |
 | `.specify/memory/constitution.md` | Constitución del proyecto — principios rectores, vinculante |
 
 ## Principios rectores (constitución v1.0.0)
@@ -59,10 +67,10 @@ El desarrollo sigue este ciclo en orden obligatorio:
 
 ## TODOs pendientes antes de implementar
 
-- `TODO(CDU_BY_PROFILE)`: definir y cerrar todos los casos de uso por perfil (padre, docente, admin, alumno) antes de bajar a MCPs/tools
-- `TODO(MCP_DEFINITIONS)`: definir catálogo completo de MCPs/tools por perfil con contratos de input/output (derivado de CDU_BY_PROFILE)
-- `TODO(MIGRATIONS_STRATEGY)`: definir estrategia de migraciones de Supabase para esquema multi-tenant con RLS
-- `TODO(DATA_REGULATION)`: investigar normativa argentina sobre datos de menores de edad (impacta FR-020 y FR-023)
-- `TODO(WHATSAPP_NUMBER_STRATEGY)`: número virtual nuevo por escuela vs migración de número existente
-- `TODO(TEMPLATE_LIBRARY)`: definir set mínimo de templates de WhatsApp para MVP y aprobación de Meta
-- `TODO(OPTIN_FLOW)`: diseñar flujo de consentimiento explícito de padres integrado con onboarding de la escuela
+- ~~`TODO(CDU_BY_PROFILE)`~~ ✅ **CERRADO** — 73 CDUs definitivos en `docs/cdu/` · decisor 90/10 en `docs/12-CDU-DECISOR-90-10.md`
+- ~~`TODO(MCP_DEFINITIONS)`~~ ✅ **CERRADO** — 43 tools canónicas en `docs/09-MCP-DEFINITIONS.md` · schemas JSON en `docs/10-MCP-SCHEMAS.md`
+- ~~`TODO(MIGRATIONS_STRATEGY)`~~ ✅ **CERRADO** — Supabase CLI nativo · esquema completo 25+ tablas · RLS policies · admin access pattern en `docs/15-MIGRATIONS-STRATEGY.md`
+- `TODO(DATA_REGULATION)`: ~~pendiente~~ brief técnico generado en `docs/16-DATA-REGULATION-BRIEF.md` · **BLOQUEANTE**: requiere dictamen legal externo + DPA Anthropic antes de usar datos reales
+- ~~`TODO(WHATSAPP_NUMBER_STRATEGY)`~~ ✅ **CERRADO** — Meta Cloud API directo (sin BSP) · Opción A: número virtual nuevo por escuela · **ACCIÓN URGENTE: iniciar verificación Tech Provider Meta (60-90 días)**
+- ~~`TODO(TEMPLATE_LIBRARY)`~~ ✅ **CERRADO** — 11 templates definidos en `docs/14-WHATSAPP-TEMPLATE-LIBRARY.md` · 5 P0 bloqueantes + 4 P1 MVP + 2 P2 · **ACCIÓN URGENTE: someter P0 a aprobación Meta (semana 1)**
+- ~~`TODO(OPTIN_FLOW)`~~ ✅ **CERRADO** — CDU-CROSS-005 + `register_consent@v1` + `get_consent_status@v1` como gate universal
