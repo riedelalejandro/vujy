@@ -91,3 +91,5 @@ Asistente: [registra consentimiento básico por WA]
 - La redacción del aviso debe ser validada con al menos 5 padres de distinto nivel socioeducativo antes del lanzamiento del MVP.
 
 **Marco normativo:** Ley 25.326 (Protección de Datos Personales), Ley 26.061 (Derechos de NNyA), Disposición DNPDP 10/2015.
+
+**Excepción documentada — Principio VI (Cero Fricción):** Este CDU introduce fricción deliberada (checkboxes, lectura obligatoria, gate bloqueante) en contradicción con el Principio VI de la Constitución. La excepción es necesaria e intencional: sin consentimiento legal no puede haber datos de menores en el sistema. La ley 25.326 exige consentimiento informado explícito — no existe alternativa de menor fricción que sea legalmente válida.

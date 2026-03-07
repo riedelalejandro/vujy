@@ -22,7 +22,7 @@ Guía de contexto para agentes IA trabajando en este repositorio.
 | `docs/03-BENCHMARKING.md` | Análisis competitivo del mercado EdTech argentino |
 | `docs/04-WHATSAPP-API.md` | WhatsApp API · decisión: Meta Cloud API directo desde MVP · Opción A (número virtual por escuela) |
 | `docs/05-ARCHITECTURE.md` | Arquitectura técnica — fuente de verdad de decisiones de stack |
-| `docs/09-MCP-DEFINITIONS.md` | Catálogo canónico de 43 tools MCP — roles, errores, mapeo CDU→tool |
+| `docs/09-MCP-DEFINITIONS.md` | Catálogo canónico de 44 tools MCP — roles, errores, mapeo CDU→tool |
 | `docs/10-MCP-SCHEMAS.md` | JSON Schemas Draft 2020-12 para todas las tools |
 | `docs/cdu/README.md` | Índice de los 73 CDUs por perfil (v2.0) |
 | `docs/12-CDU-DECISOR-90-10.md` | Decisiones 90/10 sobre CDUs — rationale de cada elección |
@@ -30,6 +30,7 @@ Guía de contexto para agentes IA trabajando en este repositorio.
 | `docs/14-WHATSAPP-TEMPLATE-LIBRARY.md` | 11 templates de WhatsApp con spec completa (variables, botones, categoría Meta) |
 | `docs/15-MIGRATIONS-STRATEGY.md` | Estrategia de migraciones Supabase CLI · esquema completo · RLS policies · acceso admin |
 | `docs/16-DATA-REGULATION-BRIEF.md` | Brief legal para asesor: base legal menores, DPA Anthropic, retención, consentimiento · PENDIENTE validación |
+| `docs/17-IMPLEMENTATION-PLAN.md` | Plan de implementación: 12 entregables verticales con grafo de dependencias y mapeo CDU→entregable |
 | `.specify/memory/constitution.md` | Constitución del proyecto — principios rectores, vinculante |
 
 ## Principios rectores (constitución v1.0.0)
@@ -60,6 +61,8 @@ El desarrollo sigue este ciclo en orden obligatorio:
 - Los mensajes de commit siguen el formato convencional: `type: descripción`
 
 ## Seguridad y Auditoría (NON-NEGOTIABLE)
+
+> **Fuente canónica:** `docs/05-ARCHITECTURE.md §8 Security Gates`. Esta sección es un resumen operativo para agentes; ante divergencia, el documento de arquitectura prevalece.
 
 ### Gate pre-build (BLOQUEANTE)
 
@@ -127,12 +130,12 @@ Antes de cualquier `git push`, el agente MUST revisar que el código no introduc
 
 | Feature | Rama | Estado |
 |---------|------|--------|
-| 001-educational-platform | `001-educational-platform` | Spec completa — pendiente `/speckit.plan` |
+| 001-educational-platform | `001-educational-platform` | Spec completa · plan de implementación en `docs/17-IMPLEMENTATION-PLAN.md` · pendiente `/speckit.plan` por entregable |
 
 ## TODOs pendientes antes de implementar
 
 - ~~`TODO(CDU_BY_PROFILE)`~~ ✅ **CERRADO** — 73 CDUs definitivos en `docs/cdu/` · decisor 90/10 en `docs/12-CDU-DECISOR-90-10.md`
-- ~~`TODO(MCP_DEFINITIONS)`~~ ✅ **CERRADO** — 43 tools canónicas en `docs/09-MCP-DEFINITIONS.md` · schemas JSON en `docs/10-MCP-SCHEMAS.md`
+- ~~`TODO(MCP_DEFINITIONS)`~~ ✅ **CERRADO** — 44 tools canónicas en `docs/09-MCP-DEFINITIONS.md` · schemas JSON en `docs/10-MCP-SCHEMAS.md`
 - ~~`TODO(MIGRATIONS_STRATEGY)`~~ ✅ **CERRADO** — Supabase CLI nativo · esquema completo 25+ tablas · RLS policies · admin access pattern en `docs/15-MIGRATIONS-STRATEGY.md`
 - `TODO(DATA_REGULATION)`: ~~pendiente~~ brief técnico generado en `docs/16-DATA-REGULATION-BRIEF.md` · **BLOQUEANTE**: requiere dictamen legal externo + DPA Anthropic antes de usar datos reales
 - ~~`TODO(WHATSAPP_NUMBER_STRATEGY)`~~ ✅ **CERRADO** — Meta Cloud API directo (sin BSP) · Opción A: número virtual nuevo por escuela · **ACCIÓN URGENTE: iniciar verificación Tech Provider Meta (60-90 días)**
