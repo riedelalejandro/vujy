@@ -117,6 +117,12 @@ No forma parte del MVP. La estrategia de autenticación del MVP está resuelta.
 **API routes como backend unificado:** el frontend web y la app mobile consumen los mismos
 endpoints en `/app/api`. No hay un servidor backend separado.
 
+**Paridad UI — perfiles ADM y DOC (Constitución §II Corolario):** Toda acción ejecutable
+por el asistente para estos perfiles MUST tener una ruta de UI estructurada equivalente en
+app y web (formulario, dashboard o flujo guiado). Implicación arquitectónica: cada endpoint
+de API que sirva a ADM/DOC desde el asistente MUST estar también consumible desde un
+componente de UI. Los perfiles PAD y ALU están exentos.
+
 **Supabase Edge Functions** para operaciones que deben correr cerca de la base de datos:
 triggers internos, procesamiento de eventos en tiempo real, cron jobs.
 
@@ -207,18 +213,20 @@ Supabase Database Branching permite tener una branch de DB por cada PR de Vercel
 
 **PR (feature → main):**
 ```
-lint → typecheck → tests unitarios → preview deploy (Vercel automático)
+npm audit (0 HIGH/CRITICAL) → lint → typecheck → tests unitarios → preview deploy (Vercel automático)
 ```
 
 **Merge a main:**
 ```
-tests → migraciones Supabase (staging) → deploy Vercel staging → smoke tests → producción
+npm audit → tests → migraciones Supabase (staging) → deploy Vercel staging → smoke tests → producción
 ```
 
 **Tag `v*.*.*`:**
 ```
-Expo EAS build (iOS + Android) → submit a App Store / Play Store
+npm audit → Expo EAS build (iOS + Android) → submit a App Store / Play Store
 ```
+
+> `npm audit --audit-level=high` es un **gate bloqueante** en todos los pipelines. Un resultado con vulnerabilidades HIGH o CRITICAL detiene el pipeline. No se puede hacer merge ni build sin resolverlas.
 
 ### Observabilidad
 
@@ -231,7 +239,66 @@ Expo EAS build (iOS + Android) → submit a App Store / Play Store
 
 ---
 
-## 8. Pendientes
+## 8. Security Gates
+
+### Principio general
+
+**Ningún build ni push puede ejecutarse sin pasar los gates de seguridad.** Esto aplica a frontend (Next.js), backend (API routes), mobile (Expo) y migraciones (Supabase).
+
+### Gate 1 — Auditoría de dependencias (pre-build)
+
+| Check | Comando | Umbral bloqueante |
+|-------|---------|-------------------|
+| Vulnerabilidades conocidas | `npm audit --audit-level=high` | 0 HIGH / 0 CRITICAL |
+| Paquetes desactualizados con CVE | `npm outdated` | revisar manualmente |
+| Integridad del lock file | `package-lock.json` commiteado | obligatorio |
+
+### Gate 2 — Revisión de seguridad (pre-push)
+
+Obligatorio cuando el cambio afecta cualquiera de estas áreas:
+
+| Área | Riesgo principal | OWASP 2025 |
+|------|-----------------|------------|
+| Rutas API (`app/api/**`) | Endpoint sin auth, exposición de datos | A01, A07 |
+| Middleware de auth | Bypass de sesión, fail-open | A07, A10 |
+| Políticas RLS / queries Supabase | Cross-tenant data leak, IDOR | A01 |
+| Webhooks (WhatsApp, Mercado Pago) | Requests no verificados, replay attacks | A07, A08 |
+| Variables de entorno | Secrets en client bundle | A04 |
+| Nuevas dependencias | Supply chain, typosquatting | A03 |
+| Manejo de errores | Stack traces expuestos, fail-open | A10 |
+
+### Checks específicos del stack
+
+**RLS (multi-tenant):**
+- Toda tabla nueva: `ALTER TABLE x ENABLE ROW LEVEL SECURITY` + política con `school_id`
+- Verificar que ninguna query de servicio omita el filtro de tenant
+
+**WhatsApp webhook** (`app/api/webhooks/whatsapp`):
+- Verificar `X-Hub-Signature-256` con HMAC-SHA256 del `APP_SECRET`
+- Fail-closed: `401` inmediato si la firma no coincide
+
+**Mercado Pago webhook:**
+- Verificar firma `x-signature` + `x-request-id` antes de procesar
+- Idempotencia: tabla de `processed_events` para evitar doble procesamiento
+
+**Claude API / Function calling:**
+- Toda tool MUST recibir y propagar `school_id` del contexto de sesión
+- Los datos retornados al LLM MUST estar filtrados por tenant antes de enviarse
+
+**Client bundle (Next.js):**
+- Solo variables con prefijo `NEXT_PUBLIC_` llegan al browser
+- Ningún secret, token de API ni credencial puede tener ese prefijo
+
+**Supabase Storage:**
+- Buckets de datos de alumnos: `public = false`
+- Acceso mediante signed URLs con expiración corta (≤ 1 hora)
+
+### Skill obligatorio
+
+Usar `/vulnerability-scanner` en PRs que toquen las áreas listadas arriba.
+Usar `/code-review-checklist` como check complementario en todo PR.
+
+## 9. Pendientes
 
 | ID | Descripción | Prioridad |
 |----|-------------|-----------|
@@ -246,3 +313,13 @@ Expo EAS build (iOS + Android) → submit a App Store / Play Store
 ---
 
 *Vujy · vujy.app — Arquitectura Técnica v1.0 · Marzo 2026*
+
+---
+
+## Runbook operativo inicial (Plan 001)
+
+1. Setear variables en `.env` usando `.env.example`.
+2. Verificar contratos MCP con `npm run validate:mcp-schemas`.
+3. Ejecutar pruebas de harness/contratos/integración del plan.
+4. Habilitar monitoreo de auditoría para invocaciones de tools.
+5. Validar aislamiento multi-tenant antes de cualquier piloto con datos reales.
