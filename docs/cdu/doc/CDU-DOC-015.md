@@ -8,7 +8,7 @@
 
 **Prioridad:** P2 | **Origen:** `[Innovation]`
 **Actor:** Docente (protección) · Padre (contención)
-**Canales:** App · WhatsApp
+**Canales:** App · Web · WhatsApp
 
 **Trigger:** Un padre envía un mensaje a la docente fuera del horario laboral (ej: 22:30). El asistente intercepta y gestiona.
 

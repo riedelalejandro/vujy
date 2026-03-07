@@ -8,7 +8,7 @@
 
 **Prioridad:** P1 | **Origen:** `[Base]`
 **Actor:** Docente
-**Canales:** App · WhatsApp
+**Canales:** App · Web · WhatsApp
 
 **Trigger:** La docente dicta o escribe notas en lenguaje natural. Ejemplo: "Notas de matemática 3ro B: Mati 8, Sofi 9, Juani 6".
 

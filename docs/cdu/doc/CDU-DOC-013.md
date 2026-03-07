@@ -8,7 +8,7 @@
 
 **Prioridad:** P2 | **Origen:** `[Base]`
 **Actor:** Profesor de secundaria
-**Canales:** App · WhatsApp
+**Canales:** App · Web · WhatsApp
 
 **Trigger:** El profesor consulta sobre previas en su materia. Ejemplo: "¿Quiénes tienen materias previas en 4to A?".
 

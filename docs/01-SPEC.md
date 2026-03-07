@@ -75,6 +75,8 @@ El asistente mantiene la misma configuración de perfil sin importar el canal:
 - WhatsApp Business API
 - Notificaciones push inteligentes
 
+**Paridad UI para perfiles de staff (ADM y DOC):** Toda funcionalidad accesible mediante el asistente para los perfiles Administrador/Directivo/Secretaría y Docente MUST estar también disponible como ruta de UI estructurada (formulario, dashboard o flujo guiado) en app y web. La conversación es la ruta preferida; la UI es el fallback garantizado. Los perfiles Padre/Tutor y Alumno están exentos de este requisito — su experiencia puede ser predominantemente conversacional.
+
 ---
 
 ## 4. Funcionalidades por Actor

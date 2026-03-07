@@ -8,7 +8,7 @@
 
 **Prioridad:** P1 | **Origen:** `[Base]`
 **Actor:** Docente
-**Canales:** App
+**Canales:** App · Web
 
 **Trigger:** La docente abre la lista de asistencia y marca individualmente. Variante táctil documentada en el SPEC como "por toque".
 

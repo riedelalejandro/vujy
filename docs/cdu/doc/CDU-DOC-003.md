@@ -8,7 +8,7 @@
 
 **Prioridad:** P1 | **Origen:** `[Base]`
 **Actor:** Docente
-**Canales:** App · WhatsApp
+**Canales:** App · Web · WhatsApp
 
 **Trigger:** La docente dicta o escribe un comunicado en lenguaje natural. Ejemplo: "Mandá comunicado a 3ro B, el viernes hay acto, vengan de blanco y traigan algo para compartir".
 

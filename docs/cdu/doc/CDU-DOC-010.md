@@ -8,7 +8,7 @@
 
 **Prioridad:** P2 | **Origen:** `[Extension]`
 **Actor:** Docente
-**Canales:** App · WhatsApp
+**Canales:** App · Web · WhatsApp
 
 **Trigger:** La docente consulta cuántos padres leyeron un comunicado. Ejemplo: "¿Cuántos papás leyeron el comunicado del acto?".
 

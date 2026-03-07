@@ -8,7 +8,7 @@
 
 **Prioridad:** P2 | **Origen:** `[Base]`
 **Actor:** Docente
-**Canales:** App
+**Canales:** App · Web
 
 **Trigger:** La docente solicita sugerencias pedagógicas. Ejemplos: "¿Qué actividades puedo hacer para introducir fracciones en 4to?", "Ayudame a planificar la unidad de ecosistemas".
 

@@ -8,7 +8,7 @@
 
 **Prioridad:** P1 | **Origen:** `[Base]`
 **Actor:** Docente
-**Canales:** App · WhatsApp
+**Canales:** App · Web · WhatsApp
 
 **Trigger:** La docente dicta o escribe una observación sobre un alumno durante o después de la clase. Ejemplos: "Mati participó mucho en ciencias, le interesan los planetas" / "Sofi confunde la d y la b".
 

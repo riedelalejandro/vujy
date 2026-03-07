@@ -8,7 +8,7 @@
 
 **Prioridad:** P2 | **Origen:** `[Extension]`
 **Actor:** Docente
-**Canales:** App · WhatsApp
+**Canales:** App · Web · WhatsApp
 
 **Trigger:** La docente consulta el panorama de un alumno particular. Ejemplos: "¿Cómo viene Lucas este trimestre?", "¿Cuántas faltas tiene Valentina?".
 

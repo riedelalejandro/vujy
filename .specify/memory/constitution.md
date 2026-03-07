@@ -48,6 +48,14 @@ permitidos solo si están documentados como tales en el spec correspondiente.
 Rationale: Los usuarios terminan en WhatsApp porque las plataformas existentes son
 incómodas. La ubicuidad es el mecanismo de adopción, no una feature opcional.
 
+**Corolario — Paridad UI para perfiles de staff:** Los perfiles ADM (Administrador /
+Directivo / Secretaría) y DOC (Docente) operan predominantemente en contextos de
+escritorio. Para estos perfiles, toda funcionalidad que el asistente pueda ejecutar
+MUST estar también disponible como ruta estructurada (formulario, dashboard o flujo
+guiado) en app y web. La conversación sigue siendo la ruta preferida; la interfaz de
+usuario es la ruta de fallback garantizada. Este corolario no aplica a PAD ni ALU:
+su experiencia puede ser predominantemente conversacional o limitada a app.
+
 ### III. Privacidad y Seguridad de Menores (NON-NEGOTIABLE)
 
 Todo feature que procese datos de alumnos menores de edad MUST cumplir con la normativa

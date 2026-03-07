@@ -8,7 +8,7 @@
 
 **Prioridad:** P2 | **Origen:** `[Innovation]`
 **Actor:** Sistema → Docente (confidencial)
-**Canales:** App (solo a la docente, discreto)
+**Canales:** App · Web (solo visible para la docente — acceso discreto, sin exposición en listados generales)
 
 **Trigger:** El sistema detecta combinación de señales preocupantes en un alumno: aumento de ausencias, cese abrupto de interacción en la plataforma, y señales de malestar en conversaciones del alumno.
 

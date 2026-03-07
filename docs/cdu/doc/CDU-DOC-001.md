@@ -8,7 +8,7 @@
 
 **Prioridad:** P1 | **Origen:** `[Base]`
 **Actor:** Docente
-**Canales:** App · WhatsApp
+**Canales:** App · Web · WhatsApp
 
 **Trigger:** La docente informa ausencias en lenguaje natural al inicio del día. Ejemplos: "Hoy faltaron Mati López y Sofi Ruiz", "Hoy están todos", "Faltó Lucas".
 

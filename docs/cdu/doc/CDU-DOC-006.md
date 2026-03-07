@@ -8,7 +8,7 @@
 
 **Prioridad:** P1 | **Origen:** `[Base]`
 **Actor:** Docente
-**Canales:** App (la revisión y edición requiere interfaz mayor que WhatsApp)
+**Canales:** App · Web (la revisión y edición de borradores requiere interfaz mayor que WhatsApp)
 
 **Trigger:** La docente solicita el borrador del informe de un alumno al cierre del trimestre. Ejemplo: "Generame el informe de Lucas para el primer trimestre".
 

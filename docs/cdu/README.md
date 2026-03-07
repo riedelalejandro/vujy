@@ -31,24 +31,26 @@
 
 ## Docente (CDU-DOC)
 
+> **Paridad UI (Constitución §II Corolario):** todos los CDU-DOC MUST estar disponibles en App y Web como mínimo.
+
 | ID | Nombre | Prioridad | Origen | Canales |
 |----|--------|-----------|--------|---------|
-| [CDU-DOC-001](doc/CDU-DOC-001.md) | Toma de asistencia por voz | P1 | Base | App · WhatsApp |
-| [CDU-DOC-002](doc/CDU-DOC-002.md) | Toma de asistencia por lista (tap) | P1 | Base | App |
-| [CDU-DOC-003](doc/CDU-DOC-003.md) | Envío de comunicado a familias | P1 | Base | App · WhatsApp |
-| [CDU-DOC-004](doc/CDU-DOC-004.md) | Carga de calificaciones | P1 | Base | App · WhatsApp |
-| [CDU-DOC-005](doc/CDU-DOC-005.md) | Registro de observación pedagógica | P1 | Base | App · WhatsApp |
-| [CDU-DOC-006](doc/CDU-DOC-006.md) | Generación de informe pedagógico trimestral | P1 | Base | App |
-| [CDU-DOC-007](doc/CDU-DOC-007.md) | Creación de actividad educativa gamificada | P1 | Base | App |
-| [CDU-DOC-008](doc/CDU-DOC-008.md) | Consulta de estado de alumno específico | P2 | Extension | App · WhatsApp |
-| [CDU-DOC-009](doc/CDU-DOC-009.md) | Detección y seguimiento de alumnos en dificultad | P2 | Extension | App |
-| [CDU-DOC-010](doc/CDU-DOC-010.md) | Consulta de estadísticas de comunicados enviados | P2 | Extension | App · WhatsApp |
-| [CDU-DOC-011](doc/CDU-DOC-011.md) | Planificación didáctica asistida | P2 | Base | App |
-| [CDU-DOC-012](doc/CDU-DOC-012.md) | Registro del diario visual del día (nivel inicial) | P2 | Extension | App |
-| [CDU-DOC-013](doc/CDU-DOC-013.md) | Gestión de previas y seguimiento (secundaria) | P2 | Base | App · WhatsApp |
-| [CDU-DOC-014](doc/CDU-DOC-014.md) | Sugerencia proactiva de actividad de repaso antes de evaluación | P2 | Innovation | App |
-| [CDU-DOC-015](doc/CDU-DOC-015.md) | Barrera de horarios: filtrar mensajes de padres fuera de horario laboral | P2 | Innovation | App · WhatsApp |
-| [CDU-DOC-016](doc/CDU-DOC-016.md) | Alerta de bienestar emocional de alumno | P2 | Innovation | App |
+| [CDU-DOC-001](doc/CDU-DOC-001.md) | Toma de asistencia por voz | P1 | Base | App · Web · WhatsApp |
+| [CDU-DOC-002](doc/CDU-DOC-002.md) | Toma de asistencia por lista (tap) | P1 | Base | App · Web |
+| [CDU-DOC-003](doc/CDU-DOC-003.md) | Envío de comunicado a familias | P1 | Base | App · Web · WhatsApp |
+| [CDU-DOC-004](doc/CDU-DOC-004.md) | Carga de calificaciones | P1 | Base | App · Web · WhatsApp |
+| [CDU-DOC-005](doc/CDU-DOC-005.md) | Registro de observación pedagógica | P1 | Base | App · Web · WhatsApp |
+| [CDU-DOC-006](doc/CDU-DOC-006.md) | Generación de informe pedagógico trimestral | P1 | Base | App · Web |
+| [CDU-DOC-007](doc/CDU-DOC-007.md) | Creación de actividad educativa gamificada | P1 | Base | App · Web |
+| [CDU-DOC-008](doc/CDU-DOC-008.md) | Consulta de estado de alumno específico | P2 | Extension | App · Web · WhatsApp |
+| [CDU-DOC-009](doc/CDU-DOC-009.md) | Detección y seguimiento de alumnos en dificultad | P2 | Extension | App · Web |
+| [CDU-DOC-010](doc/CDU-DOC-010.md) | Consulta de estadísticas de comunicados enviados | P2 | Extension | App · Web · WhatsApp |
+| [CDU-DOC-011](doc/CDU-DOC-011.md) | Planificación didáctica asistida | P2 | Base | App · Web |
+| [CDU-DOC-012](doc/CDU-DOC-012.md) | Registro del diario visual del día (nivel inicial) | P2 | Extension | App · Web |
+| [CDU-DOC-013](doc/CDU-DOC-013.md) | Gestión de previas y seguimiento (secundaria) | P2 | Base | App · Web · WhatsApp |
+| [CDU-DOC-014](doc/CDU-DOC-014.md) | Sugerencia proactiva de actividad de repaso antes de evaluación | P2 | Innovation | App · Web |
+| [CDU-DOC-015](doc/CDU-DOC-015.md) | Barrera de horarios: filtrar mensajes de padres fuera de horario laboral | P2 | Innovation | App · Web · WhatsApp |
+| [CDU-DOC-016](doc/CDU-DOC-016.md) | Alerta de bienestar emocional de alumno | P2 | Innovation | App · Web |
 | [CDU-DOC-017](doc/CDU-DOC-017.md) ⚡ | Portfolio de impacto docente | P2 | Innovation | App · Web |
 
 ## Admin / Directivo (CDU-ADM)

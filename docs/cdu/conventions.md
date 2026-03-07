@@ -48,3 +48,11 @@
 > - Las conversaciones del alumno son confidenciales. Las alertas al equipo de orientación incluyen solo el patrón observable, nunca el contenido literal del chat.
 > - El canal WhatsApp está vedado para alumnos (menores de edad) de forma absoluta.
 > - Los datos de benchmark entre escuelas son estrictamente agregados y anonimizados.
+
+## Paridad UI para perfiles de staff (Corolario del Principio II)
+
+> **OBLIGATORIO para ADM y DOC.** Derivado del Corolario del Principio II de la Constitución:
+> - Toda acción que el asistente pueda ejecutar para los perfiles **ADM** y **DOC** MUST tener una ruta equivalente mediante formulario, dashboard o flujo guiado en **app y web**.
+> - La conversación es la ruta preferida; la UI estructurada es el fallback garantizado.
+> - Los perfiles **PAD** y **ALU** están excluidos de este requisito: su experiencia puede ser predominantemente conversacional o exclusiva de app.
+> - Todo CDU de perfil ADM o DOC MUST declarar `App · Web` en su campo **Canales** como mínimo. WhatsApp es opcional según la naturaleza del CDU.

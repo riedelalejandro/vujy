@@ -8,7 +8,7 @@
 
 **Prioridad:** P2 | **Origen:** `[Innovation]`
 **Actor:** Sistema → Docente (proactivo)
-**Canales:** App (push proactivo)
+**Canales:** App · Web (el push proactivo es nativo de App; Web muestra la sugerencia en el dashboard al abrir sesión)
 
 **Trigger:** El asistente detecta que hay una evaluación programada en los próximos 3 días y la docente no generó actividad de repaso aún.
 

@@ -8,7 +8,7 @@
 
 **Prioridad:** P2 | **Origen:** `[Extension]`
 **Actor:** Docente de nivel inicial
-**Canales:** App
+**Canales:** App · Web
 
 **Trigger:** La docente quiere publicar el resumen del día para las familias. Ejemplo: "Quiero publicar el diario de hoy", "Subí las fotos de la actividad".
 

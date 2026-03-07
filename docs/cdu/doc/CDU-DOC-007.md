@@ -8,7 +8,7 @@
 
 **Prioridad:** P1 | **Origen:** `[Base]`
 **Actor:** Docente
-**Canales:** App
+**Canales:** App · Web
 
 **Trigger:** La docente solicita la creación de una actividad gamificada. Ejemplo: "Creame una trivia de 8 preguntas sobre fotosíntesis para 5to, dificultad media".
 

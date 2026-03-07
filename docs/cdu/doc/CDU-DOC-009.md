@@ -8,7 +8,7 @@
 
 **Prioridad:** P2 | **Origen:** `[Extension]`
 **Actor:** Docente / Sistema (proactivo)
-**Canales:** App
+**Canales:** App · Web
 
 **Trigger:** Proactivo del sistema al detectar patrones, o la docente consulta. Ejemplos: "¿Quiénes necesitan más atención?", "¿Quiénes van mal en matemática?".
 
