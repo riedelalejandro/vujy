@@ -288,6 +288,7 @@ Respondé con *PAGAR* para gestionar el pago o ingresá a la app.
 | `{{5}}` | Fecha de vencimiento | 10 de marzo |
 
 > **Nota de implementación:** Las respuestas QUICK_REPLY `Pagar ahora` y `Ver estado de cuenta` abren una ventana de servicio de 24 h — la respuesta del asistente a esas acciones es *gratuita* (service message).
+> **Tool MCP:** Este template se envía mediante `create_collection_campaign@v1` (CDU-ADM-003) con segmentación por familia morosa, o directamente desde `send_announcement@v1` para recordatorios individuales (CDU-PAD-003). Ver `docs/09-MCP-DEFINITIONS.md`.
 
 ---
 
@@ -441,6 +442,8 @@ Respondé *REINSCRIBIR* para iniciar el proceso o ingresá a la app.
 | `{{3}}` | Año del ciclo | 2027 |
 | `{{4}}` | Fecha límite | 31 de marzo de 2026 |
 | `{{5}}` | Mensaje personalizado (puede ser vacío) | Mati está confirmado para 4to grado. |
+
+> **Tool MCP:** Este template se envía mediante `create_reenrollment_campaign@v1` (CDU-ADM-016) con segmentación automática en 3 grupos (confirmados, pendientes, en riesgo). Requiere aprobación explícita del admin antes de disparar. Ver `docs/09-MCP-DEFINITIONS.md`.
 
 ---
 
