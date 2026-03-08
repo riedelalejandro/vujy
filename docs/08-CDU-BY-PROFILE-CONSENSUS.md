@@ -1,10 +1,14 @@
-# Definicion CDU por Perfil (Consenso Multiagente — Historico)
+# ~~Definicion CDU por Perfil (Consenso Multiagente — Historico)~~
 
-> Documento historico de trabajo (iteracion previa de 32 CDUs).
-> El catalogo vigente y definitivo esta en `docs/cdu/README.md` (73 CDUs, v2.0).
-
-> **Estado de uso:** este documento es histórico y **no es fuente canónica operativa** para tools.
-> Para implementación real, usar `docs/09-MCP-DEFINITIONS.md` y `docs/10-MCP-SCHEMAS.md` con nomenclatura canónica `tool_name@v1`.
+> **DEPRECADO — NO USAR PARA IMPLEMENTACION**
+>
+> Este documento es un snapshot historico de la iteracion previa (32 CDUs, v1).
+> El naming de tools aqui (`get_resumen_alumno`, `registrar_ausencia`, etc.) esta **obsoleto**.
+>
+> **Fuentes canonicas vigentes:**
+> - Catalogo CDU definitivo (73 CDUs, v2.0): [`docs/cdu/README.md`](../cdu/README.md)
+> - Tools MCP canonicas (48 tools, naming `snake_case@v1`): [`docs/09-MCP-DEFINITIONS.md`](09-MCP-DEFINITIONS.md)
+> - JSON Schemas: [`docs/10-MCP-SCHEMAS.md`](10-MCP-SCHEMAS.md)
 
 Base: sintesis de 3 agentes en paralelo (Conservador, Mid-Level, Super Creativo) con convergencia sobre riesgo, valor MVP y factibilidad.
 

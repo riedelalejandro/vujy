@@ -16,11 +16,11 @@ Templates checked:
   ✅ .specify/templates/agent-file-template.md — No outdated refs; no updates needed
   ✅ README.md — Present and aligned with current documentation set
 Follow-up TODOs:
-  - TODO(CDU_BY_PROFILE): Define and close all use cases by role before finalizing MCP/tool catalog
-  - TODO(MCP_DEFINITIONS): Define full MCP/tool catalog by role with I/O contracts
-  - TODO(MIGRATIONS_STRATEGY): Define Supabase migrations strategy for multi-tenant schema + RLS
-  - TODO(DATA_REGULATION): Argentine minor data regulation research pending (SPEC.md §13)
-  - TODO(RATIFICATION_DATE): Set to 2026-03-04 (today); confirm with team if different date applies
+  - ✅ TODO(CDU_BY_PROFILE): CLOSED — 73 CDUs in docs/cdu/ + decisor 90/10 in docs/12-CDU-DECISOR-90-10.md
+  - ✅ TODO(MCP_DEFINITIONS): CLOSED — 48 tools in docs/09-MCP-DEFINITIONS.md + schemas in docs/10-MCP-SCHEMAS.md
+  - ✅ TODO(MIGRATIONS_STRATEGY): CLOSED — Supabase CLI native in docs/15-MIGRATIONS-STRATEGY.md
+  - TODO(DATA_REGULATION): OPEN — Brief in docs/16-DATA-REGULATION-BRIEF.md, PENDING external legal review + Anthropic DPA
+  - ✅ TODO(RATIFICATION_DATE): CLOSED — Ratified 2026-03-04
 -->
 
 # Vujy Constitution
@@ -102,22 +102,19 @@ facilidad de uso es requisito de negocio, no un nice-to-have.
 
 ## Arquitectura y Stack Técnico
 
-Decisiones de stack aprobadas (SPEC.md §7):
+Decisiones de stack aprobadas (SPEC.md §7, docs/05-ARCHITECTURE.md):
 
-- **Asistente IA**: Claude API (Anthropic) + RAG sobre datos por familia/escuela +
-  function calling para ejecutar acciones
-- **WhatsApp**: API oficial WhatsApp Business (Twilio / Meta directa / 360dialog)
-- **Backend**: Multi-tenant — cada escuela es un tenant aislado
-- **Frontend mobile**: React Native o Flutter (decisión pendiente por feature)
-- **Frontend web**: Web responsive
+- **Asistente IA**: Claude API (Anthropic) — function calling primario + pgvector RAG solo para contenido no estructurado
+- **WhatsApp**: Meta Cloud API directo (sin BSP) — número virtual por escuela (docs/04-WHATSAPP-API.md v2.0)
+- **Backend**: Next.js + TypeScript (Vercel) — multi-tenant con Supabase RLS (school_id)
+- **Frontend mobile**: React Native + Expo
+- **Frontend web**: Next.js App Router (web responsive)
 - **Pagos**: Mercado Pago
+- **DB**: Supabase (Postgres + RLS + Auth + Storage)
 
-Decisiones pendientes que MUST ser resueltas antes de iniciar implementación:
+Decisiones pendientes que MUST ser resueltas antes de usar datos reales:
 
-- TODO(CDU_BY_PROFILE): Definir y cerrar todos los casos de uso por perfil (padre, docente, admin, alumno)
-- TODO(MCP_DEFINITIONS): Definir catálogo completo de MCPs/tools por perfil con contratos de input/output
-- TODO(MIGRATIONS_STRATEGY): Definir estrategia de migraciones de Supabase para esquema multi-tenant con RLS
-- TODO(DATA_REGULATION): Investigar normativa argentina sobre datos de menores y su impacto en retención/RLS
+- TODO(DATA_REGULATION): Brief en docs/16-DATA-REGULATION-BRIEF.md — PENDIENTE dictamen legal externo + DPA Anthropic
 
 Toda decisión de arquitectura MUST ser documentada en el `plan.md` de la feature
 correspondiente con justificación explícita.
