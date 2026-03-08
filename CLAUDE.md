@@ -50,7 +50,7 @@ El desarrollo sigue este ciclo en orden obligatorio:
 /speckit.specify → /speckit.clarify → /speckit.plan → /speckit.tasks → /speckit.implement
 ```
 
-- Las ramas siguen el formato `###-feature-name` (ej: `001-educational-platform`)
+- Las ramas siguen el formato `###-feature-name` (ej: `001-foundation`)
 - Todo PR MUST referenciar el `spec.md` correspondiente y pasar el Constitution Check del `plan.md`
 - La constitución supersede cualquier otra guía
 
@@ -130,7 +130,7 @@ Antes de cualquier `git push`, el agente MUST revisar que el código no introduc
 
 | Feature | Rama | Estado |
 |---------|------|--------|
-| 001-educational-platform | `001-educational-platform` | Spec completa · plan de implementación en `docs/17-IMPLEMENTATION-PLAN.md` · pendiente `/speckit.plan` por entregable |
+| 001-foundation | `001-foundation` | Spec de producto consolidado como base `001-educational-platform` · plan de implementación por entregable en `docs/17-IMPLEMENTATION-PLAN.md` |
 
 ## TODOs pendientes antes de implementar
 
@@ -143,8 +143,8 @@ Antes de cualquier `git push`, el agente MUST revisar que el código no introduc
 - ~~`TODO(OPTIN_FLOW)`~~ ✅ **CERRADO** — CDU-CROSS-005 + `register_consent@v1` + `get_consent_status@v1` como gate universal
 
 ## Active Technologies
-- TypeScript 5.x (Next.js / Node.js), SQL (PostgreSQL 15+), React Native (Expo) + Next.js App Router, Supabase (Postgres, RLS, Auth, Storage), Claude API (function calling), Mercado Pago SDK, Meta Cloud API/WhatsApp (001-educational-platform)
-- Supabase Postgres + pgvector para contenido no estructurado; Supabase Storage para archivos (001-educational-platform)
+- TypeScript 5.x (Next.js / Node.js), SQL (PostgreSQL 15+), React Native (Expo) + Next.js App Router, Supabase (Postgres, RLS, Auth, Storage), Claude API (function calling), Mercado Pago SDK, Meta Cloud API/WhatsApp (001-foundation / 001-educational-platform como spec base)
+- Supabase Postgres + pgvector para contenido no estructurado; Supabase Storage para archivos (001-foundation / 001-educational-platform como spec base)
 
 ## Recent Changes
-- 001-educational-platform: Added TypeScript 5.x (Next.js / Node.js), SQL (PostgreSQL 15+), React Native (Expo) + Next.js App Router, Supabase (Postgres, RLS, Auth, Storage), Claude API (function calling), Mercado Pago SDK, Meta Cloud API/WhatsApp
+- 001-foundation (spec base: 001-educational-platform): Added TypeScript 5.x (Next.js / Node.js), SQL (PostgreSQL 15+), React Native (Expo) + Next.js App Router, Supabase (Postgres, RLS, Auth, Storage), Claude API (function calling), Mercado Pago SDK, Meta Cloud API/WhatsApp

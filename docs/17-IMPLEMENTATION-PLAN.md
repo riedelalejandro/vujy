@@ -52,7 +52,7 @@ Cada feature = un ciclo speckit completo:
 ### 001 · Foundation
 
 **Branch:** `001-foundation`
-**Estado:** spec existente como `001-educational-platform` — ejecutar `/speckit.plan` acotado a infraestructura
+**Estado:** M1 resuelto — `001-educational-platform` quedó renombrado a `001-foundation`; plan y alcance ejecutivos definidos para `foundation`.
 
 **Qué incluye:**
 - Schema completo Supabase (25+ tablas, ver `docs/15-MIGRATIONS-STRATEGY.md`)
@@ -312,25 +312,25 @@ Cada feature = un ciclo speckit completo:
 
 ---
 
-## Decisión pendiente: branch 001
+## Decisión de branch 001 (resuelta)
 
-El branch `001-educational-platform` existe con spec de producto completa. Dos opciones:
+El branch de fundamento quedó definido como `001-foundation` (el spec de producto `001-educational-platform` se usa como base). Se adoptó la opción A:
 
 | Opción | Descripción | Recomendación |
 |--------|-------------|---------------|
-| **A — Reutilizar** | `001-educational-platform` se convierte en `001-foundation`. Ejecutar `/speckit.plan` acotado a schema + auth + infraestructura. Las features van en 002+. | **Recomendada** |
+| **A — Reutilizar** | `001-educational-platform` se convirtió en `001-foundation`. Ejecutar `/speckit.plan` acotado a schema + auth + infraestructura. Las features van en 002+. | **Adoptada** |
 | **B — Reestructurar** | Cerrar 001 como spec de producto general y arrancar la secuencia nueva desde `001-foundation` con spec técnico. | Mayor overhead |
 
-**Razón de Opción A:** El spec de producto ya está validado y sirve como referencia en todos los planes siguientes. Solo hay que ejecutar `/speckit.plan` con scope reducido a foundation.
+**Razón:** El spec de producto ya está validado y sirve como referencia en todos los planes siguientes. Solo hay que ejecutar `/speckit.plan` con scope reducido a foundation.
 
 ---
 
 ## Próximos pasos para retomar
 
-- [ ] Ejecutar `/speckit.plan` en `001-educational-platform` — scope: foundation únicamente (schema + auth + RLS + CI/CD)
+- [x] Ejecutar `/speckit.plan` en `001-foundation` — scope: foundation únicamente (schema + auth + RLS + CI/CD)
 - [ ] Iniciar proceso de verificación Tech Provider Meta en paralelo — no esperar al final del foundation (60-90 días de lead time)
 - [ ] Someter los 5 templates P0 de WhatsApp a Meta — ver `docs/14-WHATSAPP-TEMPLATE-LIBRARY.md`
-- [ ] Ejecutar `/speckit.tasks` → `/speckit.implement` en 001 antes de abrir 002
+- [ ] Ejecutar `/speckit.tasks` → `/speckit.implement` en 001-foundation antes de abrir 002
 - [ ] 002 y 003 pueden desarrollarse en paralelo una vez que 001 está mergeado a main
 
 ---
