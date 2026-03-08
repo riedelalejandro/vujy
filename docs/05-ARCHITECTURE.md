@@ -108,14 +108,14 @@ es obligatorio para evitar acceso accidental a datos del tenant incorrecto.
 │   └── ...
 ├── app/api/                # API routes (backend)
 │   ├── webhooks/
-│   │   └── whatsapp/       # Webhook de Twilio / Meta
+│   │   └── whatsapp/       # Webhook Meta Cloud API (X-Hub-Signature-256)
 │   ├── ai/
 │   │   └── chat/           # Endpoint principal del asistente
 │   └── ...
 ├── lib/
 │   ├── supabase/           # Cliente de Supabase (server + client)
 │   ├── claude/             # Cliente de Claude API + MCPs
-│   └── whatsapp/           # Cliente de Twilio / WhatsApp
+│   └── whatsapp/           # Cliente Meta Cloud API (WhatsApp)
 └── packages/
     └── types/              # Tipos compartidos con React Native
 ```

@@ -305,7 +305,7 @@ Los siguientes CDUs del catálogo existente tienen una condición previa que deb
 | ID | Condición previa |
 |----|-----------------|
 | CDU-D-06 (informes IA) | Cláusula de descargo firmada por la escuela (el informe es borrador, responsabilidad del docente) |
-| CDU-A-02 (cobranza WhatsApp) | Template aprobado por Meta + DPA con Twilio firmado |
+| CDU-A-02 (cobranza WhatsApp) | Template aprobado por Meta + DPA con Meta (WhatsApp Cloud API) firmado |
 | CDU-ALU-016 / CDU-DOC-016 (bienestar) | Protocolo institucional definido por cada escuela + supervisor de turno configurado |
 | CDU-PAD-017 (diario inicial) | CDU-SEC-001 y CDU-SEC-002 en producción + flag `foto_bloqueada` en modelo de datos |
 | CDU-CROSS-007 (modo acto) | CDU-SEC-001 y CDU-SEC-002 en producción (gate del 10%) |
