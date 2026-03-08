@@ -88,6 +88,12 @@ No forma parte del MVP. La estrategia de autenticación del MVP está resuelta.
 **Implementación:** Supabase Auth maneja magic links, OTP por SMS y OAuth2. El JWT incluye
 `school_id` y `role` para que las políticas de RLS puedan aplicarse automáticamente.
 
+**Requerimiento crítico para multi-escuela:** El backend MUST incluir el claim `school_id`
+en el JWT al crear la sesión. La función `get_my_school_id()` usa este claim como fuente
+primaria. Sin el claim, el fallback a `profiles.school_id` solo es correcto para usuarios
+de una sola escuela — para usuarios multi-escuela (ej. docente en dos colegios) el claim
+es obligatorio para evitar acceso accidental a datos del tenant incorrecto.
+
 ---
 
 ## 4. Backend y Web

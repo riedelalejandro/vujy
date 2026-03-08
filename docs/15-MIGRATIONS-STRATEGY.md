@@ -88,10 +88,26 @@ CREATE TABLE profiles (
   UNIQUE (id, school_id)                        -- un usuario puede tener un solo perfil por escuela
 );
 
--- Función helper para RLS — devuelve el school_id del usuario autenticado
+-- Función helper para RLS — devuelve el school_id del usuario autenticado.
+--
+-- Estrategia multi-escuela:
+-- 1. Prioridad: JWT claim 'school_id' (seteado en el login por el backend cuando
+--    el usuario selecciona escuela). Esto soporta correctamente usuarios multi-escuela
+--    (ej. docente que trabaja en dos colegios) porque el claim es explícito por sesión.
+-- 2. Fallback: profiles.school_id — solo seguro para usuarios de una sola escuela.
+--    Si el JWT no trae el claim (ej. sesión legacy), se toma el de profiles.
+--    LIMIT 1 en el fallback se acepta únicamente porque en ese caso el usuario
+--    tiene exactamente un profile row (single-tenant). Para usuarios multi-escuela
+--    el JWT claim SIEMPRE debe estar presente.
+--
+-- El backend MUST setear el claim 'school_id' en el JWT al crear la sesión.
+-- Ver: docs/05-ARCHITECTURE.md §3 (Autenticación).
 CREATE OR REPLACE FUNCTION get_my_school_id()
 RETURNS UUID LANGUAGE SQL STABLE AS $$
-  SELECT school_id FROM profiles WHERE id = auth.uid() LIMIT 1;
+  SELECT COALESCE(
+    (auth.jwt() ->> 'school_id')::UUID,
+    (SELECT school_id FROM profiles WHERE id = auth.uid() LIMIT 1)
+  );
 $$;
 
 -- Función helper para RLS — devuelve el rol del usuario autenticado
