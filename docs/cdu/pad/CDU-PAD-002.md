@@ -16,15 +16,15 @@
 ```
 Padre: "¿Qué tiene mañana Mati?"
 
-Asistente: [llama get_my_students(guardian_id)]
+Asistente: [llama get_my_students@v1(guardian_id)]
            — Si el tutor tiene >1 hijo Y la consulta no nombra al hijo explícitamente
              Y no hay contexto previo en el thread → preguntar:
              "¿Me preguntás por [Nombre1] o [Nombre2]?"
            — Si nombra explícitamente al hijo → resolver directamente.
            — Si pide la agenda de "los dos" / "todos" → responder con ambos.
 
-Asistente: [llama get_calendario(alumno_id, desde=mañana, hasta=mañana)]
-           [llama get_tareas(alumno_id, solo_pendientes=true) en paralelo]
+Asistente: [llama get_calendar@v1(alumno_id, desde=mañana, hasta=mañana)]
+           [llama get_tasks@v1(alumno_id, solo_pendientes=true) en paralelo]
 → "Mañana jueves Mati tiene:
    - Matemática, Lengua, Ed. Física, Ciencias
    - Ed. Física: llevar ropa deportiva y zapatillas
@@ -39,10 +39,10 @@ Asistente: [recupera el adjunto del sistema y lo envía]
 ```
 
 **Tool MCP requerida:**
-- `get_my_students` (para desambiguación multi-hijo al inicio del flujo)
-- `get_calendario`
-- `get_tareas`
-- `get_comunicados` (para recordatorios de materiales a llevar)
+- `get_my_students@v1` (para desambiguación multi-hijo al inicio del flujo)
+- `get_calendar@v1`
+- `get_tasks@v1`
+- `get_announcements@v1` (para recordatorios de materiales a llevar)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

@@ -28,13 +28,13 @@ Asistente: "Listo el diario de hoy (martes 4/3 — Sala de 5):
 
 Seño: "Sí"
 
-Asistente: [llama enviar_comunicado con adjuntos multimedia]
+Asistente: [llama send_announcement@v1 con adjuntos multimedia]
 → "Diario publicado ✅. 20 familias van a recibir la notificación."
 ```
 
 **Tool MCP requerida:**
-- `enviar_comunicado` (con adjuntos multimedia)
-- `registrar_observacion_pedagogica` (si el resumen incluye observaciones de alumnos)
+- `send_announcement@v1` (con adjuntos multimedia)
+- `record_pedagogical_note@v1` (si el resumen incluye observaciones de alumnos)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

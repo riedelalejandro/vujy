@@ -16,7 +16,7 @@
 ```
 Seño: "¿Cuántos papás leyeron el comunicado del acto?"
 
-Asistente: [llama get_comunicados(grado_id, limite=1)]
+Asistente: [llama get_announcements@v1(grado_id, limite=1)]
 → "Comunicado 'Acto escolar — viernes 20/3':
    ✅ Leído: 18 de 24 familias (75%)
    ❌ Sin leer: 6 familias (García, López, Torres y 3 más)
@@ -24,13 +24,13 @@ Asistente: [llama get_comunicados(grado_id, limite=1)]
 
 Seño: "Sí"
 
-Asistente: [llama enviar_comunicado(destinatarios=no_lectores, cuerpo="Recordatorio: ...")]
+Asistente: [llama send_announcement@v1(destinatarios=no_lectores, cuerpo="Recordatorio: ...")]
 → "Recordatorio enviado ✅."
 ```
 
 **Tool MCP requerida:**
-- `get_comunicados` (con estado de lectura por familia)
-- `enviar_comunicado` (recordatorio a no-lectores)
+- `get_announcements@v1` (con estado de lectura por familia)
+- `send_announcement@v1` (recordatorio a no-lectores)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

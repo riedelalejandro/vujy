@@ -16,7 +16,7 @@
 ```
 Admin: "Simulame qué pasa si subo 15% y pierdo 10 alumnos"
 
-Asistente: [llama simular_escenario_financiero(escuela_id, variacion_cuota_pct=15,
+Asistente: [llama simulate_financial_scenario@v1(escuela_id, variacion_cuota_pct=15,
             variacion_alumnos=-10)]
 → "Simulación financiera:
    Estado actual: 240 alumnos × $42.000 = $10.080.000/mes
@@ -27,13 +27,13 @@ Asistente: [llama simular_escenario_financiero(escuela_id, variacion_cuota_pct=1
 
 Admin: "Y si pierdo 25 alumnos?"
 
-Asistente: [llama simular_escenario_financiero con variacion_alumnos=-25]
+Asistente: [llama simulate_financial_scenario@v1 con variacion_alumnos=-25]
 → "Con 25 bajas: 215 alumnos × $48.300 = $10.384.500/mes (+$304.500).
    Todavía positivo pero margen mínimo."
 ```
 
 **Tool MCP requerida:**
-- `simular_escenario_financiero`
+- `simulate_financial_scenario@v1`
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

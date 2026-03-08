@@ -24,14 +24,14 @@ Asistente: "Tenés una autorización pendiente:
 
 Padre: "Sí"
 
-Asistente: [llama firmar_autorizacion(autorizacion_id, familia_id, aprobado=true)]
+Asistente: [llama sign_authorization@v1(autorizacion_id, familia_id, aprobado=true)]
 → "Autorización firmada ✅. El costo de $4.500 se agregó a tu cuenta."
 ```
 
 **Tool MCP requerida:**
-- `firmar_autorizacion`
-- `get_calendario` (para mostrar contexto del evento)
-- `get_estado_cuenta` (referencia al costo)
+- `sign_authorization@v1`
+- `get_calendar@v1` (para mostrar contexto del evento)
+- `get_account_status@v1` (referencia al costo)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

@@ -25,5 +25,5 @@ Asistente: "NPS Escolar — 1er trimestre 2026:
 
 **Tool MCP requerida:**
 - Analytics de encuestas (función futura — no en API-SPEC actual)
-- `get_alertas_institucionales` (si se detecta problema en grado específico)
-- `enviar_comunicado` (para enviar la micro-encuesta a padres)
+- `get_institutional_alerts@v1` (si se detecta problema en grado específico)
+- `send_announcement@v1` (para enviar la micro-encuesta a padres)

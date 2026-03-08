@@ -16,7 +16,7 @@
 ```
 Admin: "Si tomo un docente más para desdoblar 4to, ¿cómo impacta?"
 
-Asistente: [llama simular_escenario_financiero con parámetro de nuevo docente]
+Asistente: [llama simulate_financial_scenario@v1 con parámetro de nuevo docente]
 → "Impacto de contratar un docente para desdoblar 4to grado:
    Masa salarial actual: $4.200.000/mes
    Costo estimado nuevo docente (medio turno): $280.000/mes
@@ -26,5 +26,5 @@ Asistente: [llama simular_escenario_financiero con parámetro de nuevo docente]
 ```
 
 **Tool MCP requerida:**
-- `simular_escenario_financiero`
+- `simulate_financial_scenario@v1`
 - Datos de personal (función futura — no en API-SPEC actual)

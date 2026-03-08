@@ -31,8 +31,8 @@ Asistente: [genera borrador y envía vía canal docente-familia interno]
 ```
 
 **Tool MCP requerida:**
-- `enviar_comunicado` (canal padre → docente, dentro del sistema)
-- `get_comunicados` (para verificar si la consulta ya fue respondida en un comunicado)
+- `send_announcement@v1` (canal padre → docente, dentro del sistema)
+- `get_announcements@v1` (para verificar si la consulta ya fue respondida en un comunicado)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

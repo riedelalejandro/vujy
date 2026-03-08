@@ -128,8 +128,8 @@ Cada feature = un ciclo speckit completo:
 
 **Qué incluye:**
 - System prompt del perfil padre/tutor (ver `docs/02-API-SPEC.md`)
-- Function calling: `get_resumen_alumno`, `get_asistencia`, `get_notas`, `get_comunicados`, `get_calendario`, `get_family_balance`
-- Tools de acción: `registrar_ausencia`, `firmar_autorizacion`, `confirmar_reinscripcion`
+- Function calling: `get_student_summary@v1`, `get_attendance@v1`, `get_grades@v1`, `get_announcements@v1`, `get_calendar@v1`, `get_family_balance@v1`
+- Tools de acción: `record_absence@v1`, `sign_authorization@v1`, `confirm_reenrollment@v1`
 - UI conversacional en app (React Native) y web (Next.js)
 - Notificaciones push (Expo) para urgencias
 
@@ -149,7 +149,7 @@ Cada feature = un ciclo speckit completo:
 
 **Qué incluye:**
 - System prompt del perfil docente
-- Function calling: `tomar_asistencia_grado`, `registrar_ausencia`, `cargar_nota`, `registrar_observacion_pedagogica`, `generar_comunicado_borrador`, `enviar_comunicado`, `generar_informe_pedagogico`, `generar_actividad_educativa`
+- Function calling: `take_attendance@v1`, `record_absence@v1`, `record_grade_batch@v1`, `record_pedagogical_note@v1`, `generate_announcement_draft@v1`, `send_announcement@v1`, `generate_pedagogical_report@v1`, `generate_learning_activity@v1`
 - Input de voz en app mobile (Expo Audio) con fallback explícito a lista (DOC-002) en web
 - UI de lista de asistencia (tap) en app y web
 - Editor de comunicados con borrador IA + aprobación docente
@@ -170,7 +170,7 @@ Cada feature = un ciclo speckit completo:
 
 **Qué incluye:**
 - System prompt del perfil admin/directivo
-- Function calling: `get_alertas_institucionales`, `get_dashboard_morosidad`, `get_asistencia`, `get_comunicados`, `get_riesgo_desercion`
+- Function calling: `get_institutional_alerts@v1`, `get_delinquency_dashboard@v1`, `get_attendance@v1`, `get_announcements@v1`, `get_dropout_risk@v1`
 - Dashboard de pulso institucional (conversacional + widgets visuales)
 - Índice de riesgo de deserción con cruce de datos entre módulos
 - Alertas tempranas automáticas (Supabase Edge Function cron)

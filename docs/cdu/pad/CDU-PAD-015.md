@@ -34,7 +34,7 @@ Asistente: "Gabriela fue notificada. Te esperan en la entrada principal."
 ```
 
 **Tool MCP requerida:**
-- `enviar_comunicado` (prioridad urgente)
+- `send_announcement@v1` (prioridad urgente)
 - Notificación push de alta prioridad
 
 **Casos borde:**

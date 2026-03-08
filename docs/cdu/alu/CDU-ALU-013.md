@@ -16,7 +16,7 @@
 ```
 Alumno: "¿Qué tengo en mi portfolio?"
 
-Asistente: [llama get_notas(alumno_id, todos_los_trimestres=true)]
+Asistente: [llama get_grades@v1(alumno_id, todos_los_trimestres=true)]
            [RAG sobre proyectos y TPs completados]
 → "Tu portfolio — Valentina Gómez (5to año):
    TPs destacados: Historia (9), Biología (8.5), Física (8)
@@ -29,7 +29,7 @@ Asistente: [llama get_notas(alumno_id, todos_los_trimestres=true)]
 ```
 
 **Tool MCP requerida:**
-- `get_notas` (histórico completo — solo del alumno propio)
+- `get_grades@v1` (histórico completo — solo del alumno propio)
 - RAG sobre proyectos completados
 - Analytics de participación
 

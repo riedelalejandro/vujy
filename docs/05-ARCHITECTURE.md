@@ -33,7 +33,7 @@
 | **Mobile builds** | Expo EAS | CI para App Store / Play Store |
 | **IA — LLM** | Claude API (Anthropic) | Todos los perfiles |
 | **IA — acción** | Function calling / MCPs | Acceso a datos en tiempo real |
-| **WhatsApp** | Twilio → Meta Cloud API | Twilio en MVP; migrar a escala |
+| **WhatsApp** | Meta Cloud API directo | Sin BSP — número virtual por escuela (Opción A) |
 | **Pagos** | Mercado Pago | — |
 | **Monitoreo** | Sentry + Posthog | Errores + analytics de uso |
 

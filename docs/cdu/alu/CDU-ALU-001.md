@@ -42,7 +42,7 @@ Asistente (voz): "¡Terminaste todas las actividades de hoy!
 
 **Tool MCP requerida:**
 - Actividades asignadas por la docente (precargadas)
-- `registrar_observacion_pedagogica` (automático basado en resultados — para la docente)
+- `record_pedagogical_note@v1` (automático basado en resultados — para la docente)
 - Notificación al tutor (progreso del día)
 
 **Casos borde:**

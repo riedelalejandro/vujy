@@ -23,12 +23,12 @@ Asistente: [recupera lista del grado]
 
 Seño: "Sí"
 
-Asistente: [llama tomar_asistencia_grado(grado_id, fecha, asistencias=[...])]
+Asistente: [llama take_attendance@v1(grado_id, fecha, asistencias=[...])]
 → "Asistencia guardada ✅. 2 tutores notificados."
 ```
 
 **Tool MCP requerida:**
-- `tomar_asistencia_grado`
+- `take_attendance@v1`
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

@@ -29,10 +29,10 @@ Asistente: "¿Querés que le mande un mensaje a la seño explicando la situació
 ```
 
 **Tool MCP requerida:**
-- `get_calendario` (semana siguiente)
-- `get_tareas` (pendientes)
-- `get_resumen_alumno`
-- `enviar_comunicado` (si el padre coordina con la docente)
+- `get_calendar@v1` (semana siguiente)
+- `get_tasks@v1` (pendientes)
+- `get_student_summary@v1`
+- `send_announcement@v1` (si el padre coordina con la docente)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

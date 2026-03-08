@@ -23,14 +23,14 @@ Asistente: "Alerta: Pedro González (3er año) faltó 4 de los últimos 5 días.
 
 Admin: "Sí, avisalos"
 
-Asistente: [llama enviar_comunicado al equipo de orientación — notificación interna]
+Asistente: [llama send_announcement@v1 al equipo de orientación — notificación interna]
 → "Equipo de orientación notificado ✅."
 ```
 
 **Tool MCP requerida:**
-- `get_alertas_institucionales` (ejecutado automáticamente por scheduler)
-- `get_riesgo_desercion`
-- `enviar_comunicado` (notificación interna)
+- `get_institutional_alerts@v1` (ejecutado automáticamente por scheduler)
+- `get_dropout_risk@v1`
+- `send_announcement@v1` (notificación interna)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

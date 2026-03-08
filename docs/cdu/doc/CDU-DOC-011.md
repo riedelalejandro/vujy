@@ -27,7 +27,7 @@ Asistente: [RAG sobre diseño curricular PBA / CABA para 4to grado — Ciencias 
 
 **Tool MCP requerida:**
 - RAG sobre diseño curricular jurisdiccional (PBA/CABA)
-- `generar_actividad_educativa` (si la docente genera algo directamente)
+- `generate_learning_activity@v1` (si la docente genera algo directamente)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

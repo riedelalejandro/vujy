@@ -26,7 +26,7 @@ Asistente: "Voy a enviar alerta urgente de suspensión de clases.
 
 Admin: "Sí"
 
-Asistente: [llama enviar_comunicado(todos, prioridad=urgente, todos_canales=true)]
+Asistente: [llama send_announcement@v1(todos, prioridad=urgente, todos_canales=true)]
 → "Enviado ✅ (6:32am).
    Alcance: 186 familias por WhatsApp, 312 con push.
    Confirmaciones de lectura: 43% en los primeros 2 minutos.
@@ -40,8 +40,8 @@ Asistente: "Resumen: 278 familias leyeron (89%). 34 sin confirmar — se les ree
 ```
 
 **Tool MCP requerida:**
-- `enviar_comunicado` (todos, prioridad urgente, todos los canales)
-- `get_comunicados` (seguimiento de lectura)
+- `send_announcement@v1` (todos, prioridad urgente, todos los canales)
+- `get_announcements@v1` (seguimiento de lectura)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

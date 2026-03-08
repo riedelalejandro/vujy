@@ -16,7 +16,7 @@
 ```
 Padre: "¿Cómo viene Mati en el trimestre?"
 
-Asistente: [llama get_my_students(guardian_id)]
+Asistente: [llama get_my_students@v1(guardian_id)]
            — Si el tutor tiene >1 hijo Y la consulta no nombra al hijo explícitamente
              Y no hay contexto previo en el thread → preguntar:
              "¿Me preguntás por [Nombre1] o [Nombre2]?"
@@ -31,7 +31,7 @@ Asistente: [llama get_my_students(guardian_id)]
 
            Si can_view_grades=true →
 
-Asistente: [llama get_notas(alumno_id, trimestre=actual)]
+Asistente: [llama get_grades@v1(alumno_id, trimestre=actual)]
 → "Mati en el 1er trimestre:
    | Materia      | Promedio | Tendencia    |
    | Matemática   | 8.5      | ↑ Subiendo   |
@@ -41,13 +41,13 @@ Asistente: [llama get_notas(alumno_id, trimestre=actual)]
 
 Padre: "¿Y comparado con el trimestre anterior?"
 
-Asistente: [llama get_notas(alumno_id, trimestre=anterior)]
+Asistente: [llama get_grades@v1(alumno_id, trimestre=anterior)]
 → "En el trimestre anterior el promedio fue 7.2. Subió 0.6 puntos 📈"
 ```
 
 **Tool MCP requerida:**
-- `get_my_students` (para desambiguación multi-hijo y verificación de permisos al inicio del flujo)
-- `get_notas` (trimestre actual + anterior para comparación)
+- `get_my_students@v1` (para desambiguación multi-hijo y verificación de permisos al inicio del flujo)
+- `get_grades@v1` (trimestre actual + anterior para comparación)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

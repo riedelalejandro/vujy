@@ -16,7 +16,7 @@
 ```
 Alumno: "¿Cómo vengo en matemática?"
 
-Asistente: [llama get_notas(alumno_id, materia="Matemática")]
+Asistente: [llama get_grades@v1(alumno_id, materia="Matemática")]
 → "Matemática — 2do trimestre:
    Parcial 1: 6 | TP grupal: 8 | Parcial 2: 5
    Promedio actual: 6.3 — tendencia a la baja ↓
@@ -29,7 +29,7 @@ Asistente: "Para llegar a 7 de promedio necesitás sacar al menos 8 en el
 ```
 
 **Tool MCP requerida:**
-- `get_notas` (solo datos del alumno propio)
+- `get_grades@v1` (solo datos del alumno propio)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

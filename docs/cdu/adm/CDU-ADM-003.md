@@ -17,8 +17,8 @@
 Admin: "Mandá recordatorio a los que deben más de un mes, segmentalo:
         tono amable para los que siempre pagaron, firme para los reincidentes"
 
-Asistente: [llama get_dashboard_morosidad(segmentacion="por_familia")]
-           [llama get_riesgo_desercion para cruzar con riesgo]
+Asistente: [llama get_delinquency_dashboard@v1(segmentacion="por_familia")]
+           [llama get_dropout_risk@v1 para cruzar con riesgo]
 → "Segmentando:
    Recordatorio amable: 14 familias (historial de pago correcto, atraso puntual)
    Recordatorio firme: 8 familias (patrón de mora reincidente)
@@ -28,7 +28,7 @@ Asistente: [llama get_dashboard_morosidad(segmentacion="por_familia")]
 
 Admin: "Sí"
 
-Asistente: [llama enviar_comunicado(destinatarios=[...], cuerpo=..., prioridad="normal")]
+Asistente: [llama send_announcement@v1(destinatarios=[...], cuerpo=..., prioridad="normal")]
 → "Recordatorios enviados ✅. En 48hs te digo cuántos pagaron."
 ```
 
@@ -40,10 +40,10 @@ Para cada familia morosa, los recordatorios se envían únicamente a los tutores
 Los tutores que no cumplen estas condiciones no reciben el recordatorio de mora.
 
 **Tool MCP requerida:**
-- `get_dashboard_morosidad`
-- `get_riesgo_desercion`
-- `generar_comunicado_borrador`
-- `enviar_comunicado`
+- `get_delinquency_dashboard@v1`
+- `get_dropout_risk@v1`
+- `generate_announcement_draft@v1`
+- `send_announcement@v1`
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

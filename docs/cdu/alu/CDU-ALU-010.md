@@ -16,8 +16,8 @@
 ```
 Alumno: "Tengo física el jueves y no sé por dónde empezar"
 
-Asistente: [llama get_calendario(alumno_id) para verificar la evaluación]
-           [llama get_notas(alumno_id, materia="Física") para ver rendimiento previo]
+Asistente: [llama get_calendar@v1(alumno_id) para verificar la evaluación]
+           [llama get_grades@v1(alumno_id, materia="Física") para ver rendimiento previo]
 → "Tenés la prueba de Física el jueves 12/3 — quedan 3 días.
    Basándome en tus notas, el tema más flojo es Energía.
    Plan propuesto:
@@ -27,14 +27,14 @@ Asistente: [llama get_calendario(alumno_id) para verificar la evaluación]
 
 Alumno: "Sí"
 
-Asistente: [llama generar_plan_estudio(alumno_id, evaluacion_id, dias_disponibles=3)]
+Asistente: [llama generate_study_plan@v1(alumno_id, evaluacion_id, dias_disponibles=3)]
 → "Plan activado ✅. Te recuerdo mañana a las 19hs para el primer bloque."
 ```
 
 **Tool MCP requerida:**
-- `get_calendario`
-- `get_notas`
-- `generar_plan_estudio`
+- `get_calendar@v1`
+- `get_grades@v1`
+- `generate_study_plan@v1`
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

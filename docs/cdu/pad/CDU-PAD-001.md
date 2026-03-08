@@ -16,14 +16,14 @@
 ```
 Padre: "¿Cómo le fue a Mati esta semana?"
 
-Asistente: [llama get_my_students(guardian_id)]
+Asistente: [llama get_my_students@v1(guardian_id)]
            — Si el tutor tiene >1 hijo Y la consulta no nombra al hijo explícitamente
              Y no hay contexto previo en el thread → preguntar:
              "¿Me preguntás por [Nombre1] o [Nombre2]?"
            — Si nombra explícitamente al hijo → resolver directamente.
            — Si pide resumen de "los dos" / "todos" → responder con ambos.
 
-Asistente: [llama get_resumen_alumno(alumno_id, periodo="semana_actual")]
+Asistente: [llama get_student_summary@v1(alumno_id, periodo="semana_actual")]
 → "Semana de Mati (4to B):
    Asistencia: 4/5 días (faltó el miércoles, ya justificado).
    Notas: Sacó 9 en Matemática el jueves. Muy bien.
@@ -33,15 +33,15 @@ Asistente: [llama get_resumen_alumno(alumno_id, periodo="semana_actual")]
 
 Padre: "Las notas completas"
 
-Asistente: [llama get_notas(alumno_id, trimestre=actual)]
+Asistente: [llama get_grades@v1(alumno_id, trimestre=actual)]
 → [Tabla con notas por materia y promedio]
 ```
 
 **Tool MCP requerida:**
-- `get_my_students` (para desambiguación multi-hijo al inicio del flujo)
-- `get_resumen_alumno` (periodo: semana_actual)
-- `get_notas` (si el padre profundiza)
-- `get_tareas` (si el padre pregunta por pendientes)
+- `get_my_students@v1` (para desambiguación multi-hijo al inicio del flujo)
+- `get_student_summary@v1` (periodo: semana_actual)
+- `get_grades@v1` (si el padre profundiza)
+- `get_tasks@v1` (si el padre pregunta por pendientes)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

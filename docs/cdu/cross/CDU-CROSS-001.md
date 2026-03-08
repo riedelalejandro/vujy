@@ -46,9 +46,9 @@ Asistente: "Reunión confirmada para el martes 10/3 a las 17h ✅. Le avisé a l
 ```
 
 **Tool MCP requerida:**
-- `generar_comunicado_borrador`
-- `enviar_comunicado` (canal docente → familia)
-- `get_calendario` (para proponer y agendar)
+- `generate_announcement_draft@v1`
+- `send_announcement@v1` (canal docente → familia)
+- `get_calendar@v1` (para proponer y agendar)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

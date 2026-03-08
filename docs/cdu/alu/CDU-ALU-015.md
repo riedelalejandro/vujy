@@ -34,7 +34,7 @@ Asistente: "Sesión coordinada para las 18h ✅"
 ```
 
 **Tool MCP requerida:**
-- `get_notas` (para identificar alumnos con alto rendimiento)
+- `get_grades@v1` (para identificar alumnos con alto rendimiento)
 - Sistema de matching tutor-tutorado (anonimizado hasta que se acepte)
 - Notificación al docente para aprobación
 

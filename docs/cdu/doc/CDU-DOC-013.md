@@ -16,7 +16,7 @@
 ```
 Profesor: "¿Quiénes tienen previas en Historia en 4to A?"
 
-Asistente: [llama get_notas(grado_id="4toA", materia="historia", trimestre=anterior)]
+Asistente: [llama get_grades@v1(grado_id="4toA", materia="historia", trimestre=anterior)]
 → "Alumnos de 4to A con previa en Historia (de 3er año):
    - Lucas Fernández
    - Valentina Gómez
@@ -24,13 +24,13 @@ Asistente: [llama get_notas(grado_id="4toA", materia="historia", trimestre=anter
 
 Profesor: "Sí, avisales que es el 20/3 a las 14hs en el aula 5"
 
-Asistente: [llama enviar_comunicado(destinatarios=alumnos_previas, cuerpo="...")]
+Asistente: [llama send_announcement@v1(destinatarios=alumnos_previas, cuerpo="...")]
 → "Notificación enviada a Lucas Fernández y Valentina Gómez ✅."
 ```
 
 **Tool MCP requerida:**
-- `get_notas` (para identificar alumnos con previas)
-- `enviar_comunicado` (notificación a alumnos o tutores)
+- `get_grades@v1` (para identificar alumnos con previas)
+- `send_announcement@v1` (notificación a alumnos o tutores)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

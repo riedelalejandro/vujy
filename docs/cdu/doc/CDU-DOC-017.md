@@ -27,7 +27,7 @@ Asistente: "Hola Claudia. Esta semana todos en 3ro B entregaron sus tareas.
 
 Docente: "Mostrá mi portfolio del trimestre"
 
-Asistente: [llama get_portfolio_docente(docente_id, periodo="trimestre_1_2026")]
+Asistente: [llama get_teacher_portfolio@v1(docente_id, periodo="trimestre_1_2026")]
 → "Portfolio de Claudia Méndez — 1er Trimestre 2026:
 
    📊 Tu curso (3ro B):
@@ -49,7 +49,7 @@ Asistente: [llama get_portfolio_docente(docente_id, periodo="trimestre_1_2026")]
 
 Docente: "Sí, pero para uso personal — no para compartir"
 
-Asistente: [llama generar_portfolio_docente_anual(docente_id, modo="interno")]
+Asistente: [llama generate_teacher_portfolio_pdf@v1(docente_id, modo="interno")]
 → "Generando PDF... Listo.
    Contiene tus métricas de curso y hitos — sin datos nominales de alumnos.
    📄 Disponible en tu perfil para descarga."
@@ -58,8 +58,8 @@ Asistente: [llama generar_portfolio_docente_anual(docente_id, modo="interno")]
 **Tool MCP requerida:**
 - `detectar_hito_docente` (job periódico que evalúa umbrales estadísticos)
 - `registrar_hito_portfolio` (guarda el hito con timestamp y contexto)
-- `get_portfolio_docente` (por período — trimestre o año)
-- `generar_portfolio_docente_anual` (PDF descargable, dos modos: interno / externo-anonimizado)
+- `get_teacher_portfolio@v1` (por período — trimestre o año)
+- `generate_teacher_portfolio_pdf@v1` (PDF descargable, dos modos: interno / externo-anonimizado)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

@@ -35,7 +35,7 @@ Asistente: "Actividad importada a tu clase de 4to A ✅"
 
 **Tool MCP requerida:**
 - Biblioteca compartida de actividades (con ratings y filtros)
-- `generar_actividad_educativa` (si la docente la modifica antes de publicar)
+- `generate_learning_activity@v1` (si la docente la modifica antes de publicar)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

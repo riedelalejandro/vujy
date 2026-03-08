@@ -16,14 +16,14 @@
 ```
 Padre: "¿Cuántas faltas tiene Mati?"
 
-Asistente: [llama get_my_students(guardian_id)]
+Asistente: [llama get_my_students@v1(guardian_id)]
            — Si el tutor tiene >1 hijo Y la consulta no nombra al hijo explícitamente
              Y no hay contexto previo en el thread → preguntar:
              "¿Me preguntás por [Nombre1] o [Nombre2]?"
            — Si nombra explícitamente al hijo → resolver directamente.
            — Si pide asistencia de "los dos" / "todos" → responder con ambos.
 
-Asistente: [llama get_asistencia(alumno_id, desde=inicio_anio, hasta=hoy)]
+Asistente: [llama get_attendance@v1(alumno_id, desde=inicio_anio, hasta=hoy)]
 → "Mati lleva 4 inasistencias en lo que va del año:
    - 12/2: ausente (justificada — certificado médico)
    - 19/2: tardanza
@@ -33,8 +33,8 @@ Asistente: [llama get_asistencia(alumno_id, desde=inicio_anio, hasta=hoy)]
 ```
 
 **Tool MCP requerida:**
-- `get_my_students` (para desambiguación multi-hijo al inicio del flujo)
-- `get_asistencia`
+- `get_my_students@v1` (para desambiguación multi-hijo al inicio del flujo)
+- `get_attendance@v1`
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

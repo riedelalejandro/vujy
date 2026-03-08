@@ -16,7 +16,7 @@
 ```
 Padre: "Mati no va a ir mañana, tiene fiebre"
 
-Asistente: [llama get_my_students(guardian_id)]
+Asistente: [llama get_my_students@v1(guardian_id)]
            — Si el tutor tiene múltiples hijos y la consulta no especifica cuál,
              preguntar antes de continuar: "¿Me hablás de Mati o de Sofi?"
            — Una vez identificado el alumno, verificar can_authorize_absence=true
@@ -34,16 +34,16 @@ Asistente: "Voy a registrar la ausencia de Mati para mañana, viernes 6/3.
 
 Padre: "Sí"
 
-Asistente: [llama registrar_ausencia(alumno_ids=["alu_mati"], fecha="2026-03-06",
+Asistente: [llama record_absence@v1(alumno_ids=["alu_mati"], fecha="2026-03-06",
             motivo="salud", notificar_docente=true)]
 → "Ausencia registrada ✅. La seño fue notificada.
    ¿Querés que le pida las tareas del día para que Mati no se atrase?"
 ```
 
 **Tool MCP requerida:**
-- `get_my_students` (para desambiguación multi-hijo y verificación de permisos)
-- `registrar_ausencia`
-- `get_tareas` (si el padre acepta pedir las tareas del día)
+- `get_my_students@v1` (para desambiguación multi-hijo y verificación de permisos)
+- `record_absence@v1`
+- `get_tasks@v1` (si el padre acepta pedir las tareas del día)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

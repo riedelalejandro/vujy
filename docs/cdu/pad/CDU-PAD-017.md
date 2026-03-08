@@ -22,7 +22,7 @@ Notificación: "El diario de Mati del martes llegó 📖"
 
 [Padre abre la app]
 
-Asistente: [llama get_diario_inicial(alumno_id, fecha=hoy)]
+Asistente: [llama get_daily_journal@v1(alumno_id, fecha=hoy)]
 → "Diario de Mati — martes 5 de marzo
 
    La seño Claudia contó:
@@ -45,7 +45,7 @@ Asistente: [llama get_diario_inicial(alumno_id, fecha=hoy)]
 
 Padre: "¿Qué hizo Mati hoy?"
 
-Asistente: [llama get_diario_inicial(alumno_id, fecha=hoy)]
+Asistente: [llama get_daily_journal@v1(alumno_id, fecha=hoy)]
 → "Diario de Mati de hoy:
 
    La seño Claudia contó:
@@ -55,7 +55,7 @@ Asistente: [llama get_diario_inicial(alumno_id, fecha=hoy)]
 ```
 
 **Tool MCP requerida:**
-- `get_diario_inicial` (contenido generado por la docente, texto personalizado por alumno + fotos)
+- `get_daily_journal@v1` (contenido generado por la docente, texto personalizado por alumno + fotos)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |
@@ -63,7 +63,7 @@ Asistente: [llama get_diario_inicial(alumno_id, fecha=hoy)]
 | La docente no generó el diario ese día | "La seño no cargó el diario de hoy todavía. Te avisamos cuando esté disponible." (sin presionar a la docente) |
 | Familia sin opt-in de fotos | Recibe solo el texto narrativo — las fotos no se muestran |
 | Alumno no fue mencionado por la docente en el audio | Recibe el relato grupal del día sin mención individual — nunca se fabrica una mención |
-| Padre pregunta por el diario de otro día | `get_diario_inicial(alumno_id, fecha=solicitada)` — disponible historial de los últimos 30 días |
+| Padre pregunta por el diario de otro día | `get_daily_journal@v1(alumno_id, fecha=solicitada)` — disponible historial de los últimos 30 días |
 | Padre quiere responder algo a la docente | "Los mensajes a la seño llegan a su bandeja en horario laboral. ¿Querés enviar una nota?" — deriva a CDU-PAD-010 |
 | Familia sin app (solo WhatsApp) | Recibe texto + fotos comprimidas por WhatsApp; el álbum completo queda en la app |
 | Escuela sin nivel inicial | Este CDU no aparece en el perfil del padre — solo se activa si el alumno está en sala |

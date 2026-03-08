@@ -30,7 +30,7 @@ Asistente: "Podés ejercer cualquiera de estos derechos sobre los datos de [alum
 
 Padre: "Ver mis datos"
 
-Asistente: [llama exportar_datos_usuario(tutor_id, alumno_id, formato="pdf")]
+Asistente: [llama export_user_data@v1(tutor_id, alumno_id, formato="pdf")]
 → "Preparando tu descarga...
 
    El archivo incluye:
@@ -56,7 +56,7 @@ Asistente: "Entendido. Para corregir datos del legajo de Mati necesito:
 
 Padre: "Aparece 'Lopez' sin tilde, es 'López'"
 
-Asistente: [llama solicitar_rectificacion(alumno_id, campo="apellido", valor_actual="Lopez", valor_correcto="López", solicitante_id)]
+Asistente: [llama request_data_rectification@v1(alumno_id, campo="apellido", valor_actual="Lopez", valor_correcto="López", solicitante_id)]
 → "Solicitud registrada (ref: ARCO-2026-0312).
    La secretaría revisará y aplicará la corrección en hasta 5 días hábiles.
    Te avisaremos cuando esté hecho.
@@ -76,10 +76,10 @@ Asistente: [verifica edad del alumno — ≥ 13 → habilita flujo ARCO propio]
 ```
 
 **Tool MCP requerida:**
-- `exportar_datos_usuario` (compila datos de múltiples tablas en formato estructurado — PDF / JSON)
-- `solicitar_rectificacion` (genera ticket para secretaría con SLA trazable)
-- `solicitar_baja_datos` (flujo de eliminación con advertencias y aprobación de admin)
-- `registrar_oposicion` (queda en log para revisión legal)
+- `export_user_data@v1` (compila datos de múltiples tablas en formato estructurado — PDF / JSON)
+- `request_data_rectification@v1` (genera ticket para secretaría con SLA trazable)
+- `request_data_deletion@v1` (flujo de eliminación con advertencias y aprobación de admin)
+- `register_data_opposition@v1` (queda en log para revisión legal) — *pendiente: definir en `09-MCP-DEFINITIONS.md`*
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

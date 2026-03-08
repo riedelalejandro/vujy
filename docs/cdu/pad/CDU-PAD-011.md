@@ -16,8 +16,8 @@
 ```
 Padre: "¿Cómo van los chicos esta semana?"
 
-Asistente: [llama get_resumen_alumno(alu_mati, semana_actual)]
-           [llama get_resumen_alumno(alu_sofi, semana_actual)]  ← en paralelo
+Asistente: [llama get_student_summary@v1(alu_mati, semana_actual)]
+           [llama get_student_summary@v1(alu_sofi, semana_actual)]  ← en paralelo
 
 → "Resumen de esta semana:
 
@@ -35,8 +35,8 @@ Asistente: [llama get_resumen_alumno(alu_mati, semana_actual)]
 ```
 
 **Tool MCP requerida:**
-- `get_resumen_alumno` (llamado en paralelo para cada hijo)
-- `get_tareas` (pendientes por hijo)
+- `get_student_summary@v1` (llamado en paralelo para cada hijo)
+- `get_tasks@v1` (pendientes por hijo)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

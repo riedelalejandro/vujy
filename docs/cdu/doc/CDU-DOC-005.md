@@ -16,7 +16,7 @@
 ```
 Seño: "Mati avanzó mucho en reconocimiento de números esta semana, llegó al 10"
 
-Asistente: [llama registrar_observacion_pedagogica(alumno_id, texto="...", area="matematica")]
+Asistente: [llama record_pedagogical_note@v1(alumno_id, texto="...", area="matematica")]
 → "Guardé la observación de Mati:
    '3/3 — Avanzó en reconocimiento numérico hasta el 10.'
    Ya tenés 4 observaciones de Mati este trimestre.
@@ -24,12 +24,12 @@ Asistente: [llama registrar_observacion_pedagogica(alumno_id, texto="...", area=
 
 Seño: "También que Sofi confunde la d y la b todavía"
 
-Asistente: [llama registrar_observacion_pedagogica(alumno_id=alu_sofi, texto="...", area="lenguaje")]
+Asistente: [llama record_pedagogical_note@v1(alumno_id=alu_sofi, texto="...", area="lenguaje")]
 → "Guardado. ¿Seguimos con otro alumno?"
 ```
 
 **Tool MCP requerida:**
-- `registrar_observacion_pedagogica`
+- `record_pedagogical_note@v1`
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

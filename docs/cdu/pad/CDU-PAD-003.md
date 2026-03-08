@@ -16,7 +16,7 @@
 ```
 Padre: "¿Cuánto debo?"
 
-Asistente: [llama get_estado_cuenta(familia_id)]
+Asistente: [llama get_account_status@v1(familia_id)]
 → "Estado de cuenta:
    | Concepto         | Monto   | Vencimiento | Estado    |
    | Cuota marzo      | $42.000 | 31/3        | Pendiente |
@@ -39,13 +39,13 @@ Asistente: "Voy a procesar el pago de $46.500 con la tarjeta guardada
 
 Padre: "Sí"
 
-Asistente: [llama procesar_pago(familia_id, items_ids=[...], metodo_pago="tarjeta_guardada")]
+Asistente: [llama process_payment@v1(familia_id, items_ids=[...], metodo_pago="tarjeta_guardada")]
 → "Pago procesado ✅. Comprobante disponible en la app."
 ```
 
 **Tool MCP requerida:**
-- `get_estado_cuenta`
-- `procesar_pago` (solo con confirmación explícita del usuario; solo si `can_make_payments=true`)
+- `get_account_status@v1`
+- `process_payment@v1` (solo con confirmación explícita del usuario; solo si `can_make_payments=true`)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

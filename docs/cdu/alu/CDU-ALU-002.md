@@ -39,7 +39,7 @@ Asistente: "¡Ahí está! ¡Lo lograste! 🎉 Ganaste 5 monedas 🪙"
 ```
 
 **Tool MCP requerida:**
-- `get_tareas` (misiones del día asignadas por docente)
+- `get_tasks@v1` (misiones del día asignadas por docente)
 - Módulo de actividades gamificadas
 - Registro de progreso y monedas
 

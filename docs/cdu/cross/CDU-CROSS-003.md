@@ -41,7 +41,7 @@ Asistente: "Tomás Fernández, Lucía García y Pedro Ruiz."
 **Tool MCP requerida:**
 - LLM (explicación del concepto)
 - Detección de "alumno no resuelve tras 2+ intentos"
-- `registrar_observacion_pedagogica` (automático: "dificultad detectada con funciones cuadráticas")
+- `record_pedagogical_note@v1` (automático: "dificultad detectada con funciones cuadráticas")
 - Notificación al docente
 
 **Casos borde:**

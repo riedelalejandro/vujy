@@ -23,7 +23,7 @@ Asistente: "Tenés 85 monedas 💰
 ```
 
 **Tool MCP requerida:**
-- `get_resumen_alumno` (adaptado — solo logros y gamificación, datos del alumno propio)
+- `get_student_summary@v1` (adaptado — solo logros y gamificación, datos del alumno propio)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

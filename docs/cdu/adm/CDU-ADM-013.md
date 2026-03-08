@@ -27,6 +27,6 @@ Asistente: "A 3 días del cierre de marzo, tengo la proyección:
 ```
 
 **Tool MCP requerida:**
-- `get_dashboard_morosidad`
-- `simular_escenario_financiero` (proyección basada en historial)
-- `enviar_comunicado`
+- `get_delinquency_dashboard@v1`
+- `simulate_financial_scenario@v1` (proyección basada en historial)
+- `send_announcement@v1`

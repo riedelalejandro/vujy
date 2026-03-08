@@ -28,14 +28,14 @@ Asistente: "Quería contarte algo sobre Mati: en Lengua pasó de 8.5 (1er trim.)
 
 Padre: "A"
 
-Asistente: [llama generar_plan_estudio(alumno_id, materia="Lengua", dias=semana_actual)]
+Asistente: [llama generate_study_plan@v1(alumno_id, materia="Lengua", dias=semana_actual)]
 → [Plan semanal con actividades cortas para el hogar]
 ```
 
 **Tool MCP requerida:**
-- `get_notas` (comparativa entre trimestres — detección de caída)
-- `get_alertas_institucionales` (disparador)
-- `generar_plan_estudio` (si el padre elige opción A)
+- `get_grades@v1` (comparativa entre trimestres — detección de caída)
+- `get_institutional_alerts@v1` (disparador)
+- `generate_study_plan@v1` (si el padre elige opción A)
 - RAG sobre observaciones pedagógicas
 
 **Casos borde:**

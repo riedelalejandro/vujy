@@ -26,9 +26,9 @@ Asistente: "Buenos días, seño Andrea. Antes de empezar la semana:
 ```
 Seño: "¿Quiénes necesitan atención en el grado?"
 
-Asistente: [llama get_notas(grado, trimestre=actual)]
-           [llama get_asistencia(grado, periodo=reciente)]
-           [llama get_alertas_institucionales(filtro=docente)]
+Asistente: [llama get_grades@v1(grado, trimestre=actual)]
+           [llama get_attendance@v1(grado, periodo=reciente)]
+           [llama get_institutional_alerts@v1(filtro=docente)]
 → "Alumnos que requieren atención — 4to B:
    Pedagógico: Juan García (↓ Mat. y Lengua), Pedro Suárez (3 notas bajo 6)
    Asistencia: Mati López (4 ausencias sin justificar este mes)
@@ -36,9 +36,9 @@ Asistente: [llama get_notas(grado, trimestre=actual)]
 ```
 
 **Tool MCP requerida:**
-- `get_notas` (análisis de tendencias por grado)
-- `get_asistencia`
-- `get_alertas_institucionales` (filtro por docente y grado)
+- `get_grades@v1` (análisis de tendencias por grado)
+- `get_attendance@v1`
+- `get_institutional_alerts@v1` (filtro por docente y grado)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

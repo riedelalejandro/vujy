@@ -26,14 +26,14 @@ Asistente: "Voy a cargar en Matemática — Evaluación escrita — 3ro B:
 
 Seño: "Sí"
 
-Asistente: [llama cargar_nota(grado_id, materia, tipo_evaluacion, fecha, notas=[...])]
+Asistente: [llama record_grade_batch@v1(grado_id, materia, tipo_evaluacion, fecha, notas=[...])]
 → "Cargadas ✅. Promedio: 7.5.
    Juani bajó respecto al trimestre anterior (tenía 8). ¿Querés que te avise si sigue la tendencia?"
 ```
 
 **Tool MCP requerida:**
-- `cargar_nota`
-- `get_notas` (para comparar con trimestre anterior y disparar alertas)
+- `record_grade_batch@v1`
+- `get_grades@v1` (para comparar con trimestre anterior y disparar alertas)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

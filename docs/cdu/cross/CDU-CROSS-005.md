@@ -49,7 +49,7 @@ Asistente: "Hola [nombre]. Antes de empezar, necesitamos que revises y aceptes
 Padre: [marca el checkbox obligatorio + los opcionales que quiere]
        [toca "Continuar"]
 
-Asistente: [llama registrar_consentimiento_tutor(tutor_id, version_doc, opciones, timestamp, device)]
+Asistente: [llama register_consent@v1(tutor_id, version_doc, opciones, timestamp, device)]
 → [redirige a la pantalla principal de la app]
 
 ---
@@ -70,8 +70,8 @@ Asistente: [registra consentimiento básico por WA]
 ```
 
 **Tool MCP requerida:**
-- `registrar_consentimiento_tutor` (versión del documento, checkboxes, timestamp, IP/device, canal)
-- `get_estado_consentimiento` (para validar antes de ejecutar cualquier otro CDU)
+- `register_consent@v1` (versión del documento, checkboxes, timestamp, IP/device, canal)
+- `get_consent_status@v1` (para validar antes de ejecutar cualquier otro CDU)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

@@ -16,9 +16,9 @@
 ```
 Seño: "¿Cómo viene Lucas este trimestre?"
 
-Asistente: [llama get_resumen_alumno(alu_lucas, trimestre_actual)]
-           [llama get_notas(alu_lucas, trimestre=1)]
-           [llama get_asistencia(alu_lucas)]
+Asistente: [llama get_student_summary@v1(alu_lucas, trimestre_actual)]
+           [llama get_grades@v1(alu_lucas, trimestre=1)]
+           [llama get_attendance@v1(alu_lucas)]
 → "Lucas Fernández — 4to B, 1er trimestre:
    Académico: Promedio 7.8 — Matemática: 8, Lengua: 7, Ciencias: sin nota aún
    Asistencia: 18/20 días (2 ausencias, ambas justificadas)
@@ -27,9 +27,9 @@ Asistente: [llama get_resumen_alumno(alu_lucas, trimestre_actual)]
 ```
 
 **Tool MCP requerida:**
-- `get_resumen_alumno`
-- `get_notas`
-- `get_asistencia`
+- `get_student_summary@v1`
+- `get_grades@v1`
+- `get_attendance@v1`
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

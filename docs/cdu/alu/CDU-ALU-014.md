@@ -29,7 +29,7 @@ Asistente: "4to A ganó con 128 puntos vs. 109 de 4to B.
 ```
 
 **Tool MCP requerida:**
-- `generar_actividad_educativa` (serie de ejercicios para el desafío)
+- `generate_learning_activity@v1` (serie de ejercicios para el desafío)
 - Sistema de puntuación grupal (sin ranking individual visible al rival)
 
 **Casos borde:**

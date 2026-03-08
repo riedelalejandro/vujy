@@ -16,7 +16,7 @@
 ```
 Alumno: "¿Qué tareas tengo para mañana?"
 
-Asistente: [llama get_tareas(alumno_id, solo_pendientes=true)]
+Asistente: [llama get_tasks@v1(alumno_id, solo_pendientes=true)]
 → "Para mañana tenés:
    - Matemática: ejercicios 3 y 4 de la página 48
    - Lengua: traer el libro 'El hombre que calculaba'
@@ -24,7 +24,7 @@ Asistente: [llama get_tareas(alumno_id, solo_pendientes=true)]
 ```
 
 **Tool MCP requerida:**
-- `get_tareas`
+- `get_tasks@v1`
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

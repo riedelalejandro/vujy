@@ -20,7 +20,7 @@
 
 Admin: "Activá el modo acto para el acto de hoy"
 
-Asistente: [llama activar_modo_acto(escuela_id, evento_id="acto_fin_año_2026")]
+Asistente: [llama activate_event_mode@v1(escuela_id, evento_id="acto_fin_año_2026")]
 → "Modo Acto activado para 'Acto de Fin de Año 2026'.
    Corresponsal asignado: Seño Claudia Méndez (3ro B).
    Familias notificadas: 'El acto comienza. Seguilo en vivo en la app.'
@@ -39,7 +39,7 @@ App: [muestra warning: "Mati López tiene opt-in de fotos activo ✅"]
 
 Seño Claudia: [toca "Publicar"]
 
-Asistente: [llama publicar_update_evento(evento_id, texto, foto, alumno_id="mati_lopez")]
+Asistente: [llama publish_event_update@v1(evento_id, texto, foto, alumno_id="mati_lopez")]
            [valida flag foto_bloqueada → ok]
            [envía mención personalizada a familia López + update general al resto]
 
@@ -55,7 +55,7 @@ Asistente: [llama publicar_update_evento(evento_id, texto, foto, alumno_id="mati
 
 [Al finalizar el acto]
 
-Asistente: [llama generar_album_evento(evento_id)]
+Asistente: [llama generate_event_album@v1(evento_id)]
 → [Admin recibe notificación]
    "El álbum del Acto de Fin de Año está listo (23 fotos, 8 updates).
    Quedó guardado en el perfil de cada alumno que fue mencionado.
@@ -67,9 +67,9 @@ Asistente: → "Álbum publicado. Las familias pueden verlo en el perfil de su h
 ```
 
 **Tool MCP requerida:**
-- `activar_modo_acto` (habilita la pantalla simplificada del corresponsal + notifica familias)
-- `publicar_update_evento` (valida `foto_bloqueada` antes de publicar — bloqueo si el flag está activo)
-- `generar_album_evento` (cronología automática de fotos y updates al finalizar)
+- `activate_event_mode@v1` (habilita la pantalla simplificada del corresponsal + notifica familias)
+- `publish_event_update@v1` (valida `foto_bloqueada` antes de publicar — bloqueo si el flag está activo)
+- `generate_event_album@v1` (cronología automática de fotos y updates al finalizar)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

@@ -16,7 +16,7 @@
 ```
 Admin: "¿Qué grado tiene más inasistencias esta semana?"
 
-Asistente: [llama get_asistencia(escuela_id, desde=inicio_semana, hasta=hoy) — agrupado por grado]
+Asistente: [llama get_attendance@v1(escuela_id, desde=inicio_semana, hasta=hoy) — agrupado por grado]
 → "Inasistencias esta semana por grado:
    1. 3er año (Secundaria): 12 — 24% del grado
    2. 2do B (Primaria): 8 — 22% del grado
@@ -25,7 +25,7 @@ Asistente: [llama get_asistencia(escuela_id, desde=inicio_semana, hasta=hoy) —
 ```
 
 **Tool MCP requerida:**
-- `get_asistencia`
+- `get_attendance@v1`
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

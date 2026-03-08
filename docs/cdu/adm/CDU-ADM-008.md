@@ -33,7 +33,7 @@ Asistente: "Enviado a secretaría para revisión ✅. Te aviso cuando lo apruebe
 
 **Tool MCP requerida:**
 - Múltiples function calls para consolidar datos institucionales
-- `generar_comunicado_borrador` (para formatear el documento)
+- `generate_announcement_draft@v1` (para formatear el documento)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

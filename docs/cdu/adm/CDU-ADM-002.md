@@ -16,7 +16,7 @@
 ```
 Admin: "¿Cómo viene la morosidad este mes?"
 
-Asistente: [llama get_dashboard_morosidad(escuela_id, segmentacion="resumen")]
+Asistente: [llama get_delinquency_dashboard@v1(escuela_id, segmentacion="resumen")]
 → "Morosidad al 4/3/2026:
    | Estado        | Familias | % | Monto        |
    | Al día        | 187      |78%| —            |
@@ -28,8 +28,8 @@ Asistente: [llama get_dashboard_morosidad(escuela_id, segmentacion="resumen")]
 ```
 
 **Tool MCP requerida:**
-- `get_dashboard_morosidad`
-- `get_riesgo_desercion` (si el admin quiere ver familias de riesgo)
+- `get_delinquency_dashboard@v1`
+- `get_dropout_risk@v1` (si el admin quiere ver familias de riesgo)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

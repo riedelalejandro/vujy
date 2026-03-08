@@ -29,7 +29,7 @@ Asistente: "Benchmark — Escuelas similares en Vujy
 ```
 
 **Tool MCP requerida:**
-- `get_dashboard_morosidad` (propia escuela)
+- `get_delinquency_dashboard@v1` (propia escuela)
 - Analytics agregados de la red (anonimizados, con consentimiento de escuelas participantes)
 
 **Principio III (CRÍTICO):** Los datos del benchmark son estrictamente agregados y anonimizados. Ningún administrador puede ver datos individuales de otra escuela. NON-NEGOTIABLE.

@@ -19,8 +19,8 @@
 
 Admin: "¿Cómo viene la reinscripción para el año que viene?"
 
-Asistente: [llama get_estado_reinscripciones(escuela_id, ciclo="2027")]
-           [llama get_riesgo_desercion(escuela_id)]
+Asistente: [llama get_reenrollment_status@v1es(escuela_id, ciclo="2027")]
+           [llama get_dropout_risk@v1(escuela_id)]
 → "Reinscripción 2027 — estado al 15 de octubre:
    ✅ Confirmados: 187 / 312 (60%)
    ⚠️ Sin respuesta — bajo riesgo: 89 familias
@@ -32,7 +32,7 @@ Asistente: [llama get_estado_reinscripciones(escuela_id, ciclo="2027")]
 
 Admin: "Sí, mostrámela"
 
-Asistente: [llama crear_segmento_reinscripcion(escuela_id, ciclo="2027")]
+Asistente: [llama create_reenrollment_campaign@v1(escuela_id, ciclo="2027")]
 → "Campaña propuesta — 3 mensajes diferenciados:
 
    GRUPO A — 89 familias sin respuesta (bajo riesgo):
@@ -48,7 +48,7 @@ Asistente: [llama crear_segmento_reinscripcion(escuela_id, ciclo="2027")]
 
 Admin: "Apruebo los dos"
 
-Asistente: [llama enviar_campana_reinscripcion(segmento_A, segmento_B, admin_aprobacion=true)]
+Asistente: [llama create_reenrollment_campaign@v1(segmento_A, segmento_B, admin_aprobacion=true)]
 → "Enviando...
    ✅ Grupo A: 89 mensajes enviados (WhatsApp donde hay opt-in, push al resto)
    ✅ Grupo B: 36 mensajes enviados
@@ -66,10 +66,10 @@ Asistente: "Resultados de ayer:
 ```
 
 **Tool MCP requerida:**
-- `get_estado_reinscripciones` (por ciclo lectivo)
-- `get_riesgo_desercion` (cruza morosidad + engagement + asistencia)
-- `crear_segmento_reinscripcion` (segmentación automática en 3 grupos)
-- `enviar_campana_reinscripcion` (con aprobación explícita del admin obligatoria)
+- `get_reenrollment_status@v1` (por ciclo lectivo)
+- `get_dropout_risk@v1` (cruza morosidad + engagement + asistencia)
+- `create_reenrollment_campaign@v1` (segmentación automática en 3 grupos)
+- `create_reenrollment_campaign@v1` (con aprobación explícita del admin obligatoria)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

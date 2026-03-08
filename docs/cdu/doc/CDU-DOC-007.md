@@ -16,7 +16,7 @@
 ```
 Seño: "Creame una trivia de 8 preguntas sobre fotosíntesis para 5to, dificultad media"
 
-Asistente: [llama generar_actividad_educativa(tema="fotosíntesis", materia="Ciencias",
+Asistente: [llama generate_learning_activity@v1(tema="fotosíntesis", materia="Ciencias",
             grado_id="5to", tipo="trivia", cantidad_preguntas=8, dificultad="media")]
 → "Trivia 'Fotosíntesis' — 5to grado (preview de 3 preguntas):
    1. ¿Dónde ocurre la fotosíntesis? a) Raíces b) Hojas c) Tallo...
@@ -30,7 +30,7 @@ Asistente: "Actividad publicada ✅. Los alumnos ya la ven desde su app.
 ```
 
 **Tool MCP requerida:**
-- `generar_actividad_educativa`
+- `generate_learning_activity@v1`
 - RAG sobre diseño curricular (para alinear con contenidos del año)
 
 **Casos borde:**

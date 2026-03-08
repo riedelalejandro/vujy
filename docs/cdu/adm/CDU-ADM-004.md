@@ -16,7 +16,7 @@
 ```
 Admin: "Generá plan de pago en 3 cuotas para familia Pérez"
 
-Asistente: [llama get_estado_cuenta(familia_id="fam_perez")]
+Asistente: [llama get_account_status@v1(familia_id="fam_perez")]
 → "Familia Pérez — Deuda total: $126.000 (3 cuotas atrasadas)
    Plan de pago sugerido — 3 cuotas:
    | Cuota | Monto   | Vencimiento |
@@ -40,9 +40,9 @@ Al enviar la propuesta de plan de pago, el sistema:
 Cualquier tutor con `can_make_payments = true` puede efectuar los pagos del plan.
 
 **Tool MCP requerida:**
-- `get_estado_cuenta`
-- `generar_comunicado_borrador` (propuesta al tutor)
-- `enviar_comunicado`
+- `get_account_status@v1`
+- `generate_announcement_draft@v1` (propuesta al tutor)
+- `send_announcement@v1`
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

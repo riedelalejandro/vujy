@@ -16,8 +16,8 @@
 ```
 Alumno: "¿Qué tengo esta semana?"
 
-Asistente: [llama get_tareas(alumno_id, solo_pendientes=true)]
-           [llama get_calendario(alumno_id, desde=hoy, hasta=fin_semana)]
+Asistente: [llama get_tasks@v1(alumno_id, solo_pendientes=true)]
+           [llama get_calendar@v1(alumno_id, desde=hoy, hasta=fin_semana)]
 → "Esta semana — 4 al 8 de marzo:
    Martes: Ed. Física (llevar ropa deportiva)
    Miércoles: entregar TP de Historia ⚠️
@@ -27,8 +27,8 @@ Asistente: [llama get_tareas(alumno_id, solo_pendientes=true)]
 ```
 
 **Tool MCP requerida:**
-- `get_tareas`
-- `get_calendario`
+- `get_tasks@v1`
+- `get_calendar@v1`
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

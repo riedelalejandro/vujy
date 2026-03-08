@@ -23,13 +23,13 @@ Asistente: "Ausencias del lunes 3/3 — 4to B:
 
 Seño: "Sí"
 
-Asistente: [llama tomar_asistencia_grado(grado_id, fecha=hoy, asistencias=[...])]
+Asistente: [llama take_attendance@v1(grado_id, fecha=hoy, asistencias=[...])]
 → "Asistencia registrada ✅. 2 tutores notificados."
 ```
 
 **Tool MCP requerida:**
-- `tomar_asistencia_grado`
-- `registrar_ausencia` (alternativa si es solo ausentes individuales)
+- `take_attendance@v1`
+- `record_absence@v1` (alternativa si es solo ausentes individuales)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

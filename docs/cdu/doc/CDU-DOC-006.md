@@ -18,7 +18,7 @@ Seño: "Generame el informe de Lucas para el 1er trimestre"
 
 Asistente: "Lucas tiene 4 observaciones y 3 notas cargadas. Generando borrador..."
 
-Asistente: [llama generar_informe_pedagogico(alumno_id, trimestre=1, anio=2026, estilo="descriptivo_primaria")]
+Asistente: [llama generate_pedagogical_report@v1(alumno_id, trimestre=1, anio=2026, estilo="descriptivo_primaria")]
 → "Borrador del informe de Lucas:
    ---
    Lucas muestra un progreso notorio en Lengua, particularmente en
@@ -40,8 +40,8 @@ Asistente: "Informe de Lucas aprobado ✅. Guardado para publicar al boletín."
 ```
 
 **Tool MCP requerida:**
-- `generar_informe_pedagogico`
-- `registrar_observacion_pedagogica` (datos de entrada precargados)
+- `generate_pedagogical_report@v1`
+- `record_pedagogical_note@v1` (datos de entrada precargados)
 - RAG sobre observaciones del trimestre
 
 **Casos borde:**

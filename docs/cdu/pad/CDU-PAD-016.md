@@ -16,13 +16,13 @@
 ```
 Madre: "Quiero ver cómo viene Mati desde que entró al colegio"
 
-Asistente: [llama get_my_students(guardian_id)]
+Asistente: [llama get_my_students@v1(guardian_id)]
            — Si el tutor tiene >1 hijo Y la consulta no nombra al hijo explícitamente
              Y no hay contexto previo en el thread → preguntar:
              "¿Me preguntás por [Nombre1] o [Nombre2]?"
            — Si nombra explícitamente al hijo → resolver directamente.
 
-Asistente: [llama get_notas(alumno_id, todos_los_trimestres=true)]
+Asistente: [llama get_grades@v1(alumno_id, todos_los_trimestres=true)]
            [RAG sobre observaciones pedagógicas históricas]
 → "Trayectoria de Mati en Colegio San Martín (2022 — 2026):
    2022 — 1er grado: Promedio 8.2. 'Gran lector desde el inicio.'
@@ -37,10 +37,10 @@ Asistente: [llama get_notas(alumno_id, todos_los_trimestres=true)]
 ```
 
 **Tool MCP requerida:**
-- `get_my_students` (para desambiguación multi-hijo al inicio del flujo)
-- `get_notas` (histórico multi-año)
+- `get_my_students@v1` (para desambiguación multi-hijo al inicio del flujo)
+- `get_grades@v1` (histórico multi-año)
 - RAG sobre observaciones pedagógicas acumuladas
-- `get_asistencia` (histórica)
+- `get_attendance@v1` (histórica)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

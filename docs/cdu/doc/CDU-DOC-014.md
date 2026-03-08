@@ -27,8 +27,8 @@ Asistente: [genera dos actividades cortas]
 ```
 
 **Tool MCP requerida:**
-- `get_calendario` (evaluaciones próximas)
-- `generar_actividad_educativa`
+- `get_calendar@v1` (evaluaciones próximas)
+- `generate_learning_activity@v1`
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

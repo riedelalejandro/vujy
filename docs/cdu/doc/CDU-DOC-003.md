@@ -17,7 +17,7 @@
 Seño: "Mandá comunicado a 3ro B: el viernes hay acto, vengan de blanco
        y traigan algo para compartir"
 
-Asistente: [llama generar_comunicado_borrador(instruccion="...", destinatarios="3ro B")]
+Asistente: [llama generate_announcement_draft@v1(instruccion="...", destinatarios="3ro B")]
 → "Acá está el borrador:
    Título: Acto escolar — viernes 20 de marzo
    [Cuerpo del comunicado]
@@ -30,13 +30,13 @@ Asistente: [actualiza borrador]
 
 Seño: "Sí"
 
-Asistente: [llama enviar_comunicado(titulo, cuerpo, destinatarios={grado_ids:["3B"]}, canal=["app"])]
+Asistente: [llama send_announcement@v1(titulo, cuerpo, destinatarios={grado_ids:["3B"]}, canal=["app"])]
 → "Comunicado enviado a 28 familias ✅. Te aviso cuando lleguen las confirmaciones de lectura."
 ```
 
 **Tool MCP requerida:**
-- `generar_comunicado_borrador`
-- `enviar_comunicado`
+- `generate_announcement_draft@v1`
+- `send_announcement@v1`
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

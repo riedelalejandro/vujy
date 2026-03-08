@@ -16,10 +16,10 @@
 ```
 Admin: "¿Cómo estamos hoy?"
 
-Asistente: [llama get_asistencia(escuela_id, fecha=hoy)]
-           [llama get_dashboard_morosidad(escuela_id)]
-           [llama get_alertas_institucionales(escuela_id)]
-           [llama get_comunicados (estadísticas de lectura)]
+Asistente: [llama get_attendance@v1(escuela_id, fecha=hoy)]
+           [llama get_delinquency_dashboard@v1(escuela_id)]
+           [llama get_institutional_alerts@v1(escuela_id)]
+           [llama get_announcements@v1 (estadísticas de lectura)]
 → "Buenos días. Pulso de San Martín — lunes 4 de marzo:
    Asistencia (8:25am): 208/240 alumnos. 8 grados tomaron lista.
    Morosidad: $3.1M vencido. 3 familias en riesgo alto.
@@ -29,10 +29,10 @@ Asistente: [llama get_asistencia(escuela_id, fecha=hoy)]
 ```
 
 **Tool MCP requerida:**
-- `get_alertas_institucionales`
-- `get_dashboard_morosidad`
-- `get_asistencia`
-- `get_comunicados`
+- `get_institutional_alerts@v1`
+- `get_delinquency_dashboard@v1`
+- `get_attendance@v1`
+- `get_announcements@v1`
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

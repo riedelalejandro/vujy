@@ -16,7 +16,7 @@
 ```
 Admin: "¿Qué familias tienen riesgo de irse?"
 
-Asistente: [llama get_riesgo_desercion(escuela_id, umbral_riesgo="alto")]
+Asistente: [llama get_dropout_risk@v1(escuela_id, umbral_riesgo="alto")]
 → "3 familias con riesgo ALTO de deserción:
 
    1. Familia Pérez (Tomás, 2do A) — Índice: 87/100
@@ -36,9 +36,9 @@ Asistente: [llama get_riesgo_desercion(escuela_id, umbral_riesgo="alto")]
 ```
 
 **Tool MCP requerida:**
-- `get_riesgo_desercion`
-- `get_estado_cuenta` (para profundizar en la situación financiera)
-- `get_asistencia` (para profundizar en situación del alumno)
+- `get_dropout_risk@v1`
+- `get_account_status@v1` (para profundizar en la situación financiera)
+- `get_attendance@v1` (para profundizar en situación del alumno)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

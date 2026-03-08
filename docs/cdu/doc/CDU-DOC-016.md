@@ -28,10 +28,10 @@ Asistente: "Seño, quería comentarle algo sobre Valentina Gómez.
 ```
 
 **Tool MCP requerida:**
-- `get_asistencia` (histórica del alumno)
+- `get_attendance@v1` (histórica del alumno)
 - Señales de bienestar del asistente del alumno (alertas anonimizadas — protocolo API SPEC §5.3)
-- `get_alertas_institucionales` (tipo: bienestar)
-- `enviar_comunicado` (al equipo de orientación)
+- `get_institutional_alerts@v1` (tipo: bienestar)
+- `send_announcement@v1` (al equipo de orientación)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

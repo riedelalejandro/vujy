@@ -16,8 +16,8 @@
 ```
 Admin: "¿Cómo está la asistencia esta semana vs. la anterior?"
 
-Asistente: [llama get_asistencia(escuela_id, desde=semana_actual)]
-           [llama get_asistencia(escuela_id, desde=semana_anterior)]
+Asistente: [llama get_attendance@v1(escuela_id, desde=semana_actual)]
+           [llama get_attendance@v1(escuela_id, desde=semana_anterior)]
 → "Comparación de asistencia:
    | Semana          | Presentes | Ausentes | % Asistencia |
    | Esta (3-7/3)    | 218/240   | 22       | 90.8%        |
@@ -27,9 +27,9 @@ Asistente: [llama get_asistencia(escuela_id, desde=semana_actual)]
 ```
 
 **Tool MCP requerida:**
-- `get_asistencia` (con rangos de fecha para comparación)
-- `get_dashboard_morosidad` (para comparación de morosidad)
-- `get_alertas_institucionales` (para detectar patrones)
+- `get_attendance@v1` (con rangos de fecha para comparación)
+- `get_delinquency_dashboard@v1` (para comparación de morosidad)
+- `get_institutional_alerts@v1` (para detectar patrones)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

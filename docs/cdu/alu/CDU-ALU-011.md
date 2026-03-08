@@ -31,7 +31,7 @@ Asistente: "Resultado: 7/10. Muy bien.
 
 **Tool MCP requerida:**
 - RAG sobre materiales de clase
-- `generar_actividad_educativa` (tipo: simulacro)
+- `generate_learning_activity@v1` (tipo: simulacro)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

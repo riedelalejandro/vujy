@@ -35,9 +35,9 @@ Asistente (hacia la seño): "Seño, Pablo García (papá de Mati) escribió anoc
 ```
 
 **Tool MCP requerida:**
-- `get_notas` (para responder la consulta del padre sin molestar a la docente)
-- `get_comunicados` (mensajes pendientes)
-- `enviar_comunicado` (cuando la docente responde en horario)
+- `get_grades@v1` (para responder la consulta del padre sin molestar a la docente)
+- `get_announcements@v1` (mensajes pendientes)
+- `send_announcement@v1` (cuando la docente responde en horario)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

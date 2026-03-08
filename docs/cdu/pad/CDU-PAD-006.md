@@ -16,7 +16,7 @@
 ```
 Padre: "¿Hay algo nuevo de la escuela?"
 
-Asistente: [llama get_comunicados(destinatario_id, leidos=false, limite=5)]
+Asistente: [llama get_announcements@v1(destinatario_id, leidos=false, limite=5)]
 → "Tenés 2 comunicados sin leer:
    1. 'Acto del 25 de mayo — indumentaria' — Seño Andrea, ayer
    2. 'Reunión de padres — 20/3 a las 19hs' — Secretaría, hace 3 días
@@ -24,8 +24,8 @@ Asistente: [llama get_comunicados(destinatario_id, leidos=false, limite=5)]
 ```
 
 **Tool MCP requerida:**
-- `get_comunicados`
-- `get_calendario` (para cruzar fechas de eventos mencionados)
+- `get_announcements@v1`
+- `get_calendar@v1` (para cruzar fechas de eventos mencionados)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

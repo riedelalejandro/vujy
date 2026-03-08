@@ -18,7 +18,7 @@
 
 Admin: "Necesito revocar el acceso de Carlos López al perfil de Mati, hay una restricción judicial"
 
-Asistente: [llama buscar_tutor(escuela_id, query="Carlos López")]
+Asistente: [llama search_guardian@v1(escuela_id, query="Carlos López")]
 → "Encontré a Carlos López — tutor de Matías López (3ro B).
    Acceso activo en: App (último ingreso: ayer 21:03), WhatsApp.
 
@@ -43,7 +43,7 @@ Asistente: "Confirmá la revocación de acceso de Carlos López:
 
 Admin: [ingresa PIN]
 
-Asistente: [llama revocar_acceso_tutor(tutor_id, motivo="orden_judicial", admin_id)]
+Asistente: [llama revoke_guardian_access@v1(tutor_id, motivo="orden_judicial", admin_id)]
            [llama log_auditoria_seguridad(accion, timestamp, admin_id, motivo)]
 → "✅ Acceso revocado (22:14:07).
    Carlos López no puede ingresar a ningún canal de Vujy.
@@ -54,8 +54,8 @@ Asistente: [llama revocar_acceso_tutor(tutor_id, motivo="orden_judicial", admin_
 ```
 
 **Tool MCP requerida:**
-- `buscar_tutor` (búsqueda por nombre/DNI dentro del tenant)
-- `revocar_acceso_tutor` (propaga revocación a todos los canales vía RLS)
+- `search_guardian@v1` (búsqueda por nombre/DNI dentro del tenant)
+- `revoke_guardian_access@v1` (propaga revocación a todos los canales vía RLS)
 - `log_auditoria_seguridad` (log inmutable — no modificable ni por admin)
 
 **Casos borde:**

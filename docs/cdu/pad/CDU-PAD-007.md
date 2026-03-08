@@ -23,13 +23,13 @@ Asistente: "Para confirmar la reinscripción de Mati para 5to grado (2027):
 
 Padre: "Sí"
 
-Asistente: [llama confirmar_reinscripcion(alumno_id, ciclo_lectivo=2027, acepta_condiciones=true)]
+Asistente: [llama confirm_reenrollment@v1(alumno_id, ciclo_lectivo=2027, acepta_condiciones=true)]
 → "Reinscripción de Mati confirmada ✅. Confirmación enviada a tu email."
 ```
 
 **Tool MCP requerida:**
-- `confirmar_reinscripcion`
-- `get_estado_cuenta` (bloqueo si hay deuda pendiente)
+- `confirm_reenrollment@v1`
+- `get_account_status@v1` (bloqueo si hay deuda pendiente)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |
