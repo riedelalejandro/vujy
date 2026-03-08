@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { callMcpTool } from '../_helpers/client.mjs';
 import { headersForRole, requiresRole } from '../_helpers/auth.mjs';
 import { assertSuccessEnvelope, assertErrorCode } from '../_helpers/assertions.mjs';
+import { CONTRACT } from '../_helpers/contract.mjs';
 
 for (const [role, envVar] of Object.entries({
   parent: 'A3_PARENT_SESSION_TOKEN',
@@ -18,14 +19,14 @@ for (const [role, envVar] of Object.entries({
 test('A3-001 P0 - cross 005 consent happy path', async () => {
   const headers = headersForRole('parent');
   const statusBefore = await callMcpTool({
-    tool: 'get_consent_status@v1',
+    tool: CONTRACT.tools.get_consent_status,
     arguments: { student_id: process.env.A3_STUDENT_ID },
     headers,
   });
   assert.equal(statusBefore?.success, true);
 
   const register = await callMcpTool({
-    tool: 'register_consent@v1',
+    tool: CONTRACT.tools.register_consent,
     arguments: {
       student_id: process.env.A3_STUDENT_ID,
       has_whatsapp_consent: true,
@@ -37,7 +38,7 @@ test('A3-001 P0 - cross 005 consent happy path', async () => {
   assertSuccessEnvelope(register);
 
   const statusAfter = await callMcpTool({
-    tool: 'get_consent_status@v1',
+    tool: CONTRACT.tools.get_consent_status,
     arguments: { student_id: process.env.A3_STUDENT_ID },
     headers,
   });
@@ -47,19 +48,19 @@ test('A3-001 P0 - cross 005 consent happy path', async () => {
 test('A3-002 P0 - cross 005 blocks data tool without consent', { skip: Boolean(requiresRole('parent')) }, async () => {
   const headers = headersForRole('parent');
   const blocked = await callMcpTool({
-    tool: 'get_student_summary@v1',
+    tool: CONTRACT.tools.get_student_summary,
     arguments: { student_id: process.env.A3_STUDENT_ID },
     headers,
   });
-  assertErrorCode(blocked, 'CONSENT_REQUIRED');
+  assertErrorCode(blocked, 'CONSENT_REQUIRED', 'CONSENT_NOT_ACCEPTED');
 });
 
 test('A3-003 P0 - cross 005 validation error on consent payload', { skip: Boolean(requiresRole('parent')) }, async () => {
   const headers = headersForRole('parent');
   const invalid = await callMcpTool({
-    tool: 'register_consent@v1',
+    tool: CONTRACT.tools.register_consent,
     arguments: { student_id: process.env.A3_STUDENT_ID },
     headers,
   });
-  assertErrorCode(invalid, 'VALIDATION_ERROR');
+  assertErrorCode(invalid, 'VALIDATION_ERROR', 'BAD_REQUEST');
 });

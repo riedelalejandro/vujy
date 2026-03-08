@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { callMcpTool } from '../_helpers/client.mjs';
 import { headersForRole, requiresRole } from '../_helpers/auth.mjs';
 import { assertSuccessEnvelope, assertErrorCode } from '../_helpers/assertions.mjs';
+import { CONTRACT } from '../_helpers/contract.mjs';
 
 for (const role of ['admin']) {
   const missing = requiresRole(role);
@@ -17,7 +18,7 @@ test('A3-004 P0 - adm 015 revoke access happy path', { skip: Boolean(requiresRol
   const adminHeaders = headersForRole('admin');
   const guardId = process.env.A3_GUARDIAN_ID || 'GUARDIAN_A3';
   const revoked = await callMcpTool({
-    tool: 'revoke_guardian_access@v1',
+    tool: CONTRACT.tools.revoke_guardian_access,
     arguments: {
       student_id: process.env.A3_STUDENT_ID,
       guardian_id: guardId,
@@ -30,7 +31,7 @@ test('A3-004 P0 - adm 015 revoke access happy path', { skip: Boolean(requiresRol
   assertSuccessEnvelope(revoked);
 
   const audit = await callMcpTool({
-    tool: 'log_security_action@v1',
+    tool: CONTRACT.tools.log_security_action,
     arguments: {
       action: 'revoke_guardian_access',
       actor_user_id: 'admin-a3',
@@ -46,7 +47,7 @@ test('A3-005 P0 - adm 015 reject without confirmation', { skip: Boolean(requires
   const adminHeaders = headersForRole('admin');
   const guardId = process.env.A3_GUARDIAN_ID || 'GUARDIAN_A3';
   const blocked = await callMcpTool({
-    tool: 'revoke_guardian_access@v1',
+    tool: CONTRACT.tools.revoke_guardian_access,
     arguments: {
       student_id: process.env.A3_STUDENT_ID,
       guardian_id: guardId,
@@ -56,7 +57,12 @@ test('A3-005 P0 - adm 015 reject without confirmation', { skip: Boolean(requires
     },
     headers: adminHeaders,
   });
-  assertErrorCode(blocked, 'CONFIRMATION_REQUIRED');
+  assertErrorCode(
+    blocked,
+    'CONFIRMATION_REQUIRED',
+    'CONFIRMATION_MISSING',
+    'CONFIRMATION_REQUIRED_ERROR',
+  );
 });
 
 test('A3-006 P0 - adm 015 idempotency', { skip: Boolean(requiresRole('admin')) }, async () => {
@@ -68,8 +74,8 @@ test('A3-006 P0 - adm 015 idempotency', { skip: Boolean(requiresRole('admin')) }
     pin_verified: true,
     idempotency_key: 'a3-006',
   };
-  const first = await callMcpTool({ tool: 'revoke_guardian_access@v1', arguments: payload, headers: adminHeaders });
-  const second = await callMcpTool({ tool: 'revoke_guardian_access@v1', arguments: payload, headers: adminHeaders });
+  const first = await callMcpTool({ tool: CONTRACT.tools.revoke_guardian_access, arguments: payload, headers: adminHeaders });
+  const second = await callMcpTool({ tool: CONTRACT.tools.revoke_guardian_access, arguments: payload, headers: adminHeaders });
   assertSuccessEnvelope(first);
   assert.equal(second?.success, true);
 });

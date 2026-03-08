@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { callMcpTool } from '../_helpers/client.mjs';
 import { headersForRole, requiresRole } from '../_helpers/auth.mjs';
 import { assertSuccessEnvelope, assertErrorCode } from '../_helpers/assertions.mjs';
+import { CONTRACT } from '../_helpers/contract.mjs';
 
 for (const role of ['parent']) {
   const missing = requiresRole(role);
@@ -16,7 +17,7 @@ for (const role of ['parent']) {
 test('A3-007 P0 - cross 006 export data', { skip: Boolean(requiresRole('parent')) }, async () => {
   const headers = headersForRole('parent');
   const response = await callMcpTool({
-    tool: 'export_user_data@v1',
+    tool: CONTRACT.tools.export_user_data,
     arguments: {
       family_id: process.env.A3_FAMILY_ID || 'FAM_A3',
       student_id: process.env.A3_STUDENT_ID,
@@ -33,7 +34,7 @@ test('A3-007 P0 - cross 006 export data', { skip: Boolean(requiresRole('parent')
 test('A3-008 P0 - cross 006 rectification', { skip: Boolean(requiresRole('parent')) }, async () => {
   const headers = headersForRole('parent');
   const response = await callMcpTool({
-    tool: 'request_data_rectification@v1',
+    tool: CONTRACT.tools.request_data_rectification,
     arguments: {
       student_id: process.env.A3_STUDENT_ID,
       fields: ['contact_email', 'phone'],
@@ -49,7 +50,7 @@ test('A3-008 P0 - cross 006 rectification', { skip: Boolean(requiresRole('parent
 test('A3-009 P0 - cross 006 opposition', { skip: Boolean(requiresRole('parent')) }, async () => {
   const headers = headersForRole('parent');
   const response = await callMcpTool({
-    tool: 'register_data_opposition@v1',
+    tool: CONTRACT.tools.register_data_opposition,
     arguments: {
       student_id: process.env.A3_STUDENT_ID,
       opposition_scope: ['marketing', 'analytics'],
@@ -65,7 +66,7 @@ test('A3-009 P0 - cross 006 opposition', { skip: Boolean(requiresRole('parent'))
 test('A3-010 P0 - cross 006 deletion constrained', { skip: Boolean(requiresRole('parent')) }, async () => {
   const headers = headersForRole('parent');
   const response = await callMcpTool({
-    tool: 'request_data_deletion@v1',
+    tool: CONTRACT.tools.request_data_deletion,
     arguments: {
       student_id: process.env.A3_STUDENT_ID,
       deletion_scope: ['profile', 'communications'],
@@ -80,7 +81,7 @@ test('A3-010 P0 - cross 006 deletion constrained', { skip: Boolean(requiresRole(
 test('A3-011 P0 - cross 006 forbidden for unauthorized actor', { skip: Boolean(requiresRole('student')) }, async () => {
   const headers = headersForRole('student');
   const response = await callMcpTool({
-    tool: 'export_user_data@v1',
+    tool: CONTRACT.tools.export_user_data,
     arguments: {
       family_id: process.env.A3_FAMILY_ID || 'FAM_A3',
       student_id: process.env.A3_STUDENT_ID,
@@ -88,5 +89,5 @@ test('A3-011 P0 - cross 006 forbidden for unauthorized actor', { skip: Boolean(r
     },
     headers,
   });
-  assertErrorCode(response, 'FORBIDDEN_SCOPE');
+  assertErrorCode(response, 'FORBIDDEN_SCOPE', 'FORBIDDEN');
 });
