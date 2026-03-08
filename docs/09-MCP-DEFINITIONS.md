@@ -7,8 +7,8 @@ Este documento cierra `TODO(MCP_DEFINITIONS)`. Es la especificación operativa d
 - Decisiones 90/10: `docs/12-CDU-DECISOR-90-10.md`
 - Tools base: `docs/02-API-SPEC.md`
 
-**Total tools canónicas:** 44 (28 MVP v1 + 16 v2.0)
-**Schemas JSON publicados:** 44 tools en `docs/10-MCP-SCHEMAS.md`
+**Total tools canónicas:** 48 (28 MVP v1 + 16 v2.0 + 4 definidas en corrección de auditoría)
+**Schemas JSON publicados:** 44 tools en `docs/10-MCP-SCHEMAS.md` — pendiente agregar 4 nuevas
 
 Estado: **especificación implementable** — pendiente validación legal (ver §13).
 
@@ -104,18 +104,22 @@ Cuando intervienen proveedores externos fuera de Argentina:
 | Tool canónica | Tipo | CDU | Roles | Confirma? | Idempotente? |
 |---|---|---|---|---|---|
 | `revoke_guardian_access@v1` | Action | CDU-ADM-015 | A, Dir, S | Sí (irreversible) | Sí |
+| `log_security_action@v1` | Action | CDU-ADM-015 | Sistema (append-only) | No | Sí |
 | `search_guardian@v1` | Query | CDU-ADM-015 | A, Dir, S | No | No |
 | `register_consent@v1` | Action | CDU-CROSS-005 | P, S, A | No | Sí |
 | `get_consent_status@v1` | Query | CDU-CROSS-005 | P, S, A, D | No | No |
 | `export_user_data@v1` | Action | CDU-CROSS-006 | P (propios), A | No | Sí |
 | `request_data_rectification@v1` | Action | CDU-CROSS-006 | P (propios), A | No | Sí |
 | `request_data_deletion@v1` | Action | CDU-CROSS-006 | P (propios), A | Sí (irreversible) | Sí |
+| `register_data_opposition@v1` | Action | CDU-CROSS-006 | P (propios), A | No | Sí |
 | `get_reenrollment_status@v1` | Query | CDU-ADM-016 | A, Dir, S | No | No |
 | `create_reenrollment_campaign@v1` | Action | CDU-ADM-016 | A, Dir | Sí | Sí |
 | `get_daily_journal@v1` | Query | CDU-PAD-017, CDU-DOC-012 | P, D, Dir | No | No |
 | `publish_daily_journal@v1` | Action | CDU-DOC-012 | D | No | Sí |
 | `get_teacher_portfolio@v1` | Query | CDU-DOC-017 | D (propio), Dir, A | No | No |
 | `generate_teacher_portfolio_pdf@v1` | Generate | CDU-DOC-017 | D (propio), Dir, A | No | Sí |
+| `detect_teacher_milestone@v1` | Query | CDU-DOC-017 | Sistema (cron) | No | No |
+| `record_portfolio_milestone@v1` | Action | CDU-DOC-017 | Sistema (cron) | No | Sí |
 | `activate_event_mode@v1` | Action | CDU-CROSS-007 | D, Dir, A | No | Sí |
 | `publish_event_update@v1` | Action | CDU-CROSS-007 | D, Dir, A | No | Sí |
 | `generate_event_album@v1` | Generate | CDU-CROSS-007 | D, Dir, A | No | Sí |
@@ -386,6 +390,8 @@ Notas:
 ---
 
 ## 13. Estado y pendientes
+
+**v2.1 — corrección de auditoría:** 4 tools fantasma detectadas y definidas: `log_security_action@v1` (ADM-015), `register_data_opposition@v1` (CROSS-006), `detect_teacher_milestone@v1` + `record_portfolio_milestone@v1` (DOC-017). Total: 48 tools. Pendiente: agregar JSON Schemas de las 4 nuevas en `docs/10-MCP-SCHEMAS.md`.
 
 **v2.0 — cerrado:** catálogo canónico completo (44 tools totales), error taxonomy con 20 códigos, mapeo CDU→toolset completo, política de proactive messaging (§14), mapeo datasource+SLA en `docs/13-CDU-DATASOURCE-SLA.md`, casos E2E P0 en `docs/.tmp-mcp-insumos-7-8-10.md §Insumo 10`.
 

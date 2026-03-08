@@ -44,7 +44,7 @@ Asistente: "Confirmá la revocación de acceso de Carlos López:
 Admin: [ingresa PIN]
 
 Asistente: [llama revoke_guardian_access@v1(tutor_id, motivo="orden_judicial", admin_id)]
-           [llama log_auditoria_seguridad(accion, timestamp, admin_id, motivo)]
+           [llama log_security_action@v1(accion, timestamp, admin_id, motivo)]
 → "✅ Acceso revocado (22:14:07).
    Carlos López no puede ingresar a ningún canal de Vujy.
    Mensaje enviado al tutor.
@@ -56,7 +56,7 @@ Asistente: [llama revoke_guardian_access@v1(tutor_id, motivo="orden_judicial", a
 **Tool MCP requerida:**
 - `search_guardian@v1` (búsqueda por nombre/DNI dentro del tenant)
 - `revoke_guardian_access@v1` (propaga revocación a todos los canales vía RLS)
-- `log_auditoria_seguridad` (log inmutable — no modificable ni por admin)
+- `log_security_action@v1` (log inmutable — no modificable ni por admin)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

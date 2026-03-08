@@ -56,8 +56,8 @@ Asistente: [llama generate_teacher_portfolio_pdf@v1(docente_id, modo="interno")]
 ```
 
 **Tool MCP requerida:**
-- `detectar_hito_docente` (job periódico que evalúa umbrales estadísticos)
-- `registrar_hito_portfolio` (guarda el hito con timestamp y contexto)
+- `detect_teacher_milestone@v1` (job periódico que evalúa umbrales estadísticos)
+- `record_portfolio_milestone@v1` (guarda el hito con timestamp y contexto)
 - `get_teacher_portfolio@v1` (por período — trimestre o año)
 - `generate_teacher_portfolio_pdf@v1` (PDF descargable, dos modos: interno / externo-anonimizado)
 
