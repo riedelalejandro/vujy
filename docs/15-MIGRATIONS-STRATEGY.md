@@ -603,7 +603,30 @@ CREATE TABLE event_updates (
 
 ---
 
-### 3.11 Audit log (append-only)
+### 3.11 Webhook idempotency (processed_events)
+
+```sql
+-- Previene doble procesamiento de webhooks entrantes (WhatsApp, Mercado Pago)
+-- Estrategia: INSERT ... ON CONFLICT DO NOTHING antes de procesar cualquier webhook
+CREATE TABLE processed_events (
+  id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  source          TEXT NOT NULL CHECK (source IN ('whatsapp', 'mercadopago')),
+  external_id     TEXT NOT NULL,                -- X-Hub-Signature-256 hash o MP notification_id
+  school_id       UUID REFERENCES schools(id),  -- NULL si el event no es tenant-specific
+  processed_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
+  UNIQUE (source, external_id)
+);
+
+-- TTL: los eventos de más de 30 días pueden eliminarse (cron de limpieza)
+-- No requiere RLS — solo service_role puede insertar; nunca expuesto al cliente
+
+-- Índice para cleanup periódico
+CREATE INDEX idx_processed_events_age ON processed_events(processed_at);
+```
+
+---
+
+### 3.12 Audit log (append-only)
 
 ```sql
 -- Log inmutable de acciones críticas — nunca UPDATE ni DELETE
