@@ -3,7 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "validate:mcp-schemas": "node scripts/validate-mcp-schemas.js"
+    "validate:mcp-schemas": "node scripts/validate-mcp-schemas.js",
+    "test:e2e:p0": "node --test tests/e2e/p0/**/*.test.mjs",
+    "test:e2e:p0:clean": "rm -rf tests/e2e/p0/.artifacts"
   },
   "devDependencies": {
     "ajv": "^8.17.1",

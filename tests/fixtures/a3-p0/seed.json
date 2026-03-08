@@ -1,0 +1,24 @@
+{
+  "school_id": "SCHOOL_A3_DEMO",
+  "school_name": "Escuela Demo A3",
+  "actors": {
+    "admin": {
+      "user_id": "admin-a3",
+      "person_id": "person-admin-a3"
+    },
+    "parent": {
+      "user_id": "parent-a3",
+      "person_id": "person-parent-a3",
+      "student_id": "student-a3"
+    },
+    "student": {
+      "user_id": "student-a3",
+      "student_id": "student-a3"
+    }
+  },
+  "contracts": {
+    "consent_tool": "register_consent@v1",
+    "revoke_tool": "revoke_guardian_access@v1",
+    "arco_export_tool": "export_user_data@v1"
+  }
+}
