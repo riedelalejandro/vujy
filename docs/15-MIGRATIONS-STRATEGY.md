@@ -646,21 +646,27 @@ ALTER TABLE grade_records         ENABLE ROW LEVEL SECURITY;
 ALTER TABLE tasks                 ENABLE ROW LEVEL SECURITY;
 ALTER TABLE task_submissions      ENABLE ROW LEVEL SECURITY;
 ALTER TABLE calendar_events       ENABLE ROW LEVEL SECURITY;
-ALTER TABLE announcements         ENABLE ROW LEVEL SECURITY;
-ALTER TABLE announcement_receipts ENABLE ROW LEVEL SECURITY;
-ALTER TABLE payment_items         ENABLE ROW LEVEL SECURITY;
+ALTER TABLE announcements              ENABLE ROW LEVEL SECURITY;
+ALTER TABLE announcement_recipients   ENABLE ROW LEVEL SECURITY;
+ALTER TABLE announcement_receipts     ENABLE ROW LEVEL SECURITY;
+ALTER TABLE payment_items             ENABLE ROW LEVEL SECURITY;
 ALTER TABLE payment_item_payments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE payments              ENABLE ROW LEVEL SECURITY;
-ALTER TABLE payment_plans         ENABLE ROW LEVEL SECURITY;
-ALTER TABLE pedagogical_notes     ENABLE ROW LEVEL SECURITY;
+ALTER TABLE payment_plans                  ENABLE ROW LEVEL SECURITY;
+ALTER TABLE payment_plan_installments      ENABLE ROW LEVEL SECURITY;
+ALTER TABLE pedagogical_notes             ENABLE ROW LEVEL SECURITY;
 ALTER TABLE consent_records       ENABLE ROW LEVEL SECURITY;
 ALTER TABLE arco_requests         ENABLE ROW LEVEL SECURITY;
-ALTER TABLE authorizations        ENABLE ROW LEVEL SECURITY;
-ALTER TABLE school_alerts         ENABLE ROW LEVEL SECURITY;
+ALTER TABLE authorizations                ENABLE ROW LEVEL SECURITY;
+ALTER TABLE authorization_signatures      ENABLE ROW LEVEL SECURITY;
+ALTER TABLE school_alerts                 ENABLE ROW LEVEL SECURITY;
 ALTER TABLE wellbeing_alerts      ENABLE ROW LEVEL SECURITY;
 ALTER TABLE daily_journals        ENABLE ROW LEVEL SECURITY;
-ALTER TABLE reenrollment_records  ENABLE ROW LEVEL SECURITY;
-ALTER TABLE audit_log             ENABLE ROW LEVEL SECURITY;
+ALTER TABLE reenrollment_records          ENABLE ROW LEVEL SECURITY;
+ALTER TABLE teacher_portfolio_milestones  ENABLE ROW LEVEL SECURITY;
+ALTER TABLE event_modes                   ENABLE ROW LEVEL SECURITY;
+ALTER TABLE event_updates                 ENABLE ROW LEVEL SECURITY;
+ALTER TABLE audit_log                     ENABLE ROW LEVEL SECURITY;
 ```
 
 ### Políticas por tabla (críticas)
@@ -795,6 +801,105 @@ CREATE POLICY "payment_item_payments_select_admin" ON payment_item_payments
   FOR SELECT USING (
     school_id = get_my_school_id()
     AND get_my_role() IN ('admin', 'director', 'secretary')
+  );
+
+-- ─────────────────────────────────────────────
+-- ANNOUNCEMENT_RECIPIENTS — quién recibe cada comunicado
+-- ─────────────────────────────────────────────
+
+CREATE POLICY "announcement_recipients_select_staff" ON announcement_recipients
+  FOR SELECT USING (
+    school_id = get_my_school_id()
+    AND get_my_role() IN ('admin', 'director', 'secretary', 'teacher', 'preceptor')
+  );
+
+-- ─────────────────────────────────────────────
+-- PAYMENT_PLAN_INSTALLMENTS — cuotas de plan de pago
+-- ─────────────────────────────────────────────
+
+-- Admin/secretaría ven todas las cuotas de su escuela
+CREATE POLICY "installments_select_admin" ON payment_plan_installments
+  FOR SELECT USING (
+    school_id = get_my_school_id()
+    AND get_my_role() IN ('admin', 'director', 'secretary')
+  );
+
+-- Tutores ven solo cuotas de su familia (con permiso de pagos)
+CREATE POLICY "installments_select_guardian" ON payment_plan_installments
+  FOR SELECT USING (
+    school_id = get_my_school_id()
+    AND get_my_role() = 'guardian'
+    AND plan_id IN (
+      SELECT id FROM payment_plans
+      WHERE school_id = get_my_school_id()
+      AND family_id IN (
+        SELECT family_id FROM guardian_students
+        WHERE guardian_id = auth.uid() AND can_make_payments = true
+      )
+    )
+  );
+
+-- ─────────────────────────────────────────────
+-- AUTHORIZATION_SIGNATURES — firma de autorizaciones
+-- ─────────────────────────────────────────────
+
+-- El tutor ve solo sus propias firmas
+CREATE POLICY "auth_signatures_select_guardian" ON authorization_signatures
+  FOR SELECT USING (
+    school_id = get_my_school_id()
+    AND guardian_id = auth.uid()
+  );
+
+-- Staff ve todas las firmas de su escuela
+CREATE POLICY "auth_signatures_select_staff" ON authorization_signatures
+  FOR SELECT USING (
+    school_id = get_my_school_id()
+    AND get_my_role() IN ('admin', 'director', 'secretary', 'teacher', 'preceptor')
+  );
+
+-- ─────────────────────────────────────────────
+-- TEACHER_PORTFOLIO_MILESTONES — hitos docentes (privados)
+-- ─────────────────────────────────────────────
+
+-- Solo el propio docente y admin/director
+CREATE POLICY "portfolio_milestones_select" ON teacher_portfolio_milestones
+  FOR SELECT USING (
+    school_id = get_my_school_id()
+    AND (
+      teacher_id = auth.uid()
+      OR get_my_role() IN ('admin', 'director')
+    )
+  );
+
+-- ─────────────────────────────────────────────
+-- EVENT_MODES y EVENT_UPDATES — modo corresponsal
+-- ─────────────────────────────────────────────
+
+-- Cualquier usuario autenticado de la escuela puede ver eventos activos
+CREATE POLICY "event_modes_select_school" ON event_modes
+  FOR SELECT USING (school_id = get_my_school_id());
+
+-- Solo admin/director pueden crear/modificar modos de evento
+CREATE POLICY "event_modes_insert_admin" ON event_modes
+  FOR INSERT WITH CHECK (
+    school_id = get_my_school_id()
+    AND get_my_role() IN ('admin', 'director')
+  );
+
+-- Updates visibles para toda la escuela
+CREATE POLICY "event_updates_select_school" ON event_updates
+  FOR SELECT USING (school_id = get_my_school_id());
+
+-- Solo corresponsales autorizados pueden insertar updates
+CREATE POLICY "event_updates_insert_correspondent" ON event_updates
+  FOR INSERT WITH CHECK (
+    school_id = get_my_school_id()
+    AND event_mode_id IN (
+      SELECT id FROM event_modes
+      WHERE school_id = get_my_school_id()
+      AND auth.uid() = ANY(correspondent_ids)
+      AND status = 'active'
+    )
   );
 
 -- ─────────────────────────────────────────────
