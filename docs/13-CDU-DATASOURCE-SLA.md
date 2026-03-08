@@ -19,7 +19,7 @@ Fuente generada de `docs/.tmp-mcp-insumos-7-8-10.md §Insumo 7`.
 
 - **PAD:** `guardian_students.guardian_id` + `guardian_students.student_id`
 - **DOC:** `teacher_courses.teacher_id` + `teacher_courses.course_id`
-- **ADM:** `school_admins.user_id` + `school_admins.school_id`
+- **ADM:** `profiles.user_id` + `profiles.school_id` WHERE `role IN ('admin','director')`
 - **ALU:** `students.user_id` (versión acotada, sin datos financieros/familiares)
 
 ---
@@ -76,22 +76,22 @@ Fuente generada de `docs/.tmp-mcp-insumos-7-8-10.md §Insumo 7`.
 
 | CDU | Nombre | Tools @v1 | Fuente | SLA máx. ms | RLS control |
 |-----|--------|-----------|--------|-------------|-------------|
-| CDU-ADM-001 | Dashboard de pulso institucional | `get_attendance@v1`, `get_delinquency_dashboard@v1`, `get_institutional_alerts@v1`, `get_announcements@v1` | SQL/RLS | 1000 (4 queries en paralelo) | `school_admins.school_id` |
-| CDU-ADM-002 | Estado de morosidad | `get_delinquency_dashboard@v1`, `get_dropout_risk@v1` | SQL/RLS | 800 | `school_admins.school_id` |
-| CDU-ADM-003 | Recordatorio de cobro | `generate_announcement_draft@v1`, `send_announcement@v1`, `create_collection_campaign@v1` | SQL+GEN-IA | 5000 | `school_admins.school_id`; `opt_in` requerido WA; confirmación obligatoria |
-| CDU-ADM-004 | Plan de pago para familia morosa | `get_account_status@v1`, `create_payment_plan@v1` | SQL/RLS | 500 | `school_admins.school_id`; plan vinculado a `family_id` específico |
-| CDU-ADM-005 | Riesgo de deserción | `get_dropout_risk@v1`, `get_account_status@v1`, `get_attendance@v1` | SQL/RLS | 1500 | `school_admins.school_id` |
-| CDU-ADM-006 | Simulación financiera | `simulate_financial_scenario@v1` | SQL/RLS | 2000 | `school_admins.school_id` |
-| CDU-ADM-007 | Alertas tempranas automáticas | `get_institutional_alerts@v1`, `get_dropout_risk@v1`, `send_announcement@v1` | SQL/RLS | 800 | `school_admins.school_id` |
-| CDU-ADM-008 | Documentación para DIEGEP | `get_attendance@v1`, `get_grades@v1` | SQL/RLS | 6000 | `school_admins.school_id` |
-| CDU-ADM-009 | Comparación de períodos | `get_attendance@v1`, `get_delinquency_dashboard@v1`, `get_grades@v1` | SQL/RLS | 1500 | `school_admins.school_id`; `group by school_year`; nunca cross-tenant |
-| CDU-ADM-010 | Estadísticas de asistencia | `get_attendance@v1` | SQL/RLS | 800 | `school_admins.school_id` |
-| CDU-ADM-011 | Gestión de personal y nómina | `simulate_financial_scenario@v1` | SQL/RLS | 1500 | `school_admins.school_id`; solo ADM/Dir |
-| CDU-ADM-012 | Encuestas NPS escolar | `send_announcement@v1` | SQL/RLS | 800 | `school_admins.school_id` |
-| CDU-ADM-013 | Proyección de flujo de caja | `get_delinquency_dashboard@v1`, `simulate_financial_scenario@v1` | SQL/RLS | 2000 | `school_admins.school_id` |
+| CDU-ADM-001 | Dashboard de pulso institucional | `get_attendance@v1`, `get_delinquency_dashboard@v1`, `get_institutional_alerts@v1`, `get_announcements@v1` | SQL/RLS | 1000 (4 queries en paralelo) | `profiles.school_id` (role: admin/director) |
+| CDU-ADM-002 | Estado de morosidad | `get_delinquency_dashboard@v1`, `get_dropout_risk@v1` | SQL/RLS | 800 | `profiles.school_id` (role: admin/director) |
+| CDU-ADM-003 | Recordatorio de cobro | `generate_announcement_draft@v1`, `send_announcement@v1`, `create_collection_campaign@v1` | SQL+GEN-IA | 5000 | `profiles.school_id` (role: admin/director); `opt_in` requerido WA; confirmación obligatoria |
+| CDU-ADM-004 | Plan de pago para familia morosa | `get_account_status@v1`, `create_payment_plan@v1` | SQL/RLS | 500 | `profiles.school_id` (role: admin/director); plan vinculado a `family_id` específico |
+| CDU-ADM-005 | Riesgo de deserción | `get_dropout_risk@v1`, `get_account_status@v1`, `get_attendance@v1` | SQL/RLS | 1500 | `profiles.school_id` (role: admin/director) |
+| CDU-ADM-006 | Simulación financiera | `simulate_financial_scenario@v1` | SQL/RLS | 2000 | `profiles.school_id` (role: admin/director) |
+| CDU-ADM-007 | Alertas tempranas automáticas | `get_institutional_alerts@v1`, `get_dropout_risk@v1`, `send_announcement@v1` | SQL/RLS | 800 | `profiles.school_id` (role: admin/director) |
+| CDU-ADM-008 | Documentación para DIEGEP | `get_attendance@v1`, `get_grades@v1` | SQL/RLS | 6000 | `profiles.school_id` (role: admin/director) |
+| CDU-ADM-009 | Comparación de períodos | `get_attendance@v1`, `get_delinquency_dashboard@v1`, `get_grades@v1` | SQL/RLS | 1500 | `profiles.school_id` (role: admin/director); `group by school_year`; nunca cross-tenant |
+| CDU-ADM-010 | Estadísticas de asistencia | `get_attendance@v1` | SQL/RLS | 800 | `profiles.school_id` (role: admin/director) |
+| CDU-ADM-011 | Gestión de personal y nómina | `simulate_financial_scenario@v1` | SQL/RLS | 1500 | `profiles.school_id` (role: admin/director); solo ADM/Dir |
+| CDU-ADM-012 | Encuestas NPS escolar | `send_announcement@v1` | SQL/RLS | 800 | `profiles.school_id` (role: admin/director) |
+| CDU-ADM-013 | Proyección de flujo de caja | `get_delinquency_dashboard@v1`, `simulate_financial_scenario@v1` | SQL/RLS | 2000 | `profiles.school_id` (role: admin/director) |
 | CDU-ADM-014 | Benchmark entre escuelas | _(herramienta de red — P3, deferred)_ | SQL/RLS | 2000 | Solo `network_id`; datos individuales anonimizados |
 | CDU-ADM-015 | Revocación de acceso de tutor | `search_guardian@v1`, `revoke_guardian_access@v1` | SQL/RLS | 500 | Propaga a nivel RLS + todos los canales; log inmutable append-only |
-| CDU-ADM-016 | Campaña de reinscripción | `get_reenrollment_status@v1`, `get_dropout_risk@v1`, `create_reenrollment_campaign@v1` | SQL+GEN-IA | 5000 | `school_admins.school_id`; throttle máx 3 msg/familia/período |
+| CDU-ADM-016 | Campaña de reinscripción | `get_reenrollment_status@v1`, `get_dropout_risk@v1`, `create_reenrollment_campaign@v1` | SQL+GEN-IA | 5000 | `profiles.school_id` (role: admin/director); throttle máx 3 msg/familia/período |
 
 ---
 
@@ -123,7 +123,7 @@ Fuente generada de `docs/.tmp-mcp-insumos-7-8-10.md §Insumo 7`.
 | CDU | Nombre | Tools @v1 | Fuente | SLA máx. ms | RLS control |
 |-----|--------|-----------|--------|-------------|-------------|
 | CDU-CROSS-001 | Coordinación docente-padre para alumno | `get_student_summary@v1`, `send_announcement@v1` | SQL+RAG | 1500 | Docente: su curso; Padre: su hijo vinculado; RLS por sesión |
-| CDU-CROSS-002 | Suspensión de clases: alerta masiva | `send_announcement@v1`, `get_announcements@v1` | SQL/RLS | 500 | `school_admins.school_id`; todos los canales simultáneos; ventana de cancelación 2 min |
+| CDU-CROSS-002 | Suspensión de clases: alerta masiva | `send_announcement@v1`, `get_announcements@v1` | SQL/RLS | 500 | `profiles.school_id` (role: admin/director); todos los canales simultáneos; ventana de cancelación 2 min |
 | CDU-CROSS-003 | Alumno no entiende → docente recibe señal | `get_institutional_alerts@v1` | SQL+RAG | 1000 | `students.user_id → course_id → teacher_id`; señal anonimizada |
 | CDU-CROSS-004 | Biblioteca de actividades entre escuelas | `get_announcements@v1` | SQL/RLS | 800 | `network_id`; actividades anonimizadas antes de publicar |
 | CDU-CROSS-005 | Consentimiento informado onboarding | `register_consent@v1`, `get_consent_status@v1` | SQL/RLS | 300 | `tutors.user_id`; `consent_records.school_id`; BLOQUEANTE: gate de todos los CDUs |
