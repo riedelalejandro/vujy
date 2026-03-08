@@ -4,7 +4,14 @@ function requireEndpoint() {
   return process.env.MCP_ENDPOINT || process.env.A3_MCP_ENDPOINT || DEFAULT_MCP_ENDPOINT;
 }
 
-export async function callMcpTool({ tool, arguments: args = {}, headers = {}, timeoutMs = 30000 }) {
+export async function callMcpTool({
+  tool,
+  arguments: args = {},
+  headers = {},
+  timeoutMs = 30000,
+  requestId,
+  idempotencyKey,
+}) {
   const endpoint = requireEndpoint();
   const response = await fetch(endpoint, {
     method: 'POST',
@@ -15,8 +22,8 @@ export async function callMcpTool({ tool, arguments: args = {}, headers = {}, ti
     body: JSON.stringify({
       tool,
       arguments: args,
-      request_id: crypto.randomUUID(),
-      idempotency_key: `a3_${crypto.randomUUID()}`,
+      request_id: requestId || crypto.randomUUID(),
+      idempotency_key: idempotencyKey || args.idempotency_key || `a3_${crypto.randomUUID()}`,
     }),
     signal: AbortSignal.timeout ? AbortSignal.timeout(timeoutMs) : undefined,
   });

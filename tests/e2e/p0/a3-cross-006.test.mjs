@@ -24,6 +24,7 @@ test('A3-007 P0 - cross 006 export data', { skip: Boolean(requiresRole('parent')
       format: 'json',
       idempotency_key: 'a3-007',
     },
+    idempotencyKey: 'a3-007',
     headers,
   });
   assertSuccessEnvelope(response);
@@ -41,6 +42,7 @@ test('A3-008 P0 - cross 006 rectification', { skip: Boolean(requiresRole('parent
       reason: 'telefono actual incorrecto',
       idempotency_key: 'a3-008',
     },
+    idempotencyKey: 'a3-008',
     headers,
   });
   assertSuccessEnvelope(response);
@@ -57,6 +59,7 @@ test('A3-009 P0 - cross 006 opposition', { skip: Boolean(requiresRole('parent'))
       opposition_reason: 'No consentido',
       idempotency_key: 'a3-009',
     },
+    idempotencyKey: 'a3-009',
     headers,
   });
   assertSuccessEnvelope(response);
@@ -73,6 +76,7 @@ test('A3-010 P0 - cross 006 deletion constrained', { skip: Boolean(requiresRole(
       pin_verified: true,
       idempotency_key: 'a3-010',
     },
+    idempotencyKey: 'a3-010',
     headers,
   });
   assertSuccessEnvelope(response);

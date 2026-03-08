@@ -10,21 +10,36 @@ jobs:
   e2e-p0:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      MCP_ENDPOINT: ${{ secrets.A3_MCP_ENDPOINT }}
+      A3_ADMIN_SESSION_TOKEN: ${{ secrets.A3_ADMIN_SESSION_TOKEN }}
+      A3_PARENT_SESSION_TOKEN: ${{ secrets.A3_PARENT_SESSION_TOKEN }}
+      A3_STUDENT_SESSION_TOKEN: ${{ secrets.A3_STUDENT_SESSION_TOKEN }}
+      A3_STUDENT_ID: ${{ secrets.A3_STUDENT_ID }}
+      A3_GUARDIAN_ID: ${{ secrets.A3_GUARDIAN_ID }}
+      A3_FAMILY_ID: ${{ secrets.A3_FAMILY_ID }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
       - run: npm ci
+      - name: Check A3 secret availability
+        id: secrets
+        run: |
+          missing=0
+          for name in MCP_ENDPOINT A3_ADMIN_SESSION_TOKEN A3_PARENT_SESSION_TOKEN A3_STUDENT_SESSION_TOKEN A3_STUDENT_ID A3_GUARDIAN_ID A3_FAMILY_ID; do
+            if [ -z "${!name}" ]; then
+              echo "Missing $name"
+              missing=1
+            fi
+          done
+          echo "ready=$([ "$missing" -eq 0 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+      - name: Skip live A3 checks when secrets are unavailable
+        if: steps.secrets.outputs.ready != 'true'
+        run: echo "Skipping live A3 E2E because required secrets are not available in this context."
       - name: Run A3 prelaunch checks
-        env:
-          MCP_ENDPOINT: ${{ secrets.A3_MCP_ENDPOINT }}
-          A3_ADMIN_SESSION_TOKEN: ${{ secrets.A3_ADMIN_SESSION_TOKEN }}
-          A3_PARENT_SESSION_TOKEN: ${{ secrets.A3_PARENT_SESSION_TOKEN }}
-          A3_STUDENT_SESSION_TOKEN: ${{ secrets.A3_STUDENT_SESSION_TOKEN }}
-          A3_STUDENT_ID: ${{ secrets.A3_STUDENT_ID }}
-          A3_GUARDIAN_ID: ${{ secrets.A3_GUARDIAN_ID }}
-          A3_FAMILY_ID: ${{ secrets.A3_FAMILY_ID }}
+        if: steps.secrets.outputs.ready == 'true'
         run: |
           npm run test:e2e:p0:clean
           npm run test:e2e:p0

@@ -26,6 +26,7 @@ test('A3-004 P0 - adm 015 revoke access happy path', { skip: Boolean(requiresRol
       pin_verified: true,
       idempotency_key: 'a3-004',
     },
+    idempotencyKey: 'a3-004',
     headers: adminHeaders,
   });
   assertSuccessEnvelope(revoked);
@@ -55,6 +56,7 @@ test('A3-005 P0 - adm 015 reject without confirmation', { skip: Boolean(requires
       pin_verified: false,
       idempotency_key: 'a3-005',
     },
+    idempotencyKey: 'a3-005',
     headers: adminHeaders,
   });
   assertErrorCode(
@@ -74,8 +76,18 @@ test('A3-006 P0 - adm 015 idempotency', { skip: Boolean(requiresRole('admin')) }
     pin_verified: true,
     idempotency_key: 'a3-006',
   };
-  const first = await callMcpTool({ tool: CONTRACT.tools.revoke_guardian_access, arguments: payload, headers: adminHeaders });
-  const second = await callMcpTool({ tool: CONTRACT.tools.revoke_guardian_access, arguments: payload, headers: adminHeaders });
+  const first = await callMcpTool({
+    tool: CONTRACT.tools.revoke_guardian_access,
+    arguments: payload,
+    idempotencyKey: payload.idempotency_key,
+    headers: adminHeaders,
+  });
+  const second = await callMcpTool({
+    tool: CONTRACT.tools.revoke_guardian_access,
+    arguments: payload,
+    idempotencyKey: payload.idempotency_key,
+    headers: adminHeaders,
+  });
   assertSuccessEnvelope(first);
   assert.equal(second?.success, true);
 });

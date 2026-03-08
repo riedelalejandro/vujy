@@ -399,7 +399,7 @@ Los 4 schemas de estas tools están publicados en `docs/10-MCP-SCHEMAS.md`.
 **Pendientes pre-lanzamiento:**
 1. Validación legal formal del esquema de base legal, transferencias internacionales (DPA Anthropic) y retención con asesoría especializada.
 2. Cerrar `TEMPLATE_LIBRARY` para `create_collection_campaign@v1` y canales WhatsApp — aprobación Meta.
-3. Casos E2E P0 pendientes (`Insumo 10`) — mover a CI pipeline antes de lanzamiento.
+3. Casos E2E P0 (`Insumo 10`) con scaffold y workflow CI ya publicados; falta validación contra runtime real, secrets de integración y seed estable antes de considerarlos cerrados.
 4. DPA con Anthropic (transferencia internacional de datos para Claude API) — BLOQUEANTE antes de datos reales.
 
 ---
