@@ -64,7 +64,7 @@ El riesgo real es la foto de un alumno con restricción judicial o sin opt-in de
 | **Disparador** | Orden judicial, denuncia de violencia, suspensión de tutela |
 | **Prioridad** | **P0 — BLOQUEANTE MVP** |
 | **Canal** | App · Web (solo admin) |
-| **Tools** | `revocar_acceso_tutor`, `log_auditoria_seguridad` |
+| **Tools** | `revoke_guardian_access@v1`, `log_security_action@v1` |
 | **SLA** | Revocación efectiva < 60 segundos, 100% de los casos |
 | **Fuente de datos** | Estructurado — no RAG |
 | **Requiere confirmación** | Sí — PIN de admin + aprobación de directivo superior para restauración |
@@ -86,7 +86,7 @@ El riesgo real es la foto de un alumno con restricción judicial o sin opt-in de
 | **Disparador** | Primera sesión en la plataforma |
 | **Prioridad** | **P0 — BLOQUEANTE MVP** |
 | **Canal** | App · Web · WhatsApp (versión simplificada) |
-| **Tools** | `registrar_consentimiento_tutor`, `get_estado_consentimiento` |
+| **Tools** | `register_consent@v1`, `get_consent_status@v1` |
 | **Fuente de datos** | Estructurado |
 | **Requiere confirmación** | Sí — checkboxes separados para WhatsApp opt-in y fotos |
 
@@ -108,7 +108,7 @@ El riesgo real es la foto de un alumno con restricción judicial o sin opt-in de
 | **Disparador** | Solicitud de acceso, rectificación, cancelación u oposición |
 | **Prioridad** | **P0** |
 | **Canal** | App · Web (nunca WhatsApp — requiere identidad segura) |
-| **Tools** | `exportar_datos_usuario`, `solicitar_rectificacion`, `solicitar_baja_datos` |
+| **Tools** | `export_user_data@v1`, `request_data_rectification@v1`, `request_data_deletion@v1` |
 | **SLA** | Rectificación: 5 días · Cancelación: 30 días · según Ley 25.326 |
 
 **Condición de implementación:**
@@ -125,7 +125,7 @@ El riesgo real es la foto de un alumno con restricción judicial o sin opt-in de
 | **Disparador** | Apertura de período de reinscripción + familias sin confirmar |
 | **Prioridad** | **P1** |
 | **Canal** | App · Web (admin) · WhatsApp · App (familias) |
-| **Tools** | `get_estado_reinscripciones`, `get_riesgo_desercion`, `crear_segmento_reinscripcion`, `enviar_campana_reinscripcion` |
+| **Tools** | `get_reenrollment_status@v1`, `get_dropout_risk@v1`, `create_reenrollment_campaign@v1`, `create_reenrollment_campaign@v1` |
 | **Fuente de datos** | Estructurado — no RAG |
 | **Requiere confirmación** | Sí — preview de mensaje + N destinatarios antes de enviar |
 | **Tier** | Premium |
@@ -147,7 +147,7 @@ El riesgo real es la foto de un alumno con restricción judicial o sin opt-in de
 | **Disparador** | Fin de jornada en nivel inicial (configurable) |
 | **Prioridad** | **P1** |
 | **Canal** | App (corresponsal) · App · WhatsApp texto+imagen (familias) |
-| **Tools** | `generar_diario_visual`, `publicar_diario_inicial`, `notificar_familias_inicial` |
+| **Tools** | `publish_daily_journal@v1`, `publish_daily_journal@v1`, `send_announcement@v1` |
 | **Fuente de datos** | STT + Estructurado + Storage + RAG (personalización por alumno) |
 | **Tier** | Premium |
 
@@ -170,7 +170,7 @@ El riesgo real es la foto de un alumno con restricción judicial o sin opt-in de
 | **Disparador** | Detección automática de hito pedagógico |
 | **Prioridad** | **P2** |
 | **Canal** | App · Web (solo interno hasta Fase 2) |
-| **Tools** | `detectar_hito_docente`, `registrar_hito_portfolio`, `generar_portfolio_docente_anual` |
+| **Tools** | `detect_teacher_milestone@v1`, `record_portfolio_milestone@v1`, `generate_teacher_portfolio_pdf@v1` |
 | **Fuente de datos** | Estructurado |
 | **Tier** | Premium |
 
@@ -189,7 +189,7 @@ El riesgo real es la foto de un alumno con restricción judicial o sin opt-in de
 | **Disparador** | Admin activa "Modo Acto" para evento del calendario |
 | **Prioridad** | **P2** |
 | **Canal** | App (corresponsal) · App · WhatsApp · Push (familias) |
-| **Tools** | `activar_modo_acto`, `publicar_update_evento`, `generar_album_evento` |
+| **Tools** | `activate_event_mode@v1`, `publish_event_update@v1`, `generate_event_album@v1` |
 | **Fuente de datos** | Estructurado + Storage |
 | **Tier** | Premium |
 
@@ -208,7 +208,7 @@ Estos no son CDUs nuevos — son requisitos de implementación que se añaden al
 
 | CDU | Fix obligatorio | Criterio |
 |-----|----------------|---------|
-| CDU-P-04 (pago) | `idempotency_key` obligatoria en `procesar_pago`; reconciliación con MP antes de confirmar | CRÍTICO — doble cobro |
+| CDU-P-04 (pago) | `idempotency_key` obligatoria en `process_payment@v1`; reconciliación con MP antes de confirmar | CRÍTICO — doble cobro |
 | CDU-D-04 / D-05 | `source_references[]` en output del informe; log inmutable de versiones aprobadas | ALTO — trazabilidad |
 | CDU-D-03 (comunicado masivo) | Validar opt-in en tiempo de ejecución, no solo al inscribirse | ALTO — opt-in compliance |
 | CDU-A-02 (cobranza) | Validar edad del titular antes de incluir en campaña; < 18 → canal humano | ALTO — mensajería a menores |
