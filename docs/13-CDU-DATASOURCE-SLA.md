@@ -3,7 +3,7 @@
 **Versión:** 1.0 | **Fecha:** 2026-03-05
 **Complementa:** `docs/09-MCP-DEFINITIONS.md`
 
-Fuente generada de `docs/.tmp-mcp-insumos-7-8-10.md §Insumo 7`.
+Fuente generada a partir de Insumo 7 (mapeo CDU→fuentes+SLA).
 
 ## Criterios de clasificación
 

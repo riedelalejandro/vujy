@@ -273,13 +273,13 @@ Antes de ejecutar una tool que requiere permiso específico, el asistente verifi
 | MCP | Parámetro clave | Permiso requerido |
 |-----|----------------|-------------------|
 | `get_my_students` | `guardian_id` | — (siempre disponible) |
-| `get_student_grades` | `student_id`, `guardian_id` | `can_view_grades` |
-| `get_student_attendance` | `student_id`, `guardian_id` | `can_view_grades` |
-| `authorize_absence` | `student_id`, `guardian_id` | `can_authorize_absence` |
-| `get_family_balance` | `family_id` | `can_make_payments` |
-| `initiate_payment` | `family_id`, `guardian_id` | `can_make_payments` |
-| `get_my_communications` | `guardian_id` | — |
-| `get_family_siblings` | `family_id` | — |
+| `get_grades@v1` | `student_id`, `guardian_id` | `can_view_grades` |
+| `get_attendance@v1` | `student_id`, `guardian_id` | `can_view_grades` |
+| `record_absence@v1` | `student_id`, `guardian_id` | `can_authorize_absence` |
+| `get_account_status@v1` | `family_id` | `can_make_payments` |
+| `process_payment@v1` | `family_id`, `guardian_id` | `can_make_payments` |
+| `get_announcements@v1` | `guardian_id` | — |
+| `get_my_students@v1` | `family_id` | — |
 
 > Los MCPs reciben tanto `guardian_id` (para auditoría y permisos) como `student_id` o `family_id` según el dominio de la operación. La validación de permisos ocurre dentro del MCP antes de ejecutar la query.
 

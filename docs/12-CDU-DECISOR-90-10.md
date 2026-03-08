@@ -2,7 +2,7 @@
 
 **Decisor:** Agente de Negocio (regla 90/10 — 10% de riesgo consciente)
 **Fecha:** 2026-03-05
-**Input:** `.tmp-cdu-conservative.md` + `.tmp-cdu-creative.md`
+**Input:** insumos de consolidación para `CDU_BY_PROFILE` (fases conservadora y creativa)
 **Output:** Lista definitiva de adiciones y cambios al catálogo CDU de Vujy
 
 ---
@@ -343,6 +343,6 @@ Con este documento se cierra formalmente `TODO(CDU_BY_PROFILE)`.
 *Documento de decisión — Vujy · vujy.app*
 *Decisor: Agente de Negocio 90/10*
 *Fecha: 2026-03-05*
-*Input: `.tmp-cdu-conservative.md` + `.tmp-cdu-creative.md`*
+*Input: insumos consolidados de definición y priorización de CDU_BY_PROFILE.*
 *Cierra: `TODO(CDU_BY_PROFILE)`*
 *Desbloquea: `TODO(MCP_DEFINITIONS)`*

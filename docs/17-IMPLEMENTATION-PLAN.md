@@ -109,6 +109,7 @@ Cada feature = un ciclo speckit completo:
 - Sistema de routing de mensajes entrantes por `phone` → `profile`
 - Sesión persistente por thread de WhatsApp (OTP una sola vez)
 - Fallback conversacional cuando el asistente no puede responder
+- Ruta de contingencia: si Tech Provider tarda >60 días o bloquea onboarding >2 escuelas, activar provisoriamente BSP (p.ej. 360dialog) para liberar canal en MVP y luego migrar a Meta directo si aplica.
 
 **Superficies:** WhatsApp Business API (Meta Cloud API directo)
 
@@ -128,7 +129,7 @@ Cada feature = un ciclo speckit completo:
 
 **Qué incluye:**
 - System prompt del perfil padre/tutor (ver `docs/02-API-SPEC.md`)
-- Function calling: `get_student_summary@v1`, `get_attendance@v1`, `get_grades@v1`, `get_announcements@v1`, `get_calendar@v1`, `get_family_balance@v1`
+- Function calling: `get_student_summary@v1`, `get_attendance@v1`, `get_grades@v1`, `get_announcements@v1`, `get_calendar@v1`, `get_account_status@v1`
 - Tools de acción: `record_absence@v1`, `sign_authorization@v1`, `confirm_reenrollment@v1`
 - UI conversacional en app (React Native) y web (Next.js)
 - Notificaciones push (Expo) para urgencias

@@ -172,7 +172,8 @@ Vujy se registra como **Tech Provider** en Meta, lo que permite:
 - Acceso a la API directa de WhatsApp (Graph API v21+)
 
 **Requisito**: el proceso de verificación como Tech Provider toma 60-90 días y requiere
-revisión por parte de Meta. No apto para MVP si hay urgencia de time-to-market.
+revisión por parte de Meta. No apto para MVP si hay urgencia de time-to-market sin plan alterno.
+Ruta alternativa de contingencia (si hay restricción de timing): habilitar un BSP proveedor (p.ej. 360dialog) para arrancar MVP, y migrar a Tech Provider cuando esté aprobado.
 
 ### 360dialog Partner Program
 
@@ -426,14 +427,14 @@ Con batching + triggers inteligentes (ver §5): **~$16–22 USD/escuela/mes**.
 ### Próximos pasos técnicos
 
 1. **Iniciar verificación como Tech Provider en Meta** — URGENTE, 60-90 días de lead time
-2. **Definir los templates MVP** para pre-aprobación (ver `TODO(TEMPLATE_LIBRARY)`)
+2. **Someter a pre-aprobación de Meta** el set MVP de templates definidos (ver [14-WHATSAPP-TEMPLATE-LIBRARY.md](14-WHATSAPP-TEMPLATE-LIBRARY.md))
 3. **Implementar el handler de webhooks** con routing multi-tenant por WABA ID
 4. **Provisionar número virtual de sandbox** para desarrollo y pruebas (puede hacerse antes de la verificación con un número de prueba)
 5. **Diseñar el flujo de onboarding de escuela** que provisioné el WABA + número desde el panel de Vujy
 
 ### Decisiones pendientes derivadas
 
-- `TODO(TEMPLATE_LIBRARY)`: definir el set mínimo de templates para MVP y someterlos a aprobación de Meta
+- Pendiente operativo: someter los templates MVP definidos a aprobación de Meta (ya está definido el set en `14-WHATSAPP-TEMPLATE-LIBRARY.md`; queda estado de aprobación)
 
 ---
 

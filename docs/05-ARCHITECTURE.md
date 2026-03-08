@@ -2,7 +2,7 @@
 
 **Versión:** 1.0
 **Fecha:** 4 de marzo de 2026
-**Relacionado con:** SPEC.md §7 · SPEC.md §13 · constitution.md (TODO(WHATSAPP_NUMBER_STRATEGY), TODO(TEMPLATE_LIBRARY), TODO(OPTIN_FLOW), TODO(DATA_REGULATION))
+**Relacionado con:** SPEC.md §7 · SPEC.md §13 · constitution.md (ver estado de TODOs en [CLAUDE.md](../CLAUDE.md))
 
 ---
 
@@ -164,7 +164,7 @@ Usuario: "¿Cuánto debo de cuota?"
 Claude (con system prompt del perfil)
     │  decide llamar a:
     ▼
-get_family_balance({ family_id, school_id })
+get_account_status@v1({ family_id })
     │
     ▼
 Supabase → SELECT balance FROM payments WHERE family_id = $1 AND school_id = $2
@@ -310,9 +310,9 @@ Usar `/code-review-checklist` como check complementario en todo PR.
 |----|-------------|-----------|
 | `TODO(CDU_BY_PROFILE)` | **CERRADO** — catálogo consolidado en `docs/cdu/README.md` (73 CDUs) | Cerrado |
 | `TODO(MCP_DEFINITIONS)` | **CERRADO** — catálogo canónico en `docs/09-MCP-DEFINITIONS.md` | Cerrado |
-| `TODO(WHATSAPP_NUMBER_STRATEGY)` | ¿Número virtual nuevo por escuela o migración de número existente? Ver [04-WHATSAPP-API.md](04-WHATSAPP-API.md) | Media |
-| `TODO(TEMPLATE_LIBRARY)` | Definir set mínimo de templates de WhatsApp para MVP y someterlos a aprobación de Meta | Media |
-| `TODO(OPTIN_FLOW)` | Diseñar flujo de consentimiento explícito de padres integrado con onboarding de la escuela | Media |
+| `TODO(WHATSAPP_NUMBER_STRATEGY)` | **CERRADO** — estrategia definida: Meta Cloud API directo, Opción A (número por escuela). Ver [04-WHATSAPP-API.md](04-WHATSAPP-API.md). | Cerrado |
+| `TODO(TEMPLATE_LIBRARY)` | **CERRADO (definición):** 11 templates definidos en `docs/14-WHATSAPP-TEMPLATE-LIBRARY.md`. Queda pendiente aprobación de Meta para P0. | Media |
+| `TODO(OPTIN_FLOW)` | **CERRADO** — gate de consentimiento mediante `CROSS-005` y tools `register_consent@v1`/`get_consent_status@v1`. | Cerrado |
 | `TODO(MIGRATIONS_STRATEGY)` | **CERRADO** — estrategia publicada en `docs/15-MIGRATIONS-STRATEGY.md` | Cerrado |
 | `TODO(DATA_REGULATION)` | Investigar normativa argentina sobre datos de menores — impacta diseño de RLS y retención | Alta |
 

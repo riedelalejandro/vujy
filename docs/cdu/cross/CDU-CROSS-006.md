@@ -79,7 +79,7 @@ Asistente: [verifica edad del alumno — ≥ 13 → habilita flujo ARCO propio]
 - `export_user_data@v1` (compila datos de múltiples tablas en formato estructurado — PDF / JSON)
 - `request_data_rectification@v1` (genera ticket para secretaría con SLA trazable)
 - `request_data_deletion@v1` (flujo de eliminación con advertencias y aprobación de admin)
-- `register_data_opposition@v1` (queda en log para revisión legal) — *pendiente: definir en `09-MCP-DEFINITIONS.md`*
+- `register_data_opposition@v1` (queda en log para revisión legal)
 
 **Casos borde:**
 | Situación | Respuesta del asistente |

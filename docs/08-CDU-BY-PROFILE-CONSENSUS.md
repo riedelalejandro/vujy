@@ -3,6 +3,9 @@
 > Documento historico de trabajo (iteracion previa de 32 CDUs).
 > El catalogo vigente y definitivo esta en `docs/cdu/README.md` (73 CDUs, v2.0).
 
+> **Estado de uso:** este documento es histórico y **no es fuente canónica operativa** para tools.
+> Para implementación real, usar `docs/09-MCP-DEFINITIONS.md` y `docs/10-MCP-SCHEMAS.md` con nomenclatura canónica `tool_name@v1`.
+
 Base: sintesis de 3 agentes en paralelo (Conservador, Mid-Level, Super Creativo) con convergencia sobre riesgo, valor MVP y factibilidad.
 
 ## Matriz de Cobertura

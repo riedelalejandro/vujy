@@ -8,7 +8,7 @@ Este documento cierra `TODO(MCP_DEFINITIONS)`. Es la especificación operativa d
 - Tools base: `docs/02-API-SPEC.md`
 
 **Total tools canónicas:** 48 (28 MVP v1 + 16 v2.0 + 4 definidas en corrección de auditoría)
-**Schemas JSON publicados:** 44 tools en `docs/10-MCP-SCHEMAS.md` — pendiente agregar 4 nuevas
+**Schemas JSON publicados:** 48 tools en `docs/10-MCP-SCHEMAS.md` (incluye la corrección v2.1).
 
 Estado: **especificación implementable** — pendiente validación legal (ver §13).
 
@@ -391,14 +391,15 @@ Notas:
 
 ## 13. Estado y pendientes
 
-**v2.1 — corrección de auditoría:** 4 tools fantasma detectadas y definidas: `log_security_action@v1` (ADM-015), `register_data_opposition@v1` (CROSS-006), `detect_teacher_milestone@v1` + `record_portfolio_milestone@v1` (DOC-017). Total: 48 tools. Pendiente: agregar JSON Schemas de las 4 nuevas en `docs/10-MCP-SCHEMAS.md`.
+**v2.1 — corrección de auditoría:** 4 tools fantasma detectadas y definidas: `log_security_action@v1` (ADM-015), `register_data_opposition@v1` (CROSS-006), `detect_teacher_milestone@v1` + `record_portfolio_milestone@v1` (DOC-017). Total: 48 tools.  
+Los 4 schemas de estas tools están publicados en `docs/10-MCP-SCHEMAS.md`.
 
-**v2.0 — cerrado:** catálogo canónico completo (44 tools totales), error taxonomy con 20 códigos, mapeo CDU→toolset completo, política de proactive messaging (§14), mapeo datasource+SLA en `docs/13-CDU-DATASOURCE-SLA.md`, casos E2E P0 en `docs/.tmp-mcp-insumos-7-8-10.md §Insumo 10`.
+**v2.0 — estado al cierre de ese alcance:** catálogo canónico con 44 tools publicadas en ese corte, error taxonomy con 20 códigos, mapeo CDU→toolset completo, política de proactive messaging (§14), mapeo datasource+SLA en `docs/13-CDU-DATASOURCE-SLA.md`, casos E2E P0 por insumos pendientes.
 
 **Pendientes pre-lanzamiento:**
 1. Validación legal formal del esquema de base legal, transferencias internacionales (DPA Anthropic) y retención con asesoría especializada.
 2. Cerrar `TEMPLATE_LIBRARY` para `create_collection_campaign@v1` y canales WhatsApp — aprobación Meta.
-3. Casos E2E P0 disponibles en `docs/.tmp-mcp-insumos-7-8-10.md §Insumo 10` — mover a CI pipeline antes de lanzamiento.
+3. Casos E2E P0 pendientes (`Insumo 10`) — mover a CI pipeline antes de lanzamiento.
 4. DPA con Anthropic (transferencia internacional de datos para Claude API) — BLOQUEANTE antes de datos reales.
 
 ---

@@ -44,7 +44,7 @@ Asistente: "Confirmá la revocación de acceso de Carlos López:
 Admin: [ingresa PIN]
 
 Asistente: [llama revoke_guardian_access@v1(tutor_id, motivo="orden_judicial", admin_id)]
-           [llama log_security_action@v1(accion, timestamp, admin_id, motivo)]
+           [llama log_security_action@v1(action, actor_user_id, target_type, target_id, request_id, metadata)]
 → "✅ Acceso revocado (22:14:07).
    Carlos López no puede ingresar a ningún canal de Vujy.
    Mensaje enviado al tutor.

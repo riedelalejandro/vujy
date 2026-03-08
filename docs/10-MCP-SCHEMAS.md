@@ -2,8 +2,8 @@
 
 Alcance de este documento:
 - Esquemas publicados de input/output para tools canónicas del catálogo.
-- **Total publicado:** 44 tools con schema (cobertura completa del catálogo).
-- Catálogo completo de referencia: `docs/09-MCP-DEFINITIONS.md` (44 tools).
+- **Total publicado:** 48 tools con schema.
+- Catálogo completo de referencia: `docs/09-MCP-DEFINITIONS.md` (48 canónicas).
 - Canonical-only: no legacy aliases.
 
 Convenciones:
@@ -13,6 +13,14 @@ Convenciones:
 - All actions must include `idempotency_key`.
 
 ## Common
+
+## 0) Estado de publicación de schemas (v2.1)
+
+Esta versión publica **48 tools** del catálogo canónico total de **48 tools**.
+
+Con esto, quedaron cerrados los pendientes de publicación de schemas de A3.
+
+El resto de las tools tiene schema publicado en este documento.
 
 ### Error Schema
 ```json
@@ -2441,5 +2449,196 @@ Convenciones:
   "status": "signed",
   "signed_at": "2026-03-05T12:30:00Z",
   "receipt_id": "rec_456"
+}
+```
+
+---
+
+## 45) `log_security_action@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.log_security_action.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "action": { "type": "string", "minLength": 1 },
+    "actor_user_id": { "type": ["string", "null"] },
+    "target_type": { "type": ["string", "null"] },
+    "target_id": { "type": ["string", "null"] },
+    "request_id": { "type": ["string", "null"] },
+    "metadata": { "type": "object", "additionalProperties": true },
+    "idempotency_key": { "type": "string", "minLength": 8 }
+  },
+  "required": ["action", "idempotency_key"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.log_security_action.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "success": { "type": "boolean" },
+    "audit_event_id": { "type": "string" },
+    "logged_at": { "type": "string", "format": "date-time" },
+    "action": { "type": "string" },
+    "target_type": { "type": ["string", "null"] },
+    "target_id": { "type": ["string", "null"] },
+    "result_status": { "type": "string", "enum": ["success", "failure"] }
+  },
+  "required": ["success", "audit_event_id", "logged_at", "action", "result_status"]
+}
+```
+
+---
+
+## 46) `register_data_opposition@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.register_data_opposition.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "subject_guardian_id": { "type": "string", "minLength": 1 },
+    "opposition_scope": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "opposition_reason": { "type": "string", "minLength": 1 },
+    "notes": { "type": "string", "maxLength": 1000 },
+    "idempotency_key": { "type": "string", "minLength": 8 },
+    "requester_note": { "type": "string", "maxLength": 1000 }
+  },
+  "required": ["subject_guardian_id", "opposition_scope", "opposition_reason", "idempotency_key"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.register_data_opposition.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "request_id": { "type": "string" },
+    "status": { "type": "string", "enum": ["received", "duplicate"] },
+    "created_at": { "type": "string", "format": "date-time" },
+    "sla_response_deadline": { "type": "string", "format": "date-time" },
+    "assigned_to_role": { "type": "string", "enum": ["admin", "secretary"] },
+    "tracking_url": { "type": ["string", "null"], "format": "uri" },
+    "request_type": { "type": "string", "const": "opposition" }
+  },
+  "required": ["request_id", "status", "created_at", "sla_response_deadline", "assigned_to_role", "request_type"]
+}
+```
+
+---
+
+## 47) `detect_teacher_milestone@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.detect_teacher_milestone.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "period_start": { "type": "string", "format": "date" },
+    "period_end": { "type": "string", "format": "date" },
+    "course_ids": { "type": "array", "items": { "type": "string" } },
+    "min_confidence": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.7 },
+    "run_id": { "type": ["string", "null"] },
+    "idempotency_key": { "type": "string", "minLength": 8 }
+  },
+  "required": ["idempotency_key"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.detect_teacher_milestone.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "run_id": { "type": "string" },
+    "execution_at": { "type": "string", "format": "date-time" },
+    "milestones_detected": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "teacher_id": { "type": "string" },
+          "course_id": { "type": ["string", "null"] },
+          "milestone_type": { "type": "string" },
+          "description": { "type": "string" },
+          "confidence_score": { "type": "number", "minimum": 0, "maximum": 1 },
+          "metric_context": { "type": "object", "additionalProperties": true }
+        },
+        "required": ["teacher_id", "milestone_type", "description", "confidence_score", "metric_context"]
+      }
+    },
+    "scan_scope": { "type": "string" },
+    "next_run_at": { "type": ["string", "null"], "format": "date-time" }
+  },
+  "required": ["run_id", "execution_at", "milestones_detected"]
+}
+```
+
+---
+
+## 48) `record_portfolio_milestone@v1`
+
+### Input
+```json
+{
+  "$id": "vujy.record_portfolio_milestone.input.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "teacher_id": { "type": "string", "minLength": 1 },
+    "course_id": { "type": ["string", "null"] },
+    "milestone_type": { "type": "string", "minLength": 1 },
+    "description": { "type": "string", "minLength": 1, "maxLength": 500 },
+    "metric_context": { "type": "object", "additionalProperties": true },
+    "detected_at": { "type": "string", "format": "date-time" },
+    "idempotency_key": { "type": "string", "minLength": 8 },
+    "notify_teacher": { "type": "boolean", "default": true }
+  },
+  "required": ["teacher_id", "milestone_type", "description", "idempotency_key"]
+}
+```
+
+### Output
+```json
+{
+  "$id": "vujy.record_portfolio_milestone.output.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "success": { "type": "boolean" },
+    "milestone_id": { "type": "string" },
+    "recorded_at": { "type": "string", "format": "date-time" },
+    "teacher_id": { "type": "string" },
+    "notified_guardian": { "type": "boolean" },
+    "notified_teacher": { "type": "boolean" }
+  },
+  "required": ["success", "milestone_id", "recorded_at", "teacher_id"]
 }
 ```

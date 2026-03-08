@@ -1082,7 +1082,7 @@ Este seed permite probar todos los CDUs P0/P1 del MVP sin datos reales.
 
 - [ ] Todas las tablas tienen `ENABLE ROW LEVEL SECURITY`
 - [ ] Todas las tablas tienen `school_id` con FK a `schools`
-- [ ] Todas las políticas de RLS están testeadas con los casos E2E de `docs/.tmp-mcp-insumos-7-8-10.md §Insumo 10`
+- [ ] Todas las políticas de RLS están testeadas con los casos E2E P0 (`Insumo 10`)
 - [ ] `audit_log` tiene `REVOKE UPDATE, DELETE` para todos los roles excepto `postgres`
 - [ ] `service_role key` solo existe en variables de entorno del servidor (nunca en el cliente)
 - [ ] `pedagogical_notes.embedding` tiene índice `ivfflat` configurado
