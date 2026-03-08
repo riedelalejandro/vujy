@@ -123,7 +123,7 @@ Cada feature = un ciclo speckit completo:
 ### 004 · Parent Assistant
 
 **Branch:** `004-parent-assistant`
-**CDUs:** PAD-001 · PAD-002 · PAD-003 · PAD-004 · PAD-005 · PAD-006 · PAD-007 · PAD-008 · PAD-015
+**CDUs:** PAD-001 · PAD-002 · PAD-003 · PAD-004 · PAD-005 · PAD-006 · PAD-007 · PAD-008 · PAD-009 · PAD-011 · PAD-015
 **Prioridad:** P1 MVP
 
 **Qué incluye:**
@@ -208,7 +208,7 @@ Cada feature = un ciclo speckit completo:
 ### 008 · Notifications & Alerts
 
 **Branch:** `008-notifications`
-**CDUs:** CROSS-002 · PAD-014 · PAD-012 · ADM-007 (avanzado)
+**CDUs:** CROSS-002 · PAD-010 · PAD-012 · PAD-014 · ADM-007 (avanzado)
 **Prioridad:** P1-P2
 
 **Qué incluye:**
@@ -227,7 +227,7 @@ Cada feature = un ciclo speckit completo:
 ### 009 · Student App
 
 **Branch:** `009-student-app`
-**CDUs:** ALU-001 a ALU-011 (agrupados por nivel: inicial, primaria 1er ciclo, primaria 2do ciclo, secundaria)
+**CDUs:** ALU-001 a ALU-014 · ALU-016 · PAD-013 (agrupados por nivel: inicial, primaria 1er ciclo, primaria 2do ciclo, secundaria)
 **Prioridad:** P1-P2
 
 **Qué incluye:**
@@ -236,9 +236,12 @@ Cada feature = un ciclo speckit completo:
 - Actividades interactivas publicadas por docentes (005)
 - Vista unificada de agenda académica (secundaria)
 - Simulacro de examen + plan de estudio (secundaria)
-- Detección de malestar emocional: señales → alerta anonimizada al equipo de orientación
+- Detección de malestar emocional: señales → alerta anonimizada al equipo de orientación (ALU-016 — P1)
+- Foro de debate y portfolio vocacional (ALU-012, ALU-013 — Secundaria, P2)
+- Desafío colaborativo entre grados (ALU-014 — Primaria, P2)
+- Consulta del diario del día para padre de nivel inicial (PAD-013 — P2, vista de padre del journal generado por DOC)
 
-**Superficies:** App únicamente (sin WhatsApp — NON-NEGOTIABLE · sin Web para alumnos)
+**Superficies:** App únicamente para alumnos (sin WhatsApp — NON-NEGOTIABLE · sin Web para alumnos) · App + Web para PAD-013
 
 **Dependencias:** 001-foundation · 002-legal-gates · 005-teacher-assistant
 
@@ -247,7 +250,7 @@ Cada feature = un ciclo speckit completo:
 ### 010 · Teacher Advanced
 
 **Branch:** `010-teacher-advanced`
-**CDUs:** DOC-008 · DOC-009 · DOC-010 · DOC-011 · DOC-012 · DOC-013 · DOC-014 · DOC-015 · DOC-016 · DOC-017
+**CDUs:** DOC-008 · DOC-009 · DOC-010 · DOC-011 · DOC-012 · DOC-013 · DOC-014 · DOC-015 · DOC-016 · DOC-017 · CROSS-001 · CROSS-003
 **Prioridad:** P2
 
 **Qué incluye:**
@@ -260,6 +263,8 @@ Cada feature = un ciclo speckit completo:
 - Barrera de horarios: filtro de mensajes de padres fuera de horario laboral
 - Alerta de bienestar emocional (solo patrón observable, nunca contenido — Principio III)
 - Portfolio de impacto docente (DOC-017, tier Premium)
+- Coordinación docente-padre para apoyo a alumno en dificultad (CROSS-001)
+- Señal anonimizada cuando alumno no entiende algo (CROSS-003)
 
 **Superficies:** App · Web · WhatsApp (según CDU)
 
@@ -291,12 +296,16 @@ Cada feature = un ciclo speckit completo:
 ### 012+ · Differentiators
 
 **Branch:** branches separados por CDU
-**CDUs:** CROSS-004 (biblioteca compartida entre escuelas) · CROSS-007 (modo corresponsal/acto) · ADM-014 (benchmark red)
+**CDUs:** CROSS-004 (biblioteca compartida entre escuelas) · CROSS-007 (modo corresponsal/acto) · ADM-014 (benchmark red) · PAD-016 (trayectoria multi-año) · ALU-015 (tutor entre pares con IA)
 **Prioridad:** P3
 
 **Condición de CROSS-007:** No se lanza sin que 002-legal-gates esté implementado y el flag `foto_bloqueada` exista en el modelo de datos.
 
 **Condición de ADM-014:** Requiere red de al menos 10 escuelas activas para que el benchmark tenga valor estadístico.
+
+**Condición de PAD-016:** Requiere al menos 2 ciclos lectivos de datos del alumno en el sistema.
+
+**Condición de ALU-015:** Requiere al menos 20 alumnos activos en el mismo nivel para que el matching entre pares sea estadísticamente válido.
 
 **Dependencias:** Red de escuelas activas.
 
