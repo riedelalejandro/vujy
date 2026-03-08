@@ -353,6 +353,7 @@ CREATE TABLE payments (
 
 -- Ítems de pago cubiertos por cada pago
 CREATE TABLE payment_item_payments (
+  school_id       UUID NOT NULL REFERENCES schools(id),  -- tenant isolation
   payment_id      UUID NOT NULL REFERENCES payments(id),
   payment_item_id UUID NOT NULL REFERENCES payment_items(id),
   PRIMARY KEY (payment_id, payment_item_id)
@@ -648,6 +649,7 @@ ALTER TABLE calendar_events       ENABLE ROW LEVEL SECURITY;
 ALTER TABLE announcements         ENABLE ROW LEVEL SECURITY;
 ALTER TABLE announcement_receipts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE payment_items         ENABLE ROW LEVEL SECURITY;
+ALTER TABLE payment_item_payments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE payments              ENABLE ROW LEVEL SECURITY;
 ALTER TABLE payment_plans         ENABLE ROW LEVEL SECURITY;
 ALTER TABLE pedagogical_notes     ENABLE ROW LEVEL SECURITY;
@@ -772,6 +774,27 @@ CREATE POLICY "payment_items_select_guardian" ON payment_items
       SELECT family_id FROM guardian_students
       WHERE guardian_id = auth.uid() AND can_make_payments = true
     )
+  );
+
+-- Guardian ve solo el join de sus propios pagos e ítems
+CREATE POLICY "payment_item_payments_select_guardian" ON payment_item_payments
+  FOR SELECT USING (
+    school_id = get_my_school_id()
+    AND payment_id IN (
+      SELECT id FROM payments
+      WHERE school_id = get_my_school_id()
+      AND family_id IN (
+        SELECT family_id FROM guardian_students
+        WHERE guardian_id = auth.uid() AND can_make_payments = true
+      )
+    )
+  );
+
+-- Admin/director ven todos los registros de su escuela
+CREATE POLICY "payment_item_payments_select_admin" ON payment_item_payments
+  FOR SELECT USING (
+    school_id = get_my_school_id()
+    AND get_my_role() IN ('admin', 'director', 'secretary')
   );
 
 -- ─────────────────────────────────────────────
