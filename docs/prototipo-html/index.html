@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vujy - Prototipo Navegable</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .hero {
+      background: linear-gradient(135deg, #4F46E5 0%, #7c3aed 100%);
+      color: white;
+      padding: 60px 20px;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto 20px;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 12px 30px;
+      background: white;
+      color: #4F46E5;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .features-section {
+      margin-bottom: 40px;
+    }
+
+    .features-section h2 {
+      color: #4F46E5;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .feature-list {
+      list-style: none;
+      columns: 2;
+      gap: 30px;
+    }
+
+    .feature-list li {
+      padding: 10px 0;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .feature-list li:before {
+      content: "✓ ";
+      color: #4F46E5;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin: 40px 0;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .stat-number {
+      font-size: 36px;
+      color: #4F46E5;
+      font-weight: 700;
+    }
+
+    .stat-label {
+      color: #666;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="active">🏠 Inicio</a>
+    <a href="padre.html">👨‍👩‍👧 Padre/Tutor</a>
+    <a href="docente.html">👩‍🏫 Docente</a>
+    <a href="admin.html">💼 Administrador</a>
+    <a href="alumno-inicial.html">👶 Alumno Inicial</a>
+    <a href="alumno-primaria.html">📚 Alumno Primaria</a>
+    <a href="alumno-secundaria.html">🎓 Alumno Secundaria</a>
+  </nav>
+
+  <div class="container">
+    <div class="hero">
+      <h1>🎓 Vujy</h1>
+      <p>Plataforma educativa con asistente IA conversacional para escuelas privadas argentinas</p>
+      <p style="font-size: 14px; opacity: 0.8;">Multicanal: WhatsApp + App + Web | Perfiles: Padres, Docentes, Administradores, Alumnos</p>
+    </div>
+
+    <div class="header">
+      <h2>Prototipo Navegable — Muestra Previa</h2>
+      <p>Explora cómo funciona Vujy para cada perfil de usuario. Los prototipos simulan conversaciones con el asistente IA y flujos principales del sistema.</p>
+    </div>
+
+    <div class="features-section">
+      <h2>✨ Características Principales</h2>
+      <ul class="feature-list">
+        <li>Asistente conversacional IA disponible 24/7</li>
+        <li>Consultas en lenguaje natural (WhatsApp, App, Web)</li>
+        <li>Registros académicos en tiempo real</li>
+        <li>Gestión de pagos y morosidad inteligente</li>
+        <li>Comunicados digitales con confirmación de lectura</li>
+        <li>Actividades gamificadas por nivel educativo</li>
+        <li>Generación asistida de contenido (informes, comunicados, actividades)</li>
+        <li>Alertas proactivas (deserción, caída académica, urgencias)</li>
+        <li>Dashboard administrativo con simulador financiero</li>
+        <li>Privacidad y seguridad multi-tenant</li>
+      </ul>
+    </div>
+
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-number">4</div>
+        <div class="stat-label">Perfiles principales</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">73</div>
+        <div class="stat-label">Casos de uso (CDUs)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Canales (WhatsApp, App, Web)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">∞</div>
+        <div class="stat-label">Posibilidades conversacionales</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 40px;">
+      <h2 style="color: #4F46E5; margin-bottom: 20px;">🎭 Selecciona un Perfil para Explorar</h2>
+
+      <div class="profile-grid">
+        <div class="profile-card">
+          <h3>👨‍👩‍👧 Padre / Tutor</h3>
+          <p>Consulta el resumen semanal de tu hijo, reporta ausencias, paga la cuota y recibe notificaciones importantes desde el asistente IA.</p>
+          <p><strong>Journey P0:</strong> Resumen → Ausencia → Pago</p>
+          <a href="padre.html">Explorar →</a>
+        </div>
+
+        <div class="profile-card">
+          <h3>👩‍🏫 Docente</h3>
+          <p>Toma de asistencia por voz, carga de calificaciones, envío de comunicados automáticos, generación de informes pedagógicos con IA.</p>
+          <p><strong>Canales:</strong> App, Web, WhatsApp</p>
+          <a href="docente.html">Explorar →</a>
+        </div>
+
+        <div class="profile-card">
+          <h3>💼 Administrador</h3>
+          <p>Dashboard de pulso institucional, gestión de morosidad, simulador financiero, detección de riesgo de deserción, alertas automáticas.</p>
+          <p><strong>Inteligencia:</strong> Predicción, insights conectados</p>
+          <a href="admin.html">Explorar →</a>
+        </div>
+
+        <div class="profile-card">
+          <h3>👶 Alumno Inicial (3-5 años)</h3>
+          <p>Actividades visuales interactivas, juegos con narración por voz, gamificación con mascota virtual. Interfaz táctil y lúdica.</p>
+          <p><strong>Nivel:</strong> Inicial | Enfoque: Juego</p>
+          <a href="alumno-inicial.html">Explorar →</a>
+        </div>
+
+        <div class="profile-card">
+          <h3>📚 Alumno Primaria (6-12 años)</h3>
+          <p>Misiones diarias gamificadas, lectura interactiva, progreso visible, desafíos colaborativos, monedas virtuales y avatares personalizables.</p>
+          <p><strong>Nivel:</strong> Primaria | Enfoque: Misiones</p>
+          <a href="alumno-primaria.html">Explorar →</a>
+        </div>
+
+        <div class="profile-card">
+          <h3>🎓 Alumno Secundaria (13-17 años)</h3>
+          <p>Agenda académica unificada, tutor IA personal, simulacros de examen, plan de estudio asistido, portfolio digital, foros de debate.</p>
+          <p><strong>Nivel:</strong> Secundaria | Enfoque: Autonomía</p>
+          <a href="alumno-secundaria.html">Explorar →</a>
+        </div>
+      </div>
+    </div>
+
+    <div style="background: #f0f2f5; padding: 30px; border-radius: 8px; margin-top: 40px; margin-bottom: 20px;">
+      <h3 style="color: #4F46E5; margin-bottom: 15px;">📋 Qué verás en cada prototipo:</h3>
+      <ul style="color: #666; list-style: none;">
+        <li>✓ <strong>Chat conversacional:</strong> Simulación de interacciones con el asistente IA</li>
+        <li>✓ <strong>Interfaz estructurada:</strong> Formularios, dashboards y flujos principales</li>
+        <li>✓ <strong>Datos funcionales:</strong> Ejemplos reales de información que maneja cada perfil</li>
+        <li>✓ <strong>Acciones interactivas:</strong> Click para navegar entre pantallas y ver transiciones</li>
+        <li>✓ <strong>Estados críticos:</strong> Loading, error, vacío, confirmación</li>
+        <li>✓ <strong>Multicanal:</strong> Cómo se ve en WhatsApp, App y Web</li>
+      </ul>
+    </div>
+
+    <div style="background: white; padding: 30px; border-radius: 8px; border-left: 4px solid #4F46E5; margin-bottom: 40px;">
+      <h3 style="color: #4F46E5; margin-bottom: 15px;">💡 Guía de Uso</h3>
+      <ol style="color: #666; padding-left: 20px;">
+        <li><strong>Elige un perfil</strong> del menú superior o de las tarjetas abajo</li>
+        <li><strong>Lee la descripción</strong> del journey que se simula</li>
+        <li><strong>Interactúa</strong> con el chat: escribe mensajes o haz click en botones</li>
+        <li><strong>Prueba diferentes acciones</strong> para ver cómo responde el sistema</li>
+        <li><strong>Navega entre pantallas</strong> usando los botones de acción</li>
+        <li><strong>Observa los estados</strong> de carga, error y confirmación</li>
+      </ol>
+    </div>
+
+    <div style="text-align: center; color: #999; padding-bottom: 20px; border-top: 1px solid #e5e7eb; padding-top: 20px;">
+      <p>Prototipo HTML navegable para Vujy — Marzo 2026</p>
+      <p style="font-size: 12px;">Este prototipo es una demostración interactiva. Los datos mostrados son simulados y no conectan a un backend real.</p>
+    </div>
+  </div>
+
+  <script>
+    // Simple analytics to track which profiles users visit
+    document.querySelectorAll('a[href*=".html"]').forEach(link => {
+      link.addEventListener('click', function(e) {
+        const profile = this.href.split('/').pop();
+        console.log('Visiting profile:', profile);
+      });
+    });
+  </script>
+</body>
+</html>

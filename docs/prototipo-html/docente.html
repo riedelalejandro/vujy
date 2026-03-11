@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vujy - Perfil Docente</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .class-selector {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    .class-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .class-btn {
+      padding: 8px 16px;
+      background: #f0f2f5;
+      border: 2px solid transparent;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+    }
+
+    .class-btn:hover {
+      background: #e0e2e5;
+    }
+
+    .class-btn.active {
+      background: #4F46E5;
+      color: white;
+      border-color: #4F46E5;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .feature-box {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border-top: 4px solid #4F46E5;
+    }
+
+    .feature-box h3 {
+      color: #4F46E5;
+      margin: 0 0 10px 0;
+      font-size: 16px;
+    }
+
+    .feature-box p {
+      color: #666;
+      font-size: 13px;
+      margin: 0 0 15px 0;
+      line-height: 1.5;
+    }
+
+    .feature-box button {
+      width: 100%;
+    }
+
+    .chat-box {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-top: 30px;
+    }
+
+    .chat-messages {
+      background: #f9fafb;
+      border-radius: 6px;
+      padding: 15px;
+      min-height: 300px;
+      overflow-y: auto;
+      margin-bottom: 15px;
+    }
+
+    .chip-vertical {
+      width: 100%;
+      text-align: left;
+      justify-content: flex-start;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">🏠 Inicio</a>
+    <a href="padre.html">👨‍👩‍👧 Padre</a>
+    <a href="docente.html" class="active">👩‍🏫 Docente</a>
+    <a href="admin.html">💼 Administrador</a>
+    <a href="alumno-inicial.html">👶 Inicial</a>
+    <a href="alumno-primaria.html">📚 Primaria</a>
+    <a href="alumno-secundaria.html">🎓 Secundaria</a>
+  </nav>
+
+  <div class="container">
+    <div class="header">
+      <h1>👩‍🏫 Perfil Docente</h1>
+      <p><strong>CDUs principales:</strong> Asistencia | Comunicados | Calificaciones | Observaciones | Actividades | Informes</p>
+    </div>
+
+    <div class="class-selector">
+      <strong>Selecciona tu clase:</strong>
+      <div class="class-buttons">
+        <button class="class-btn active" onclick="switchClass(event, 'class1')">4to A</button>
+        <button class="class-btn" onclick="switchClass(event, 'class2')">4to B</button>
+        <button class="class-btn" onclick="switchClass(event, 'class3')">5to A</button>
+      </div>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-box">
+        <h3>⏰ Toma de Asistencia</h3>
+        <p>Marca quién asiste por lista o por voz: "Hoy faltaron Mati y Sofi"</p>
+        <button class="btn btn-primary" onclick="cduDocente('asistencia')">Marcar asistencia →</button>
+      </div>
+
+      <div class="feature-box">
+        <h3>📢 Comunicados a Padres</h3>
+        <p>Dicta naturalmente, el asistente genera borrador, tú apruebas y se envía.</p>
+        <button class="btn btn-primary" onclick="cduDocente('comunicado')">Enviar comunicado →</button>
+      </div>
+
+      <div class="feature-box">
+        <h3>📝 Carga de Calificaciones</h3>
+        <p>Por voz: "Notas de Matemática: Mati 8, Sofi 9, Juani 6"</p>
+        <button class="btn btn-primary" onclick="cduDocente('calificaciones')">Cargar notas →</button>
+      </div>
+
+      <div class="feature-box">
+        <h3>📔 Observación Pedagógica</h3>
+        <p>Micro-observaciones durante clase: "Mati participó mucho en ciencias"</p>
+        <button class="btn btn-primary" onclick="cduDocente('observacion')">Registrar observación →</button>
+      </div>
+
+      <div class="feature-box">
+        <h3>🤖 Generación de Actividades</h3>
+        <p>Pide: "Crea trivia de fotosíntesis para 5to". El asistente lo genera.</p>
+        <button class="btn btn-primary" onclick="cduDocente('actividad')">Crear actividad →</button>
+      </div>
+
+      <div class="feature-box">
+        <h3>📋 Informe Trimestral</h3>
+        <p>Al cierre, el asistente genera borrador del informe por alumno.</p>
+        <button class="btn btn-primary" onclick="cduDocente('informe')">Ver informe (borrador) →</button>
+      </div>
+    </div>
+
+    <div class="chat-box">
+      <h2 style="color: #4F46E5; margin-top: 0;">💬 Chat con Asistente de Docentes</h2>
+      <p style="color: #666; margin-bottom: 15px;">Haz clic en los CDU arriba o pregunta algo aquí:</p>
+
+      <div class="chat-messages" id="chatMessages">
+        <div class="message assistant">
+          <div class="message-bubble">Hola seño 👋 ¿En qué puedo ayudarte hoy?</div>
+        </div>
+        <div style="padding: 10px; background: white; display: flex; flex-direction: column; gap: 8px;">
+          <button class="chip chip-vertical" onclick="cduDocente('asistencia')">⏰ Tomar asistencia</button>
+          <button class="chip chip-vertical" onclick="cduDocente('comunicado')">📢 Generar comunicado</button>
+          <button class="chip chip-vertical" onclick="cduDocente('calificaciones')">📝 Cargar calificaciones</button>
+          <button class="chip chip-vertical" onclick="cduDocente('observacion')">📔 Registrar observación</button>
+          <button class="chip chip-vertical" onclick="cduDocente('actividad')">🤖 Crear actividad</button>
+          <button class="chip chip-vertical" onclick="cduDocente('informe')">📋 Ver informe trimestral</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const cduData = {
+      asistencia: {
+        user: 'Necesito tomar asistencia',
+        assistant: 'Lista de 4to A (20 alumnos):\n\n1. Mateo Rodríguez [✓]\n2. Sofía García [✓]\n3. Juan López [✓]\n4. Laura Martínez [✓]\n5. Ana Fernández [✗] Ausente\n6. Carlos Díaz [✓]\n... (14 más presentes)\n\nResumen: 19 presentes, 1 ausente\n\n¿Confirmar asistencia?',
+        followUp: [
+          { label: '✓ Confirmar', response: 'Asistencia registrada. Los padres fueron notificados.' }
+        ]
+      },
+      comunicado: {
+        user: 'Enviar comunicado a los padres',
+        assistant: 'Dicta tu comunicado:\n\nEjemplo: "El viernes hay acto escolar. Todos vienen de blanco y traen algo para compartir"',
+        followUp: [
+          { label: '✏️ Generar borrador', response: 'BORRADOR GENERADO:\n\n"Estimadas familias,\n\nLes informamos que el viernes 15 de marzo realizaremos nuestro acto escolar institucional. Los alumnos deberán asistir presentados de blanco. Asimismo, solicitamos que cada estudiante traiga algo para compartir en la merienda posterior al acto."\n\n¿Enviar a 25 familias?' },
+          { label: '✓ Enviar', response: 'Comunicado enviado a 25 familias. 18 ya lo leyeron.' }
+        ]
+      },
+      calificaciones: {
+        user: 'Cargar calificaciones',
+        assistant: 'Materia: Matemática | Tema: "Operaciones con fracciones"\n\nIngresa las notas:\nMateo [8]\nSofía [9]\nJuan [6]\n\n¿Guardar y notificar a padres?',
+        followUp: [
+          { label: '✓ Guardar', response: '✓ Calificaciones guardadas\n\n⚠️ ALERTA: Juan bajó 2 puntos vs. evaluación anterior. Sugiero refuerzo.' }
+        ]
+      },
+      observacion: {
+        user: 'Registrar observación pedagógica',
+        assistant: 'Alumno: Mateo Rodríguez\n\n¿Qué observaste hoy?\n\nEjemplo: "Muy participativo en clase, preguntas reflexivas"',
+        followUp: [
+          { label: '📔 Guardar', response: 'Observación #12 registrada para Mateo\n\nAl cierre del trimestre, el informe se generará automáticamente con todas tus observaciones.' }
+        ]
+      },
+      actividad: {
+        user: 'Crear actividad educativa',
+        assistant: 'Describe la actividad que quieres:\n\nEjemplo: "Trivia de 8 preguntas sobre fotosíntesis para 5to, dificultad media"',
+        followUp: [
+          { label: '🚀 Generar', response: 'ACTIVIDAD GENERADA:\n\nTipo: Trivia\nTema: Fotosíntesis\nPreguntas: 8\nDificultad: Media\n\n¿Publicar para que los alumnos la resuelvan?' },
+          { label: '✓ Publicar', response: 'Actividad publicada. Los alumnos de 5to pueden acceder desde la app. Recibirás reporte de resultados.' }
+        ]
+      },
+      informe: {
+        user: 'Ver informe trimestral',
+        assistant: 'BORRADOR - Informe Pedagógico Trimestral\n\nAlumno: Mateo Rodríguez\nTrimestre: 1 (Marzo-Mayo 2026)\n\n📊 Desempeño: Muy bueno\n🤝 Relacionamiento: Excelente\n⚠️ Áreas de mejora: Comprensión lectora\n✨ Logros: Participación destacada en Ciencias',
+        followUp: [
+          { label: '✓ Confirmar', response: '✓ Informe enviado al padre. Se visualiza en su dashboard.' }
+        ]
+      }
+    };
+
+    function cduDocente(type) {
+      const chatMessages = document.getElementById('chatMessages');
+      const cdu = cduData[type];
+
+      if (!cdu) return;
+
+      // Limpiar elementos anteriores
+      const oldChips = chatMessages.querySelector('[style*="flex-direction"]');
+      if (oldChips && oldChips.style.background === 'white') oldChips.remove();
+
+      // Usuario
+      const userMsg = document.createElement('div');
+      userMsg.className = 'message user';
+      userMsg.innerHTML = `<div class="message-bubble">${cdu.user}</div>`;
+      chatMessages.appendChild(userMsg);
+
+      // Asistente
+      setTimeout(() => {
+        const assistantMsg = document.createElement('div');
+        assistantMsg.className = 'message assistant';
+        assistantMsg.innerHTML = `<div class="message-bubble">${cdu.assistant}</div>`;
+        chatMessages.appendChild(assistantMsg);
+
+        // Follow-up buttons
+        if (cdu.followUp && cdu.followUp.length > 0) {
+          const followUpDiv = document.createElement('div');
+          followUpDiv.style.padding = '10px';
+          followUpDiv.style.background = 'white';
+          followUpDiv.style.display = 'flex';
+          followUpDiv.style.flexDirection = 'column';
+          followUpDiv.style.gap = '8px';
+
+          cdu.followUp.forEach(item => {
+            const btn = document.createElement('button');
+            btn.className = 'chip chip-vertical';
+            btn.textContent = item.label;
+            btn.onclick = () => addDocResponse(item.label, item.response);
+            followUpDiv.appendChild(btn);
+          });
+
+          chatMessages.appendChild(followUpDiv);
+        }
+
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }, 300);
+    }
+
+    function addDocResponse(label, response) {
+      const chatMessages = document.getElementById('chatMessages');
+
+      const userMsg = document.createElement('div');
+      userMsg.className = 'message user';
+      userMsg.innerHTML = `<div class="message-bubble">${label}</div>`;
+      chatMessages.appendChild(userMsg);
+
+      setTimeout(() => {
+        const assistantMsg = document.createElement('div');
+        assistantMsg.className = 'message assistant';
+        assistantMsg.innerHTML = `<div class="message-bubble">${response}</div>`;
+        chatMessages.appendChild(assistantMsg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }, 300);
+    }
+
+    function switchClass(event, className) {
+      document.querySelectorAll('.class-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>

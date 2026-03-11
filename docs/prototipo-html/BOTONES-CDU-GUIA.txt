@@ -1,0 +1,307 @@
+═══════════════════════════════════════════════════════════════════════════════
+🎯 GUÍA DE BOTONES CDU - CÓMO FUNCIONAN LOS ASISTENTES AHORA
+═══════════════════════════════════════════════════════════════════════════════
+
+RESUMEN RÁPIDO:
+Los asistentes ahora tienen botones clickeables para cada CDU en lugar de campos
+de input vacíos. Funciona exactamente como WhatsApp Business con botones.
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🧪 CÓMO TESTEAR - PASO A PASO
+
+1. Abre http://localhost o arrastra index.html al navegador
+2. Clica en "👨‍👩‍👧 Padre/Tutor"
+3. ¡Verás los botones CDU! Clica en cualquiera
+
+ANTES (❌):
+  [Vujy Assistant]
+  Hola, ¿cómo estás?
+  [Campo de input vacío... ]
+  [→ botón enviar]
+
+DESPUÉS (✅):
+  [Vujy Assistant]
+  Hola, ¿En qué te puedo ayudar?
+
+  [📊 ¿Cómo le fue a Mateo esta semana?]
+  [❌ Reportar ausencia]
+  [💳 ¿Cuánto debo de cuota?]
+  [📅 ¿Qué tiene mañana?]
+  [📞 Contactar con la docente]
+  [📬 Ver comunicados]
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📋 FLUJOS CDU PRINCIPALES POR PERFIL
+
+PADRE (padre.html):
+─────────────────────
+📊 Resumen Semanal
+   Botón: "¿Cómo le fue a Mateo esta semana?"
+   → Muestra: Asistencia 95%, Promedio 8.2, 2 tareas pendientes
+   → Follow-ups: [Reportar ausencia] [Ver deuda] [Agenda]
+
+❌ Reportar Ausencia
+   Botón: "Mateo no va a ir mañana"
+   → Pregunta: ¿Cuál es el motivo?
+   → Follow-ups: [Enfermedad] [Cita médica] [Razones familiares]
+   → Resultado: "✓ Ausencia registrada. Docente notificada."
+
+💳 Gestión de Pagos
+   Botón: "¿Cuánto debo de cuota?"
+   → Muestra: $4,500 adeudados (Marzo vencida)
+   → Follow-ups: [Pagar ahora] [Plan de pago]
+   → Resultado: "✓ Pago procesado. Transacción MP-8392847392"
+
+📅 Consultar Agenda
+   Botón: "¿Qué tiene mañana?"
+   → Muestra: Horario completo del día
+   → Follow-ups: [Contactar docente]
+
+📞 Contacto con Docente
+   Botón: "Contactar con la docente"
+   → Muestra: Email, horario, opciones de contacto
+   → Follow-ups: [Enviar mensaje privado]
+
+📬 Ver Comunicados
+   Botón: "Ver comunicados"
+   → Muestra: Últimos comunicados (leído/sin leer)
+   → Follow-ups: [Leer detalles]
+
+
+DOCENTE (docente.html):
+───────────────────────
+⏰ Toma de Asistencia
+   Botón: "Marcar asistencia"
+   → Muestra: Lista de 20 alumnos (presente/ausente)
+   → Follow-up: [✓ Confirmar]
+   → Notifica a padres de ausentes
+
+📢 Comunicados
+   Botón: "Enviar comunicado"
+   → Pregunta: ¿Qué quieres comunicar?
+   → Genera: Borrador con tono institucional
+   → Follow-up: [✓ Enviar a 25 familias]
+
+📝 Carga de Calificaciones
+   Botón: "Cargar notas"
+   → Muestra: Tabla de notas editables
+   → Alerta: Si alumno bajó significativamente
+   → Follow-up: [✓ Guardar y notificar]
+
+📔 Observación Pedagógica
+   Botón: "Registrar observación"
+   → Pregunta: ¿Qué observaste del alumno?
+   → Ejemplo: "Muy participativo en clase"
+   → Almacena para generar informe trimestral
+
+🤖 Crear Actividad
+   Botón: "Crear actividad"
+   → Pregunta: Describe la actividad (ej: "trivia sobre fotosíntesis")
+   → Genera: 8 preguntas con opciones
+   → Follow-up: [✓ Publicar]
+
+📋 Ver Informe Trimestral
+   Botón: "Ver informe"
+   → Muestra: Borrador del informe por alumno
+   → Información: Desempeño, habilidades, áreas de mejora
+   → Follow-up: [✓ Confirmar]
+
+
+ADMIN (admin.html):
+───────────────────
+📊 Dashboard de Morosidad
+   Botón: "¿Cuál es el estado de morosidad?"
+   → Muestra: Total deuda, distribución por días, top familias
+   → Follow-ups: [📧 Enviar recordatorios] [💳 Generar planes pago]
+
+⚠️ Familias en Riesgo
+   Botón: "¿Qué familias están en riesgo?"
+   → Muestra: Risk score, señales de deserción
+   → Follow-ups: [🤝 Agendar reunión] [📬 Enviar recordatorio]
+
+💰 Recaudación
+   Botón: "¿Cómo va la recaudación?"
+   → Muestra: Pagos confirmados, proyección, comparativas
+   → Follow-ups: [📊 Ver historial] [🔮 Proyectar próximos meses]
+
+🎯 Simulador Financiero
+   Botón: "¿Qué pasa si subo 15% la cuota?"
+   → Calcula: Nuevos ingresos, deserción estimada, viabilidad
+   → Resultado: "⚠️ No viable. Aumenta solo 8%"
+   → Follow-ups: [Simular 8%] [Alternativas de ingresos]
+
+🔔 Alertas del Día
+   Botón: "Ver alertas"
+   → Muestra: 5 alertas automáticas (urgencias, caídas académicas, etc)
+   → Follow-ups: [☎️ Contactar familia]
+
+📈 Asistencia Semanal
+   Botón: "¿Cómo está la asistencia?"
+   → Muestra: % por día, comparativas con semanas anteriores
+   → Follow-up: [Comparar con período anterior]
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🎮 INTERACCIÓN - EJEMPLO COMPLETO
+
+Escenario: Padre necesita:
+  1. Ver cómo le fue a Mateo
+  2. Reportar ausencia para mañana
+  3. Pagar la cuota vencida
+
+PASO 1: Usuario abre padre.html
+─────────────────────────────────
+Vujy: Hola, ¿En qué te puedo ayudar?
+
+[📊 ¿Cómo le fue a Mateo esta semana?]
+[❌ Reportar ausencia]
+[💳 ¿Cuánto debo de cuota?]
+[📅 ¿Qué tiene mañana?]
+[📞 Contactar con la docente]
+[📬 Ver comunicados]
+
+
+PASO 2: Usuario clica [📊 ¿Cómo le fue...]
+───────────────────────────────────────────
+Usuario: ¿Cómo le fue a Mateo esta semana?
+
+Vujy: Mateo tuvo una buena semana 📊
+✓ Asistencia: 95% (5 días presentes)
+✓ Promedio: 8.2 en todas las materias
+⚠️ 2 tareas pendientes de Ciencias
+
+[❌ Reportar ausencia]
+[💳 Ver deuda]
+[📅 Agenda]
+
+
+PASO 3: Usuario clica [❌ Reportar ausencia]
+──────────────────────────────────────────
+Usuario: Mateo no va a ir mañana
+
+Vujy: ¿Cuál es el motivo?
+
+[🤒 Enfermedad]
+[⚕️ Cita médica]
+[🚗 Razones familiares]
+
+
+PASO 4: Usuario clica [🤒 Enfermedad]
+──────────────────────────────────────
+Usuario: Enfermedad
+
+Vujy: ✓ Ausencia registrada
+Mateo está marcado como ausente para mañana por enfermedad.
+La seño ya fue notificada.
+
+[¿Necesitas algo más?]
+
+
+PASO 5: Usuario vuelve y clica [💳 ¿Cuánto debo de cuota?]
+───────────────────────────────────────────────────────────
+Usuario: ¿Cuánto debo de cuota?
+
+Vujy: ⚠️ Tienes un saldo pendiente:
+📌 Cuota de Marzo: $4,500 (vencida hace 5 días)
+📌 Cuota de Abril: $4,500 (vence el 5/04)
+Total: $4,500
+
+[💳 Pagar ahora]
+[📋 Plan de pago]
+
+
+PASO 6: Usuario clica [💳 Pagar ahora]
+───────────────────────────────────────
+Usuario: Pagar ahora
+
+Vujy: ✓ ¡Pago procesado exitosamente! 🎉
+• Monto: $4,500
+• Transacción: MP-8392847392
+• Recibo disponible en tu cuenta
+
+Tu deuda está al día. ¡Gracias!
+
+═══════════════════════════════════════════════════════════════════════════════
+
+💡 VENTAJAS DE ESTE SISTEMA
+
+✅ CONVERSACIONAL: Parece chat natural, no formulario
+✅ GUIADO: Usuario no se pierde, siempre hay opciones claras
+✅ RÁPIDO: No hay que escribir (como WhatsApp con botones)
+✅ REALISTA: Simula cómo respondería un asistente IA real
+✅ TESTEABLE: Fácil validar CDUs con usuarios reales
+✅ FAMILIAR: Parece WhatsApp Business (que usuarios conocen)
+✅ ENCADENABLE: Ausencia → Pago (flujosreales)
+✅ DATOS CONTEXTUALES: Respuestas específicas, no genéricas
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🔧 CÓMO AGREGAR NUEVOS CDUs (Para developers)
+
+1. Abre padre.html (o docente.html, admin.html)
+2. Busca "const cduResponses = {"
+3. Agrega un nuevo CDU:
+
+const cduResponses = {
+  nuevo_cdu: {
+    user: "Texto que ve el usuario",
+    assistant: "Respuesta del asistente",
+    followUp: [
+      { label: "Opción 1", cdu: "otro_cdu_existente" },
+      { label: "Opción 2", response: "Respuesta directa" }
+    ]
+  },
+  ...más CDUs
+}
+
+4. Agrega un botón en el HTML:
+<button class="chip chip-vertical"
+        onclick="cduPadre('nuevo_cdu')">
+  🎯 Nombre del CDU
+</button>
+
+5. ¡Listo! El nuevo CDU es funcional.
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📊 COBERTURA DE CDUs ACTUALMENTE
+
+PADRE:          6 CDUs funcionales (de 17 totales)
+DOCENTE:        6 CDUs funcionales (de 17 totales)
+ADMIN:          6 CDUs funcionales (de 16 totales)
+ALUMNO INICIAL: 2 CDUs (demo lúdica)
+ALUMNO PRIMARIA: 4 CDUs (misiones, lectura, progreso)
+ALUMNO SECUNDARIA: 5 CDUs (agenda, tutor IA, académico, debate, portfolio)
+
+TOTAL IMPLEMENTADO: ~30 CDUs de 73 totales
+→ Suficiente para validación y demostración
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🚀 QUÉ VIENE DESPUÉS
+
+□ Testear con usuarios reales (padres, docentes, admin)
+□ Agregar más CDUs basado en feedback
+□ Refinamiento visual (diseño en Figma)
+□ Implementación en Next.js + Supabase + Claude API
+□ Integración con WhatsApp Cloud API
+□ Persistencia de chats (base de datos real)
+□ Autenticación real
+□ Pagos reales (Mercado Pago)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🎯 RESUMEN
+
+Ahora los asistentes:
+✅ Tienen botones CDU claros (como WhatsApp)
+✅ Muestran respuestas contextuales realistas
+✅ Encadenan acciones (flujos completos)
+✅ Son fáciles de testear con usuarios
+✅ Simulan cómo funcionará el sistema real
+
+¡Abre padre.html y prueba clicando botones!
+
+═══════════════════════════════════════════════════════════════════════════════

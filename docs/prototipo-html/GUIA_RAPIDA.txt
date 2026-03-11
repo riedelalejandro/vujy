@@ -1,0 +1,231 @@
+═══════════════════════════════════════════════════════════════════
+🎓 VUJY — PROTOTIPO HTML NAVEGABLE
+Guía Rápida de Inicio
+═══════════════════════════════════════════════════════════════════
+
+RESUMEN
+───────
+✅ 7 prototipos HTML interactivos
+✅ Estilos CSS compartidos y responsivos
+✅ JavaScript para interactividad
+✅ Totalmente autocontenido (sin backend)
+✅ 4,070+ líneas de código
+✅ Listo para demostración
+
+═══════════════════════════════════════════════════════════════════
+
+CÓMO EMPEZAR
+───────────
+
+1️⃣  Abre en tu navegador:
+    → Arrastra "index.html" al navegador, o
+    → Click derecho > Abrir con > Navegador
+
+2️⃣  Haz clic en un perfil para explorar:
+
+    👨‍👩‍👧 PADRE/TUTOR (padre.html)
+       Journey P0: Resumen → Ausencia → Pago
+       • Chat conversacional
+       • Datos académicos en tiempo real
+       • Pagos integrados
+
+    👩‍🏫 DOCENTE (docente.html)
+       Herramientas docentes principales
+       • Toma de asistencia
+       • Carga de calificaciones
+       • Generación de actividades con IA
+
+    💼 ADMINISTRADOR (admin.html)
+       Inteligencia financiera + visibilidad
+       • Dashboard de KPIs
+       • Gestión de morosidad
+       • Simulador de escenarios financieros
+
+    👶 ALUMNO INICIAL (alumno-inicial.html)
+       Interfaz lúdica para 3-5 años
+       • Actividades visuales
+       • Gamificación con mascota
+
+    📚 ALUMNO PRIMARIA (alumno-primaria.html)
+       Misiones gamificadas para 6-12 años
+       • Misiones diarias
+       • Biblioteca interactiva
+       • Progreso visible
+
+    🎓 ALUMNO SECUNDARIA (alumno-secundaria.html)
+       Herramientas académicas avanzadas para 13+
+       • Agenda unificada
+       • Tutor IA personal
+       • Simulacros de examen
+       • Portfolio digital
+
+═══════════════════════════════════════════════════════════════════
+
+ARCHIVOS QUE SE GENERARON
+──────────────────────────
+
+prototipo-html/
+├── 📄 index.html                    [9.1 KB]   Hub principal
+├── 🎨 styles.css                    [8.4 KB]   Estilos compartidos
+│
+├── 👨‍👩‍👧 padre.html                    [18 KB]    Padre/Tutor
+├── 👩‍🏫 docente.html                   [22 KB]    Docente
+├── 💼 admin.html                     [15 KB]    Administrador
+│
+├── 👶 alumno-inicial.html            [10 KB]    Inicial
+├── 📚 alumno-primaria.html           [15 KB]    Primaria
+├── 🎓 alumno-secundaria.html         [17 KB]    Secundaria
+│
+├── 📖 README.md                      [11 KB]    Documentación completa
+└── 📋 GUIA_RAPIDA.txt               [Este archivo]
+
+TOTAL: 9 archivos | 4,070 líneas de código
+
+═══════════════════════════════════════════════════════════════════
+
+CARACTERÍSTICAS INTERACTIVAS
+────────────────────────────
+
+✓ Chat conversacional (Padre)
+✓ Tabs navegables (todos los perfiles)
+✓ Formularios interactivos (Docente, Admin)
+✓ Simulador dinámico (Admin)
+✓ Animaciones (Inicial, Primaria)
+✓ Validaciones (Padre - pago)
+✓ Estado responsive (mobile/tablet/desktop)
+
+═══════════════════════════════════════════════════════════════════
+
+TIPS DE USO
+───────────
+
+🎬 Para padres/stakeholders:
+   1. Comienza en Index
+   2. Lee las descripciones
+   3. Abre Padre → sigue el journey completo
+   4. Luego Admin → ve el simulador
+   5. Termina en Alumno Secundaria → portfolio
+
+📐 Para diseñadores:
+   1. Abre cada prototipo
+   2. Abre DevTools (F12) → Modo Responsive
+   3. Prueba en mobile (375px), tablet (768px), desktop
+   4. Identifica componentes reutilizables
+   5. Anota mejoras de UX
+
+💻 Para developers:
+   1. Revisa la estructura HTML
+   2. Nota los patrones CSS (clases, variables)
+   3. Lee el JavaScript (lógica de interacción)
+   4. Identifica componentes para reutilizar
+   5. Planifica la arquitectura del proyecto real
+
+═══════════════════════════════════════════════════════════════════
+
+DATOS MOSTRADOS (FICTICIOS)
+───────────────────────────
+
+Nombres: Mateo, Sofía, Juan, Laura, María García
+Escuela: Genérica (4to A, 5to B, etc.)
+Fechas: Marzo 2026
+Montos: Pesos argentinos ($)
+Calificaciones: Escala 1-10
+Matrícula: 487 alumnos
+
+Nota: Todos los datos son ejemplos para demostración.
+      No conectan a ningún backend real.
+
+═══════════════════════════════════════════════════════════════════
+
+LIMITACIONES (PROTOTIPO)
+────────────────────────
+
+❌ No hay persistencia (F5 = vuelve a inicio)
+❌ No hay backend real
+❌ No hay base de datos
+❌ No hay autenticación
+❌ No hay pagos reales (botones simulados)
+
+✅ Para VALIDACIÓN, DEMOSTRACIÓN y DISEÑO es perfecto
+✅ Base sólida para desarrollo real
+
+═══════════════════════════════════════════════════════════════════
+
+CÓMO EXTENDER
+──────────────
+
+¿Quieres agregar más funcionalidad?
+
+1. Nuevo Tab:
+   Copia HTML de un tab existente, actualiza el JavaScript
+
+2. Nuevo Componente:
+   Define en styles.css, reutiliza clases existentes
+
+3. Nueva Página:
+   Copia un HTML existente, adapta el contenido
+
+4. Animaciones:
+   Usa @keyframes en CSS (bounce, slideIn, spin incluidos)
+
+═══════════════════════════════════════════════════════════════════
+
+NAVEGADOR RECOMENDADO
+──────────────────────
+
+✓ Chrome 90+
+✓ Firefox 88+
+✓ Safari 14+
+✓ Edge 90+
+
+═══════════════════════════════════════════════════════════════════
+
+DOCUMENTACIÓN COMPLETA
+───────────────────────
+
+Para información detallada, abre:
+→ README.md (en la misma carpeta)
+
+Incluye:
+• Descripción de cada perfil
+• Funcionalidades principales
+• Estructura de archivos
+• Componentes reutilizables
+• Guía para desarrolladores
+
+═══════════════════════════════════════════════════════════════════
+
+PREGUNTAS FRECUENTES
+────────────────────
+
+P: ¿Se puede abrir offline?
+R: Sí, completamente. Sin conexión a internet.
+
+P: ¿Funciona en mobile?
+R: Sí. Responsive design incluido.
+
+P: ¿Se pueden editar los datos?
+R: Solo en la demostración interactiva (inputs del formulario).
+   Los cambios se pierden al recargar.
+
+P: ¿Qué sigue después de este prototipo?
+R: Validación con usuarios → Diseño en alta fidelidad
+   → Desarrollo real (Next.js + Supabase + Claude API)
+
+═══════════════════════════════════════════════════════════════════
+
+SOPORTE
+───────
+
+📖 Lee README.md para documentación completa
+🎯 Cada HTML tiene comentarios en el código
+💡 Los archivos usan patrones CSS/JS estándar
+
+═══════════════════════════════════════════════════════════════════
+
+Versión: 1.0
+Fecha: Marzo 2026
+Estado: Listo para demostración y validación
+
+¡Que disfrutes explorando Vujy! 🚀
+═══════════════════════════════════════════════════════════════════

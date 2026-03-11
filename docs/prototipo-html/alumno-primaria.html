@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vujy - Alumno Primaria</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .app-container {
+      background: white;
+      margin: 20px auto;
+      max-width: 500px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    .app-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .app-header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .app-header p {
+      margin: 5px 0 0 0;
+      opacity: 0.9;
+      font-size: 14px;
+    }
+
+    .avatar-section {
+      padding: 20px;
+      text-align: center;
+      background: #f0f2f5;
+    }
+
+    .avatar-large {
+      font-size: 80px;
+      margin-bottom: 10px;
+    }
+
+    .stats-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin: 10px 0;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      background: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .stat.coins {
+      color: #f59e0b;
+    }
+
+    .stat.stars {
+      color: #fbbf24;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .tabs-container {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #e5e7eb;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 10px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      color: #999;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+    }
+
+    .tab-btn.active {
+      color: #667eea;
+      border-bottom-color: #667eea;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .mission-card {
+      background: white;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .mission-card:hover {
+      border-color: #667eea;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+    }
+
+    .mission-card.completed {
+      border-color: #10b981;
+      background: #f0fdf4;
+    }
+
+    .mission-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+      margin: 0;
+    }
+
+    .mission-desc {
+      font-size: 12px;
+      color: #666;
+      margin: 5px 0 0 0;
+    }
+
+    .mission-reward {
+      font-size: 12px;
+      color: #f59e0b;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    .progress-circle {
+      width: 100px;
+      height: 100px;
+      margin: 20px auto;
+      border-radius: 50%;
+      background: conic-gradient(#667eea 0deg 144deg, #e5e7eb 144deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 700;
+      color: #667eea;
+    }
+
+    .library-section {
+      margin-bottom: 20px;
+    }
+
+    .book-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: #f9fafb;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .book-item:hover {
+      background: #f0f2f5;
+    }
+
+    .book-icon {
+      font-size: 32px;
+    }
+
+    .book-info h4 {
+      margin: 0;
+      color: #333;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .book-info p {
+      margin: 3px 0 0 0;
+      color: #999;
+      font-size: 11px;
+    }
+
+    .level-badge {
+      background: #667eea;
+      color: white;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      text-align: center;
+      min-width: 50px;
+    }
+
+    .achievement {
+      text-align: center;
+      padding: 15px;
+      background: #fef3c7;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .achievement-icon {
+      font-size: 40px;
+      margin-bottom: 8px;
+    }
+
+    .achievement-text {
+      font-size: 12px;
+      color: #333;
+      font-weight: 600;
+    }
+
+    .bottom-nav {
+      display: flex;
+      gap: 0;
+      border-top: 1px solid #e5e7eb;
+      margin: 20px -20px -20px -20px;
+    }
+
+    .nav-btn {
+      flex: 1;
+      padding: 15px 10px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: center;
+      font-size: 20px;
+      color: #999;
+      transition: all 0.3s;
+    }
+
+    .nav-btn:hover, .nav-btn.active {
+      color: #667eea;
+      background: #f9fafb;
+    }
+  </style>
+</head>
+<body>
+  <nav style="background: rgba(255,255,255,0.95);">
+    <a href="index.html">🏠 Inicio</a>
+    <a href="padre.html">👨‍👩‍👧 Padre</a>
+    <a href="docente.html">👩‍🏫 Docente</a>
+    <a href="admin.html">💼 Admin</a>
+    <a href="alumno-inicial.html">👶 Inicial</a>
+    <a href="alumno-primaria.html" class="active">📚 Primaria</a>
+    <a href="alumno-secundaria.html">🎓 Secundaria</a>
+  </nav>
+
+  <div style="max-width: 100%; padding: 20px;">
+    <div class="header" style="text-align: center; margin-bottom: 20px;">
+      <h1>📚 Nivel Primaria (6-12 años)</h1>
+      <p>Misiones gamificadas, progreso visible, lectura interactiva, desafíos colaborativos</p>
+    </div>
+
+    <div class="app-container">
+      <!-- App Header -->
+      <div class="app-header">
+        <h1>Vujy School</h1>
+        <p>Aprende jugando 🚀</p>
+      </div>
+
+      <!-- Avatar & Stats -->
+      <div class="avatar-section">
+        <div class="avatar-large">👨‍🎓</div>
+        <h3 style="margin: 0; color: #333;">Juani Martínez</h3>
+        <p style="margin: 5px 0 0 0; color: #666; font-size: 12px;">5to Grado - Primaria</p>
+        <div class="stats-row">
+          <div class="stat coins">💰 450 monedas</div>
+          <div class="stat stars">⭐ Nivel 8</div>
+        </div>
+      </div>
+
+      <!-- Content Area -->
+      <div class="content">
+        <!-- Tabs -->
+        <div class="tabs-container">
+          <button class="tab-btn active" onclick="switchTab(event, 'missions')">🎯 Misiones</button>
+          <button class="tab-btn" onclick="switchTab(event, 'reading')">📖 Lectura</button>
+          <button class="tab-btn" onclick="switchTab(event, 'progress')">📊 Progreso</button>
+          <button class="tab-btn" onclick="switchTab(event, 'achievements')">🏆 Logros</button>
+        </div>
+
+        <!-- Missions Tab -->
+        <div id="missions" class="tab-content active">
+          <h3 style="color: #333; margin-top: 0;">Misiones de Hoy</h3>
+
+          <div class="mission-card">
+            <h4 class="mission-title">🧮 Problemas de División</h4>
+            <p class="mission-desc">Resuelve 5 problemas de división con 2 cifras</p>
+            <div class="mission-reward">+150 monedas 💰</div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 10px; font-size: 12px;">Empezar Misión →</button>
+          </div>
+
+          <div class="mission-card completed">
+            <h4 class="mission-title">✓ Lectura del Capítulo 3</h4>
+            <p class="mission-desc">Lee "El Quijote" - Capítulo 3 (12 minutos)</p>
+            <div style="color: #10b981; font-weight: 600; margin-top: 10px;">✓ Completada - +200 monedas</div>
+          </div>
+
+          <div class="mission-card">
+            <h4 class="mission-title">🏃 Desafío Grupal</h4>
+            <p class="mission-desc">5to A vs 5to B: ¿Cuál grado llega a 1000 monedas primero?</p>
+            <p style="font-size: 11px; color: #667eea; margin-top: 8px;">📈 5to A: 850/1000 - Vamos ganando 💪</p>
+            <div class="mission-reward">+500 monedas si gana el grado 🏆</div>
+          </div>
+
+          <h3 style="color: #333; margin-top: 20px;">Misiones Semanales</h3>
+
+          <div class="mission-card">
+            <h4 class="mission-title">📚 Leer 3 libros de la biblioteca</h4>
+            <p class="mission-desc">Faltan 1 libro para terminar</p>
+            <div class="progress-circle" style="width: 60px; height: 60px; margin: 10px 0;">2/3</div>
+          </div>
+        </div>
+
+        <!-- Reading Tab -->
+        <div id="reading" class="tab-content">
+          <h3 style="color: #333; margin-top: 0;">📖 Biblioteca Interactiva</h3>
+
+          <div class="library-section">
+            <h4 style="color: #666; margin: 15px 0 10px 0; font-size: 12px;">LEYENDO AHORA</h4>
+            <div class="book-item">
+              <div class="book-icon">📗</div>
+              <div class="book-info" style="flex: 1;">
+                <h4>El Quijote (Adaptado)</h4>
+                <p>Capítulo 3 - Progreso: 60%</p>
+              </div>
+              <div class="level-badge">P5</div>
+            </div>
+          </div>
+
+          <div class="library-section">
+            <h4 style="color: #666; margin: 15px 0 10px 0; font-size: 12px;">RECOMENDADO PARA TI</h4>
+            <div class="book-item">
+              <div class="book-icon">📕</div>
+              <div class="book-info" style="flex: 1;">
+                <h4>El Principito</h4>
+                <p>Clásico | 156 páginas</p>
+              </div>
+              <div class="level-badge">P4</div>
+            </div>
+
+            <div class="book-item">
+              <div class="book-icon">📙</div>
+              <div class="book-info" style="flex: 1;">
+                <h4>La Casa de los Espíritus</h4>
+                <p>Aventura | 212 páginas</p>
+              </div>
+              <div class="level-badge">P5</div>
+            </div>
+          </div>
+
+          <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 12px; border-radius: 6px;">
+            <p style="margin: 0; font-size: 12px; color: #166534;"><strong>✓ Logro Desbloqueado:</strong> Lector Explorador (leyó 5 libros)</p>
+          </div>
+        </div>
+
+        <!-- Progress Tab -->
+        <div id="progress" class="tab-content">
+          <h3 style="color: #333; margin-top: 0;">📊 Tu Progreso Semanal</h3>
+
+          <div style="background: #f9fafb; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
+            <p style="margin: 0; color: #666; font-size: 12px;">MATEMÁTICA</p>
+            <div class="progress-fill" style="margin: 8px 0;">
+              <div class="progress-bar" style="width: 85%; background: #667eea;"></div>
+            </div>
+            <p style="margin: 5px 0 0 0; color: #999; font-size: 11px;">Completadas: 17/20 actividades</p>
+          </div>
+
+          <div style="background: #f9fafb; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
+            <p style="margin: 0; color: #666; font-size: 12px;">LENGUA</p>
+            <div class="progress-fill" style="margin: 8px 0;">
+              <div class="progress-bar" style="width: 92%; background: #764ba2;"></div>
+            </div>
+            <p style="margin: 5px 0 0 0; color: #999; font-size: 11px;">Completadas: 23/25 actividades</p>
+          </div>
+
+          <div style="background: #f9fafb; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
+            <p style="margin: 0; color: #666; font-size: 12px;">CIENCIAS</p>
+            <div class="progress-fill" style="margin: 8px 0;">
+              <div class="progress-bar" style="width: 70%; background: #10b981;"></div>
+            </div>
+            <p style="margin: 5px 0 0 0; color: #999; font-size: 11px;">Completadas: 14/20 actividades</p>
+          </div>
+
+          <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 12px; border-radius: 6px;">
+            <p style="margin: 0; font-size: 12px; color: #92400e;"><strong>💡 Sugerencia:</strong> Refuerza Ciencias. La seño te propone una actividad de repaso.</p>
+          </div>
+        </div>
+
+        <!-- Achievements Tab -->
+        <div id="achievements" class="tab-content">
+          <h3 style="color: #333; margin-top: 0;">🏆 Tus Logros</h3>
+
+          <div class="achievement">
+            <div class="achievement-icon">🌟</div>
+            <div class="achievement-text">Lector Explorador</div>
+            <p style="margin: 5px 0 0 0; font-size: 11px; color: #666;">Leyó 5 libros</p>
+          </div>
+
+          <div class="achievement">
+            <div class="achievement-icon">🔥</div>
+            <div class="achievement-text">Racha de 7 Días</div>
+            <p style="margin: 5px 0 0 0; font-size: 11px; color: #666;">Actividades 7 días seguidos</p>
+          </div>
+
+          <div class="achievement">
+            <div class="achievement-icon">🎯</div>
+            <div class="achievement-text">Matemático</div>
+            <p style="margin: 5px 0 0 0; font-size: 11px; color: #666;">Completó todas las misiones de Matemática</p>
+          </div>
+
+          <div style="background: #e0e7ff; border-left: 4px solid #667eea; padding: 12px; border-radius: 6px; margin-top: 15px;">
+            <p style="margin: 0; font-size: 12px; color: #4338ca;"><strong>🔒 Próximo Logro Desbloqueado:</strong> Falta leer 2 libros más para "Lector Aventurero"</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Navigation -->
+      <div class="bottom-nav">
+        <button class="nav-btn active" onclick="switchTab(event, 'missions')">🎯</button>
+        <button class="nav-btn" onclick="switchTab(event, 'reading')">📖</button>
+        <button class="nav-btn" onclick="switchTab(event, 'progress')">📊</button>
+        <button class="nav-btn" onclick="switchTab(event, 'achievements')">🏆</button>
+      </div>
+    </div>
+
+    <!-- Info for Parents -->
+    <div style="max-width: 500px; margin: 20px auto;">
+      <button class="btn btn-secondary" onclick="toggleParentInfo()" style="width: 100%;">👨‍👩‍👦 Ver datos del Padre</button>
+
+      <div id="parentInfo" style="display: none; background: white; border-radius: 8px; padding: 20px; margin-top: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        <h3 style="color: #667eea; margin-top: 0;">Resumen para Padres</h3>
+        <p style="color: #666; margin: 0;">Juani ha completado 17 de 20 misiones esta semana. Va muy bien en Lengua (92%) y necesita refuerzo en Ciencias. Ha desbloqueado 3 logros y lee activamente. ¡Sigue así! 📚</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchTab(event, tabName) {
+      // Hide all tabs
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+
+      // Show selected tab
+      const tab = document.getElementById(tabName);
+      if (tab) {
+        tab.classList.add('active');
+      }
+
+      // Mark button as active
+      if (event.target.classList.contains('tab-btn')) {
+        event.target.classList.add('active');
+      }
+      if (event.target.classList.contains('nav-btn')) {
+        event.target.classList.add('active');
+      }
+    }
+
+    function toggleParentInfo() {
+      const info = document.getElementById('parentInfo');
+      info.style.display = info.style.display === 'none' ? 'block' : 'none';
+    }
+  </script>
+</body>
+</html>

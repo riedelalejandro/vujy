@@ -1,0 +1,430 @@
+═══════════════════════════════════════════════════════════════════════════════
+🎓 VUJY — CONTENIDO DE CADA PROTOTIPO
+═══════════════════════════════════════════════════════════════════════════════
+
+📍 INDEX.HTML (Hub Principal)
+─────────────────────────────────────────────────────────────────────────────
+
+• Descripción general del proyecto
+• Cards de cada perfil (clickeables)
+• Estadísticas: 4 perfiles, 73 CDUs, 3 canales
+• Features principales listadas
+• Links de navegación hacia cada prototipo
+• Guía de uso del prototipo
+• Sección "Qué verás en cada prototipo"
+
+✨ Propósito: Introducción visual y brújula de navegación
+
+
+👨‍👩‍👧 PADRE.HTML (Padre/Tutor)
+─────────────────────────────────────────────────────────────────────────────
+
+📌 Journey P0: Resumen Semanal → Ausencia → Pago
+
+LAYOUT:
+  [Selector de Canal: Chat | Web]
+  
+  Lado Izquierdo (Chat):
+  • Conversación con Asistente IA (6 turnos simulados)
+  • Quick chips para acciones rápidas
+  • Input para escribir mensajes
+  
+  Lado Derecho (Datos):
+  • Card de estado de Mateo (alumno ejemplo)
+  • Resumen: asistencia, promedio, tareas
+  • Agenda de la semana
+  • Últimas calificaciones
+  • Alerta de deuda
+  • Botón "Pagar ahora"
+
+INTERACTIVIDAD:
+  ✓ Chat conversacional funcional
+  ✓ Switch entre Chat y Web view
+  ✓ Tabs en view web (Resumen, Calificaciones, Asistencia, Cuenta)
+  ✓ Simulación de flow de pago
+
+✨ Propósito: Demostrar cómo un padre resuelve los 3 problemas principales
+
+
+👩‍🏫 DOCENTE.HTML (Docente)
+─────────────────────────────────────────────────────────────────────────────
+
+📌 Funcionalidades: Asistencia, comunicados, notas, observaciones, actividades, informes
+
+LAYOUT:
+  [Selector de Clase: 4to A | 4to B | 5to A]
+  
+  Feature Grid (6 cards principales):
+  1. Toma de Asistencia
+  2. Comunicados a Padres
+  3. Carga de Calificaciones
+  4. Observación Pedagógica
+  5. Generación de Actividades
+  6. Informe Trimestral
+
+SECCIONES INTERACTIVAS (se despliegan al clickear):
+  • [Asistencia] Lista de 4 alumnos con estado (presente/ausente)
+  • [Comunicado] Editor de texto → borrador generado por IA
+  • [Calificaciones] Tabla con inputs editables + alerta de caída
+  • [Observación] Formulario de registro + contador de observaciones
+  • [Actividad] Generador de trivia con preview de preguntas
+  • [Informe] Borrador del informe trimestral (auto-generado)
+
+CHAT:
+  • Asistente docente disponible para preguntas
+
+✨ Propósito: Mostrar cómo el docente ahorra tiempo burocrático
+
+
+💼 ADMIN.HTML (Administrador)
+─────────────────────────────────────────────────────────────────────────────
+
+📌 Enfoque: Inteligencia financiera + Visibilidad institucional
+
+DASHBOARDS:
+
+1. PULSO INSTITUCIONAL (KPI Grid)
+   • 487 alumnos | 91% asistencia | $47,500 deuda | 23 familias en riesgo
+   • $182,400 recaudación proyectada | 5 alertas hoy
+
+2. GESTIÓN DE MOROSIDAD
+   • Gráfico de distribución por días de atraso
+   • Top 5 familias morosas (con acciones: recordar, plan pago, llamar)
+   
+3. DETECCIÓN DE RIESGO DE DESERCIÓN
+   • Familias con risk score > 7/10
+   • Señales combinadas (morosidad, inactividad, ausencias)
+   • Botón "Intervenir" para cada familia
+
+4. SIMULADOR FINANCIERO
+   • Sliders: aumento cuota (0-50%), costo de docentes ($0-200k)
+   • Cálculo dinámico: impacto en ingresos, deserción, viabilidad
+   • Recomendación de IA basada en simulación
+
+5. ALERTAS AUTOMÁTICAS
+   • 5 alertas del día (urgencias, caídas académicas, morosidad, buenas noticias)
+
+CHAT:
+  • Asistente administrativo para consultas conversacionales
+
+✨ Propósito: Demostrar inteligencia predictiva y toma de decisiones
+
+
+👶 ALUMNO-INICIAL.HTML (Inicial, 3-5 años)
+─────────────────────────────────────────────────────────────────────────────
+
+📌 Interfaz: Lúdica, sin palabras, narrada por voz
+
+CONTENIDO:
+  • Avatar animado (🦁 Leoncito, mascota virtual)
+  • Estado de la mascota (felicidad, nivel)
+  • Desafío del día (visual, sin texto)
+  
+ACTIVIDAD SIMULADA:
+  • Pregunta visual: "¿Cuál animal dice muuuu?"
+  • 3 opciones con emojis clickeables
+  • Respuesta correcta → Éxito (aplausos, estrellitas, animación)
+  
+STATUS:
+  • Progreso del día (2/5 actividades)
+  • Barra de progreso hacia sorpresa
+  
+PARA PADRES (Collapsible):
+  • Actividades completadas
+  • Progreso semanal por habilidad
+  • Nota de la maestra
+
+✨ Propósito: Mostrar que la app NO es aburrida (es un juego)
+
+
+📚 ALUMNO-PRIMARIA.HTML (Primaria, 6-12 años)
+─────────────────────────────────────────────────────────────────────────────
+
+📌 Interfaz: App mobile, misiones gamificadas, avatares, monedas
+
+LAYOUT (Pseudo mobile):
+  • Header con avatar del alumno + stats (monedas, nivel)
+  
+TABS NAVEGABLES:
+  1. [🎯 Misiones]
+     • 3 misiones: División (150 monedas), Lectura (200 monedas), Desafío Grupal (500)
+     • Desafío semanal: "¿Cuál grado llega a 1000 monedas primero?"
+     • Progress circle: 2/3 libros para logro semanal
+
+  2. [📖 Lectura]
+     • Libro actual: "El Quijote" (60% completado)
+     • 2 libros recomendados (El Principito, La Casa de los Espíritus)
+     • Logro desbloqueado: "Lector Explorador"
+
+  3. [📊 Progreso]
+     • Progress por materia: Matemática (85%), Lengua (92%), Ciencias (70%)
+     • Sugerencia: refuerzo en Ciencias
+
+  4. [🏆 Logros]
+     • 3 logros desbloqueados
+     • 1 próximo logro (falta leer 2 libros)
+
+BOTTOM NAV:
+  • 4 botones para navegar entre tabs
+
+✨ Propósito: Demostrar cómo gamificación mantiene a alumnos enganchados
+
+
+🎓 ALUMNO-SECUNDARIA.HTML (Secundaria, 13-17 años)
+─────────────────────────────────────────────────────────────────────────────
+
+📌 Interfaz: Seria, útil, orientada a autonomía y estudio
+
+LAYOUT:
+  • Header: nombre alumno + semana actual
+  • Tabs: Agenda | Tutor IA | Académico | Debate | Portfolio
+
+TABS:
+
+1. [📅 AGENDA]
+   • 4 tareas urgentes con iconos
+   • Destacadas: TP Historia (vence mié), Prueba Física (jueves)
+   • Recordatorios inteligentes de IA
+   • Otras tareas regulares
+
+2. [🤖 TUTOR IA]
+   • Chat con tutor personalizado
+   • Ejemplos de preguntas que puede responder
+   • Chat funcional (simulado)
+
+3. [📊 ACADÉMICO]
+   • Promedio general: 8.1
+   • Calificaciones por materia (Física 8.3, Historia 7.8, Lengua 8.4, Matemática 7.9)
+   • Tendencia positiva (+0.3 vs trimestre anterior)
+
+4. [💬 DEBATE]
+   • Foro sobre Revolución Francesa
+   • 2 posts de otros alumnos + 1 del profesor
+   • Puntuación de participación (+10 pts)
+   • Insight de IA: sugiere expandir argumento
+
+5. [📂 PORTFOLIO]
+   • Grid de 6 trabajos/logros con iconos
+   • Calificaciones (A, A+, B+)
+   • Resumen para universidades
+   • Fortalezas académicas identificadas
+
+✨ Propósito: Demostrar que IA no es solo para "jugar", también for serious learning
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+INTERACTIVIDAD POR PROTOTIPO
+─────────────────────────────
+
+PADRE:
+  ✓ Chat: 6 turnos de conversación pre-programados
+  ✓ Quick chips clicables para diferentes temas
+  ✓ Switch entre Chat view y Web view
+  ✓ Tabs en web view (Resumen, Calificaciones, Asistencia, Cuenta)
+  ✓ Botón "Pagar ahora" para flow de pago
+
+DOCENTE:
+  ✓ Selector de clase (4to A, 4to B, 5to A)
+  ✓ 6 botones para expandir/contraer secciones
+  ✓ Tabla de asistencia con estados
+  ✓ Inputs editables para calificaciones
+  ✓ Formularios: observación, actividad
+  ✓ Generador de contenido (actividades)
+
+ADMIN:
+  ✓ Sliders interactivos para simulador
+  ✓ Cálculo dinámico de impacto financiero
+  ✓ Botones de acción (recordar, plan pago, intervenir)
+  ✓ Gráficos con barras dinámicas
+  ✓ Chat conversacional
+
+ALUMNO INICIAL:
+  ✓ Click en imágenes para responder (juego)
+  ✓ Animación de éxito (aplausos)
+  ✓ Collapse/expand de info para padres
+  ✓ Botón para siguiente actividad
+
+ALUMNO PRIMARIA:
+  ✓ 4 tabs navegables
+  ✓ Datos dinámicos (monedas, nivel, progreso)
+  ✓ Bottom nav para cambiar tabs
+  ✓ Botones de acción (empezar misión, etc.)
+
+ALUMNO SECUNDARIA:
+  ✓ 5 tabs navegables
+  ✓ Chat simulado con tutor
+  ✓ Grid responsive de portfolio
+  ✓ Múltiples secciones de contenido
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+DATOS DE EJEMPLO (Ficticios pero realistas)
+─────────────────────────────────────────────
+
+ALUMNOS PRINCIPALES:
+  • Mateo Rodríguez (4to A, 10 años, padre lo ve en perfil Padre)
+  • Sofía García (4to A)
+  • Juan López (4to A)
+  • Laura Martínez (4to A)
+  • Juani Martínez (5to A, en prototipo Alumno Primaria)
+  • [Alumno genérico] (Secundaria)
+
+ESCUELA:
+  • Matrícula: 487 alumnos
+  • Multigrado (Inicial, Primaria 1°-6°, Secundaria 1°-6°)
+  • 3 cursos por grado (A, B, C)
+  • Docentes, administrativos, coordinadores
+
+DATOS ACADÉMICOS:
+  • Escala 1-10 (argentino)
+  • Trimestres: Marzo-Mayo, Junio-Agosto, Sept-Nov
+  • Promedio: 8.1-8.5 (alumnos ejemplo son buenos)
+
+DATOS FINANCIEROS:
+  • Cuota mensual: $4,500 (hijo primario)
+  • Deuda total: $47,500 (institucional)
+  • Morosidad: 1-45 días de atraso (varios niveles)
+  • Recaudación: ~$182,400/mes
+
+DATAS TEMPORALES:
+  • Semana: 10-14 de Marzo 2026
+  • Hoy: 10/03/2026 (lunes)
+  • Próximas entregas: miércoles (TP), jueves (prueba)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+PALETA DE COLORES UTILIZADA
+─────────────────────────────
+
+Primario:     #4F46E5 (Indigo) - CTAs, acciones principales
+Secundario:   #667eea / #764ba2 (gradientes suaves)
+Éxito:        #10b981 (Verde) - checkmarks, logros
+Alerta:       #ef4444 (Rojo) - urgencias, errores
+Warning:      #f59e0b (Ámbar) - precaución
+Fondo:        #f9fafb (gris muy claro) - secciones
+Border:       #e5e7eb (gris claro) - divisores
+Texto:        #333 (casi negro)
+Secundario:   #666 (gris oscuro)
+Muted:        #999 (gris medio)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+COMPONENTES REUTILIZABLES (CSS)
+────────────────────────────────
+
+Definidos en styles.css:
+
+Cards:
+  .data-card         - Información estructurada
+  .action-card       - Llamadas a acción
+  .profile-card      - Card de perfil
+  .dashboard-card    - Métrica + label
+  .feature-box       - Feature con descripción
+
+Formularios:
+  .form-group        - Input + label
+  .btn               - Botones (primary, secondary, danger)
+  .alert             - Mensajes (success, warning, error)
+
+Datos:
+  .progress-bar      - Barra de progreso
+  .badge             - Etiquetas pequeñas
+  .data-row          - Fila de datos (label + valor)
+
+Chat:
+  .chat-container    - Chat wrapper
+  .message           - Mensaje individual
+  .quick-chips       - Quick actions
+
+Navegación:
+  .tabs              - Tab navigation
+  .tab-content       - Contenido por tab
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+GUÍA DE FLUJOS PRINCIPALES (Happy Path)
+─────────────────────────────────────────
+
+1️⃣  PADRE - Journey P0 (Resumen → Ausencia → Pago)
+   INPUT:  "¿Cómo le fue a Mateo esta semana?"
+   → Asistente devuelve resumen (95% asistencia, 8.2 promedio, 2 tareas)
+   → Input: "Mateo no va a ir mañana"
+   → Sistema pide confirmación + motivo (enfermedad)
+   → Confirma → Alerta enviada a docente
+   → Asistente sugiere "¿Pagamos la deuda?"
+   → INPUT: "Sí" → Link de Mercado Pago → Confirma pago
+   OUTPUT: Recibo + transacción ID
+
+2️⃣  DOCENTE - Día típico
+   1. Abre app → Selectiona clase (4to A)
+   2. "Marcar asistencia" → Lista de 20 alumnos → marca ausentes (Sofía)
+   3. "Enviar comunicado" → Dicta: "Viernes acto, vengan de blanco"
+   4. Asistente genera borrador → Aprueba → Se envía a 25 padres
+   5. "Cargar notas" → Tabla de Matemática → Ingresa 4 notas
+   6. Sistema alerta: Juan bajó 2 puntos
+   7. End of day: "Registrar observación" → Nota sobre Mateo (participativo)
+
+3️⃣  ADMIN - Decisión financiera
+   1. Abre dashboard → Ve $47,500 deuda + 23 familias en riesgo
+   2. Cliquea "Plan Pago" para Familia Pérez
+   3. Va a "Simulador" → Pregunta: "¿Qué pasa si subo cuota 15%?"
+   4. Mueve slider → Sistema calcula:
+      - Nueva recaudación: $176,500
+      - Deserción estimada: -24 alumnos
+      - Impacto neto: -$34,000/mes 🔴
+   5. Lee recomendación de IA: "Aumentos graduales son mejores"
+   6. Decide: aumentar solo 8% + mejorar retención
+
+4️⃣  ALUMNO INICIAL - Sesión de juego
+   1. Entra a app → Ve su mascota (leoncito) feliz
+   2. "¿Qué actividad quieres?" → Desafío visual: "¿Cuál dice muuuu?"
+   3. 3 opciones: 🐄 🦢 🐑
+   4. Toca 🐄 → ¡Correcto! Aplausos + 3 estrellitas
+   5. Leoncito creció un poco + ganó nivel
+   6. Barra de progreso: 2/5 actividades hoy
+   7. "¿Una más?" → Siguiente actividad
+
+5️⃣  ALUMNO PRIMARIA - Semana de misiones
+   1. Abre app → Ve 450 monedas + Nivel 8
+   2. Misiones activas: División (150 💰), Lectura (200 💰), Desafío grupal (500 🏆)
+   3. Cliquea "Empezar misión" (División)
+   4. Completa 5 problemas → Recibe 150 monedas
+   5. "Biblioteca" → Lee "El Quijote" (60% done)
+   6. Logro desbloqueado: "Lector Explorador"
+   7. Desafío grupal: 5to A va ganando 850/1000
+
+6️⃣  ALUMNO SECUNDARIA - Preparación para prueba
+   1. Abre app → Agenda: "Prueba Física jueves"
+   2. Cliquea "Hacer simulacro"
+   3. Responde 10 preguntas sobre Fuerzas
+   4. Resultado: 7.5/10 → Weak areas: Movimiento 3D
+   5. Va a "Tutor IA" → "Explicame movimiento en 3D"
+   6. Tutor lo guía paso a paso + ejemplos
+   7. Va a "Debate" → Participa en foro sobre Revolución Francesa
+   8. Profesor comenta: "Buen análisis, expande sobre economía"
+   9. Actualiza portfolio → Agrega "Trabajo Historia en progreso"
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+CONSIDERACIONES UX/UI
+─────────────────────
+
+✓ Lenguaje simple: no jerga técnica
+✓ Confirmación de acciones críticas (ausencia, pago)
+✓ Estados claros: loading, error, empty, success
+✓ Feedback inmediato: animaciones, toasts, confirmaciones
+✓ Mobile-first: funciona bien en 375px+
+✓ Responsive: tablet (768px), desktop (1024px+)
+✓ Accesibilidad: buenas prácticas (contraste, tamaño de texto)
+✓ Performance: CSS sencillo, JS vanilla (sin dependencias)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+Fin de CONTENIDO.txt
+═══════════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vujy - Perfil Administrador</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .kpi-card {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .kpi-card.alert {
+      border-top: 4px solid #ef4444;
+    }
+
+    .kpi-value {
+      font-size: 32px;
+      font-weight: 700;
+      color: #4F46E5;
+      margin-bottom: 8px;
+    }
+
+    .kpi-label {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .chat-box {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin: 30px 0;
+    }
+
+    .chat-messages {
+      background: #f9fafb;
+      border-radius: 6px;
+      padding: 15px;
+      min-height: 300px;
+      overflow-y: auto;
+      margin-bottom: 15px;
+    }
+
+    .chip-vertical {
+      width: 100%;
+      text-align: left;
+      justify-content: flex-start;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">🏠 Inicio</a>
+    <a href="padre.html">👨‍👩‍👧 Padre</a>
+    <a href="docente.html">👩‍🏫 Docente</a>
+    <a href="admin.html" class="active">💼 Administrador</a>
+    <a href="alumno-inicial.html">👶 Inicial</a>
+    <a href="alumno-primaria.html">📚 Primaria</a>
+    <a href="alumno-secundaria.html">🎓 Secundaria</a>
+  </nav>
+
+  <div class="container">
+    <div class="header">
+      <h1>💼 Perfil Administrador</h1>
+      <p><strong>CDUs principales:</strong> Dashboard | Morosidad | Riesgo de Deserción | Simulador | Alertas</p>
+    </div>
+
+    <h2 style="color: #4F46E5; margin-top: 30px;">📊 Pulso Institucional Hoy</h2>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-value">487</div>
+        <div class="kpi-label">Alumnos matriculados</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-value">91%</div>
+        <div class="kpi-label">Asistencia hoy</div>
+      </div>
+
+      <div class="kpi-card alert">
+        <div class="kpi-value">$47,500</div>
+        <div class="kpi-label">Deuda acumulada</div>
+      </div>
+
+      <div class="kpi-card alert">
+        <div class="kpi-value">23</div>
+        <div class="kpi-label">Familias en riesgo</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-value">$182,400</div>
+        <div class="kpi-label">Recaudación proyectada</div>
+      </div>
+
+      <div class="kpi-card alert">
+        <div class="kpi-value">5</div>
+        <div class="kpi-label">Alertas automáticas</div>
+      </div>
+    </div>
+
+    <div class="chat-box">
+      <h2 style="color: #4F46E5; margin-top: 0;">💬 Asistente de Administración</h2>
+      <p style="color: #666; margin-bottom: 15px;">Haz consultas conversacionales sobre tu institución:</p>
+
+      <div class="chat-messages" id="chatMessages">
+        <div class="message assistant">
+          <div class="message-bubble">Hola admin 👋 ¿Qué información necesitas hoy?</div>
+        </div>
+        <div style="padding: 10px; background: white; display: flex; flex-direction: column; gap: 8px;">
+          <button class="chip chip-vertical" onclick="cduAdmin('dashboard')">📊 Estado de morosidad</button>
+          <button class="chip chip-vertical" onclick="cduAdmin('riesgo')">⚠️ Familias en riesgo</button>
+          <button class="chip chip-vertical" onclick="cduAdmin('recaudacion')">💰 ¿Cómo va la recaudación?</button>
+          <button class="chip chip-vertical" onclick="cduAdmin('simulador')">🎯 Simulador financiero</button>
+          <button class="chip chip-vertical" onclick="cduAdmin('alertas')">🔔 Alertas del día</button>
+          <button class="chip chip-vertical" onclick="cduAdmin('asistencia')">📈 Asistencia semanal</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const cduData = {
+      dashboard: {
+        user: '¿Cuál es el estado de morosidad?',
+        assistant: '💰 ESTADO DE MOROSIDAD:\n\n• Total deuda: $47,500\n• 1-7 días: $16,625 (35%)\n• 8-30 días: $20,000 (42%)\n• +31 días: $10,875 (23%)\n\nTop 3 familias:\n1. Pérez: $13,500 (45 días)\n2. Martínez: $9,000 (30 días)\n3. López: $4,500 (20 días)',
+        followUp: [
+          { label: '📧 Enviar recordatorios', response: '✓ Recordatorios enviados a 12 familias morosas.\n\nEstrategia:\n• 1-7 días: mensaje amable\n• 8-30 días: recordatorio firme\n• +31 días: contacto directo' },
+          { label: '💳 Generar planes de pago', response: 'Planes de pago generados para 5 familias.\n\nOpciones:\n• 2 cuotas\n• 3 cuotas\n• 6 cuotas\n\nFamilias aceptaron en 80% de casos.' }
+        ]
+      },
+      riesgo: {
+        user: '¿Qué familias están en riesgo de deserción?',
+        assistant: '⚠️ FAMILIAS EN RIESGO (Risk Score > 7/10):\n\n1. GONZALEZ (Score: 8.5)\n   • Morosidad: 2 meses\n   • Padre no lee comunicados hace 3 semanas\n   • 4 ausencias no justificadas\n   → ACCIÓN: Agendar reunión de retención\n\n2. ROBLES (Score: 6.8)\n   • No confirmó reinscripción\n   • Deuda de febrero\n   → ACCIÓN: Enviar recordatorio urgente',
+        followUp: [
+          { label: '🤝 Intervención Gonzalez', response: 'Reunión agendada para mañana 14:00\n\nTema: Retención de familia Gonzalez\n\nDatos a revisar:\n✓ Morosidad: $9,000\n✓ Asistencia: deteriorada\n✓ Comunicaciones: nulas' },
+          { label: '📬 Recordatorio Robles', response: 'SMS + Email enviado:\n\n"Estimada familia,\n\nLes recordamos que el plazo para confirmar reinscripción vence hoy. Confirmar en: [link]"' }
+        ]
+      },
+      recaudacion: {
+        user: '¿Cómo va la recaudación este mes?',
+        assistant: 'RECAUDACIÓN MARZO 2026:\n\n✓ Pagos confirmados: $165,000\n⏳ En proceso: $15,200\n❌ Pendiente: $47,500\n\nProyección: $182,400 (89% de matrícula)\n\nComparación:\n• Febrero: $175,000\n• Marzo proyectado: +$7,400 (+4%)',
+        followUp: [
+          { label: '📊 Ver historial 3 meses', response: 'HISTORIAL DE RECAUDACIÓN:\n\nEnero: $176,500\nFebrero: $175,000\nMarzo: $182,400 (proyectado)\n\nTendencia: Estable con leve crecimiento' },
+          { label: '🔮 Proyectar próximos meses', response: 'PROYECCIÓN ABRIL-JUNIO:\n\nAbril: ~$180,000\nMayo: ~$182,000\nJunio: ~$185,000 (bono vacaciones)\n\nFactores positivos: Nuevas inscripciones (+3)\nRiesgo: 2 familias por decidir' }
+        ]
+      },
+      simulador: {
+        user: '¿Qué pasa si subo la cuota 15%?',
+        assistant: 'SIMULADOR FINANCIERO:\n\n📊 Escenario: Aumento 15% + Costo docente adicional $100k\n\nResultados:\n• Nueva recaudación: $176,500\n• Estimación de deserción: -24 alumnos (5%)\n• Nuevo costo operativo: +$100,000/mes\n• IMPACTO NETO: -$34,000/mes 🔴\n\n⚠️ RECOMENDACIÓN: No viable. Aumentos graduales son mejores.',
+        followUp: [
+          { label: '🔄 Simular 8% de aumento', response: 'SIMULADOR: Aumento 8%\n\n• Nuevos ingresos: +$12,000/mes\n• Probable deserción: -8 alumnos\n• Viabilidad: ✓ POSITIVA\n\nRecomendación: Aumentar 8% + mejorar servicios' },
+          { label: '💡 Alternativas de ingresos', response: 'OPCIONES ADICIONALES:\n\n1. Aranceles por servicios: +$3,500\n2. Actividades extracurriculares: +$5,000\n3. Materiales: +$2,000\n\nTotal sin afectar cuota: +$10,500/mes' }
+        ]
+      },
+      alertas: {
+        user: 'Ver alertas de hoy',
+        assistant: '🔔 ALERTAS AUTOMÁTICAS (10/03/2026):\n\n🚨 URGENTE: Tomás García (5to A)\n• 4 de 5 últimos días ausente\n• Familia con 2 meses de morosidad\n• Alto riesgo de deserción\n→ CONTACTO INMEDIATO RECOMENDADO\n\n⚠️ CAÍDA ACADÉMICA:\n• 3 alumnos bajaron >2 puntos vs trimestre anterior\n• Sugerencia: contactar docentes\n\n📬 COMUNICACIÓN:\n• 12 padres no leyeron último comunicado\n• Auto-reenvío programado para mañana',
+        followUp: [
+          { label: '☎️ Contactar Familia Tomás', response: 'CRM abierto para agendar llamada:\n\nDatos:\n• Teléfono: +54 9 11 3456-7890\n• Horario recomendado: 18:00-20:00\n• Tema: Asistencia + morosidad' }
+        ]
+      },
+      asistencia: {
+        user: '¿Cómo está la asistencia esta semana?',
+        assistant: 'ASISTENCIA SEMANAL (Semana 3: 10-14/03):\n\nMartes 10: 91%\nMiércoles 11: Hoy (91% hasta ahora)\n\nComparación:\n• Semana anterior: 89%\n• Semana anterior a esa: 87%\n\nTendencia: ↗ Mejorando\n\n⚠️ Grado con más faltas: 5to A (12 ausencias)',
+        followUp: [
+          { label: '📊 Comparar con período anterior', response: 'COMPARATIVA POR PERIODO:\n\nMARZO 2024: 84%\nMARZO 2025: 87%\nMARZO 2026: 90% (actual)\n\n✓ Mejora consistente: +3% anual' }
+        ]
+      }
+    };
+
+    function cduAdmin(type) {
+      const chatMessages = document.getElementById('chatMessages');
+      const cdu = cduData[type];
+
+      if (!cdu) return;
+
+      // Limpiar chips anteriores
+      const oldChips = chatMessages.querySelector('[style*="flex-direction"]');
+      if (oldChips && oldChips.style.background === 'white') oldChips.remove();
+
+      // Usuario
+      const userMsg = document.createElement('div');
+      userMsg.className = 'message user';
+      userMsg.innerHTML = `<div class="message-bubble">${cdu.user}</div>`;
+      chatMessages.appendChild(userMsg);
+
+      // Asistente
+      setTimeout(() => {
+        const assistantMsg = document.createElement('div');
+        assistantMsg.className = 'message assistant';
+        assistantMsg.innerHTML = `<div class="message-bubble">${cdu.assistant}</div>`;
+        chatMessages.appendChild(assistantMsg);
+
+        // Follow-up buttons
+        if (cdu.followUp && cdu.followUp.length > 0) {
+          const followUpDiv = document.createElement('div');
+          followUpDiv.style.padding = '10px';
+          followUpDiv.style.background = 'white';
+          followUpDiv.style.display = 'flex';
+          followUpDiv.style.flexDirection = 'column';
+          followUpDiv.style.gap = '8px';
+
+          cdu.followUp.forEach(item => {
+            const btn = document.createElement('button');
+            btn.className = 'chip chip-vertical';
+            btn.textContent = item.label;
+            btn.onclick = () => addAdminResponse(item.label, item.response);
+            followUpDiv.appendChild(btn);
+          });
+
+          chatMessages.appendChild(followUpDiv);
+        }
+
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }, 300);
+    }
+
+    function addAdminResponse(label, response) {
+      const chatMessages = document.getElementById('chatMessages');
+
+      const userMsg = document.createElement('div');
+      userMsg.className = 'message user';
+      userMsg.innerHTML = `<div class="message-bubble">${label}</div>`;
+      chatMessages.appendChild(userMsg);
+
+      setTimeout(() => {
+        const assistantMsg = document.createElement('div');
+        assistantMsg.className = 'message assistant';
+        assistantMsg.innerHTML = `<div class="message-bubble">${response}</div>`;
+        chatMessages.appendChild(assistantMsg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }, 300);
+    }
+  </script>
+</body>
+</html>
