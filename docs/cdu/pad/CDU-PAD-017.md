@@ -8,7 +8,7 @@
 
 **Prioridad:** P1 | **Origen:** `[Innovation]`
 **Actor:** Padre / Tutor (receptor) · Docente de sala (emisor — ver CDU-DOC-012)
-**Canales:** App · WhatsApp (solo texto + imagen, sin audio)
+**Canales:** App · Web · WhatsApp (solo texto + imagen, sin audio)
 **Tier:** Premium
 **Nivel educativo:** Inicial (salas de 3, 4 y 5 años)
 

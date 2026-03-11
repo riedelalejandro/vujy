@@ -8,7 +8,7 @@
 
 **Prioridad:** P2 | **Origen:** `[Extension]`
 **Actor:** Padre / Tutor
-**Canales:** App · WhatsApp
+**Canales:** App · Web · WhatsApp
 
 **Trigger:** El padre quiere comunicarse con la docente. Ejemplos: "Quiero hablar con la seño", "¿Puedo mandar un mensaje a la maestra?".
 

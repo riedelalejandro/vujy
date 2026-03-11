@@ -8,7 +8,7 @@
 
 **Prioridad:** P1 | **Origen:** `[Innovation]`
 **Actor:** Sistema → Padre / Tutor (iniciado por la institución)
-**Canales:** Push de alta prioridad · App · WhatsApp
+**Canales:** Push de alta prioridad · App · Web · WhatsApp
 
 **Trigger:** Un adulto de la institución carga una notificación urgente sobre un incidente que involucra al hijo del padre.
 

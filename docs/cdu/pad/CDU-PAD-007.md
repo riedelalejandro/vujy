@@ -8,7 +8,7 @@
 
 **Prioridad:** P1 | **Origen:** `[Base]`
 **Actor:** Padre / Tutor
-**Canales:** App · WhatsApp
+**Canales:** App · Web · WhatsApp
 
 **Trigger:** El padre consulta sobre la reinscripción o responde a un recordatorio del sistema. Ejemplos: "¿Cómo confirmo la reinscripción de Mati?", "Quiero reinscribir a Mati para el año que viene".
 

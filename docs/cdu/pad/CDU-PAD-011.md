@@ -8,7 +8,7 @@
 
 **Prioridad:** P2 | **Origen:** `[Extension]`
 **Actor:** Padre / Tutor con 2+ hijos en la institución
-**Canales:** App · WhatsApp
+**Canales:** App · Web · WhatsApp
 
 **Trigger:** El padre pregunta por todos sus hijos. Ejemplos: "¿Cómo van los chicos?", "Resumen de todos mis hijos".
 

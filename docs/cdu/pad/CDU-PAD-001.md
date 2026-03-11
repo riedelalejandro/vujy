@@ -8,7 +8,7 @@
 
 **Prioridad:** P1 | **Origen:** `[Base]`
 **Actor:** Padre / Tutor
-**Canales:** App · WhatsApp
+**Canales:** App · Web · WhatsApp
 
 **Trigger:** El padre pregunta en lenguaje natural por el estado general del hijo en la semana. Ejemplos: "¿Cómo le fue a Mati esta semana?", "¿Cómo viene Sofi?", "Contame de Mati".
 

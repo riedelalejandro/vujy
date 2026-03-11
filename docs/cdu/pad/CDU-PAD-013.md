@@ -8,7 +8,7 @@
 
 **Prioridad:** P2 | **Origen:** `[Extension]`
 **Actor:** Padre / Tutor de alumno de nivel inicial
-**Canales:** App (fotos requieren app) · WhatsApp (solo resumen textual)
+**Canales:** App · Web · WhatsApp (fotos requieren app o browser con cámara; web muestra el diario en modo lectura)
 
 **Trigger:** El padre quiere saber qué hizo el hijo en el jardín. Ejemplos: "¿Qué hizo Sofi hoy en el jardín?", "¿Subió la seño fotos?".
 

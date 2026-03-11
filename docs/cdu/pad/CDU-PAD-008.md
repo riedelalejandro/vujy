@@ -8,7 +8,7 @@
 
 **Prioridad:** P1 | **Origen:** `[Base]`
 **Actor:** Padre / Tutor
-**Canales:** App · WhatsApp
+**Canales:** App · Web · WhatsApp
 
 **Trigger:** El padre pregunta por notas. Ejemplos: "¿Qué nota sacó Mati en matemática?", "¿Cómo viene en el trimestre?".
 

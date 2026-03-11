@@ -8,7 +8,7 @@
 
 **Prioridad:** P1 | **Origen:** `[Base]`
 **Actor:** Padre / Tutor
-**Canales:** App · WhatsApp
+**Canales:** App · Web · WhatsApp
 
 **Trigger:** El padre informa que el hijo no va a concurrir. Ejemplos: "Avisá que Mati no va a ir el lunes", "Mati no va mañana", "Sofi está con fiebre".
 

@@ -8,7 +8,7 @@
 
 **Prioridad:** P1 | **Origen:** `[Base]`
 **Actor:** Padre / Tutor
-**Canales:** App (firma digital requiere app) · WhatsApp (notificación + derivación a app)
+**Canales:** App · Web · WhatsApp (notificación + derivación a app/web)
 
 **Trigger:** El padre recibe una autorización pendiente o la consulta directamente. Ejemplos: notificación push de autorización pendiente, "¿Tengo algo para firmar?".
 

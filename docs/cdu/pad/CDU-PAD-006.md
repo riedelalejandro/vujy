@@ -8,7 +8,7 @@
 
 **Prioridad:** P1 | **Origen:** `[Base]`
 **Actor:** Padre / Tutor
-**Canales:** App · WhatsApp
+**Canales:** App · Web · WhatsApp
 
 **Trigger:** El padre pregunta por comunicados. Ejemplos: "¿Hay comunicados nuevos?", "¿Qué mandó la escuela?".
 

@@ -8,7 +8,7 @@
 
 **Prioridad:** P3 | **Origen:** `[Innovation]`
 **Actor:** Padre / Tutor
-**Canales:** App (visualización rica) · WhatsApp (resumen textual)
+**Canales:** App · Web · WhatsApp (resumen textual)
 
 **Trigger:** El padre quiere una visión longitudinal del hijo. Ejemplos: "¿Cómo viene Mati en general?", "Mostrá la trayectoria de Mati desde que entró al colegio".
 

@@ -8,7 +8,7 @@
 
 **Prioridad:** P1 | **Origen:** `[Base]`
 **Actor:** Padre / Tutor
-**Canales:** App · WhatsApp
+**Canales:** App · Web · WhatsApp
 
 **Trigger:** El padre pregunta qué tiene el hijo al día siguiente o en una fecha específica. Ejemplos: "¿Qué tiene mañana?", "¿Qué tiene Mati el lunes?", "¿Necesita llevar algo mañana?".
 

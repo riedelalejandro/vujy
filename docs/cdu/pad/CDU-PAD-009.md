@@ -8,7 +8,7 @@
 
 **Prioridad:** P2 | **Origen:** `[Base]`
 **Actor:** Padre / Tutor
-**Canales:** App · WhatsApp
+**Canales:** App · Web · WhatsApp
 
 **Trigger:** El padre consulta inasistencias. Ejemplos: "¿Cuántas faltas tiene Mati?", "¿Cuántas inasistencias lleva?".
 

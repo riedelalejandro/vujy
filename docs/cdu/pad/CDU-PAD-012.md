@@ -8,7 +8,7 @@
 
 **Prioridad:** P2 | **Origen:** `[Base]`
 **Actor:** Sistema → Padre / Tutor (iniciado por el sistema)
-**Canales:** App · WhatsApp
+**Canales:** App · Web · WhatsApp
 
 **Trigger:** Automático — el sistema envía un resumen semanal (lunes a las 8:00 o viernes a las 18hs según configuración del tenant). No hay acción del usuario.
 

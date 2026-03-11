@@ -8,7 +8,7 @@
 
 **Prioridad:** P2 | **Origen:** `[Innovation]`
 **Actor:** Sistema → Padre / Tutor (iniciado por el sistema al detectar caída)
-**Canales:** Push notification · App · WhatsApp
+**Canales:** Push notification · App · Web · WhatsApp
 
 **Trigger:** El sistema detecta que el alumno bajó 2 o más puntos entre trimestres consecutivos o entre evaluaciones. El padre no preguntó nada.
 

@@ -8,7 +8,7 @@
 
 **Prioridad:** P1 | **Origen:** `[Base]`
 **Actor:** Padre / Tutor
-**Canales:** App · WhatsApp
+**Canales:** App · Web · WhatsApp
 
 **Trigger:** El padre pregunta por deudas o cuotas pendientes. Ejemplos: "¿Cuánto debo?", "¿Cuándo vence la cuota?", "¿Hay algo pendiente de pago?".
 

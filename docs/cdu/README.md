@@ -11,23 +11,23 @@
 
 | ID | Nombre | Prioridad | Origen | Canales |
 |----|--------|-----------|--------|---------|
-| [CDU-PAD-001](pad/CDU-PAD-001.md) | Consulta de resumen semanal del hijo | P1 | Base | App · WhatsApp |
-| [CDU-PAD-002](pad/CDU-PAD-002.md) | Consulta de agenda del día siguiente | P1 | Base | App · WhatsApp |
-| [CDU-PAD-003](pad/CDU-PAD-003.md) | Consulta y pago de estado de cuenta | P1 | Base | App · WhatsApp |
-| [CDU-PAD-004](pad/CDU-PAD-004.md) | Aviso de ausencia del hijo | P1 | Base | App · WhatsApp |
-| [CDU-PAD-005](pad/CDU-PAD-005.md) | Firma de autorización digital | P1 | Base | App · WhatsApp |
-| [CDU-PAD-006](pad/CDU-PAD-006.md) | Lectura de comunicados | P1 | Base | App · WhatsApp |
-| [CDU-PAD-007](pad/CDU-PAD-007.md) | Reinscripción para el ciclo siguiente | P1 | Base | App · WhatsApp |
-| [CDU-PAD-008](pad/CDU-PAD-008.md) | Consulta de calificaciones | P1 | Base | App · WhatsApp |
-| [CDU-PAD-009](pad/CDU-PAD-009.md) | Consulta de asistencia acumulada | P2 | Base | App · WhatsApp |
-| [CDU-PAD-010](pad/CDU-PAD-010.md) | Contacto con la docente | P2 | Extension | App · WhatsApp |
-| [CDU-PAD-011](pad/CDU-PAD-011.md) | Seguimiento de múltiples hijos | P2 | Extension | App · WhatsApp |
-| [CDU-PAD-012](pad/CDU-PAD-012.md) | Resumen proactivo semanal | P2 | Base | App · WhatsApp |
-| [CDU-PAD-013](pad/CDU-PAD-013.md) | Consulta del diario del día (nivel inicial) | P2 | Extension | App · WhatsApp |
-| [CDU-PAD-014](pad/CDU-PAD-014.md) | Alerta proactiva: hijo con caída académica | P2 | Innovation | Push · App · WhatsApp |
-| [CDU-PAD-015](pad/CDU-PAD-015.md) | Urgencia: alumno con incidente en la escuela | P1 | Innovation | Push · App · WhatsApp |
-| [CDU-PAD-016](pad/CDU-PAD-016.md) | Trayectoria acumulada del hijo (multi-año) | P3 | Innovation | App · WhatsApp |
-| [CDU-PAD-017](pad/CDU-PAD-017.md) ⚡ | Diario visual diario del hijo (nivel inicial) | P1 | Innovation | App · WhatsApp |
+| [CDU-PAD-001](pad/CDU-PAD-001.md) | Consulta de resumen semanal del hijo | P1 | Base | App · Web · WhatsApp |
+| [CDU-PAD-002](pad/CDU-PAD-002.md) | Consulta de agenda del día siguiente | P1 | Base | App · Web · WhatsApp |
+| [CDU-PAD-003](pad/CDU-PAD-003.md) | Consulta y pago de estado de cuenta | P1 | Base | App · Web · WhatsApp |
+| [CDU-PAD-004](pad/CDU-PAD-004.md) | Aviso de ausencia del hijo | P1 | Base | App · Web · WhatsApp |
+| [CDU-PAD-005](pad/CDU-PAD-005.md) | Firma de autorización digital | P1 | Base | App · Web · WhatsApp |
+| [CDU-PAD-006](pad/CDU-PAD-006.md) | Lectura de comunicados | P1 | Base | App · Web · WhatsApp |
+| [CDU-PAD-007](pad/CDU-PAD-007.md) | Reinscripción para el ciclo siguiente | P1 | Base | App · Web · WhatsApp |
+| [CDU-PAD-008](pad/CDU-PAD-008.md) | Consulta de calificaciones | P1 | Base | App · Web · WhatsApp |
+| [CDU-PAD-009](pad/CDU-PAD-009.md) | Consulta de asistencia acumulada | P2 | Base | App · Web · WhatsApp |
+| [CDU-PAD-010](pad/CDU-PAD-010.md) | Contacto con la docente | P2 | Extension | App · Web · WhatsApp |
+| [CDU-PAD-011](pad/CDU-PAD-011.md) | Seguimiento de múltiples hijos | P2 | Extension | App · Web · WhatsApp |
+| [CDU-PAD-012](pad/CDU-PAD-012.md) | Resumen proactivo semanal | P2 | Base | App · Web · WhatsApp |
+| [CDU-PAD-013](pad/CDU-PAD-013.md) | Consulta del diario del día (nivel inicial) | P2 | Extension | App · Web · WhatsApp |
+| [CDU-PAD-014](pad/CDU-PAD-014.md) | Alerta proactiva: hijo con caída académica | P2 | Innovation | Push · App · Web · WhatsApp |
+| [CDU-PAD-015](pad/CDU-PAD-015.md) | Urgencia: alumno con incidente en la escuela | P1 | Innovation | Push · App · Web · WhatsApp |
+| [CDU-PAD-016](pad/CDU-PAD-016.md) | Trayectoria acumulada del hijo (multi-año) | P3 | Innovation | App · Web · WhatsApp |
+| [CDU-PAD-017](pad/CDU-PAD-017.md) ⚡ | Diario visual diario del hijo (nivel inicial) | P1 | Innovation | App · Web · WhatsApp |
 
 ## Docente (CDU-DOC)
 
