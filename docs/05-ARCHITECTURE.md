@@ -24,6 +24,7 @@
 | Capa | Tecnología | Notas |
 |------|-----------|-------|
 | **Base de datos** | Supabase (Postgres + RLS) | Multi-tenant vía Row Level Security |
+| **ORM / data access** | Drizzle ORM | Queries de negocio — portable a cualquier Postgres |
 | **Auth** | Supabase Auth | Magic link + OTP por teléfono |
 | **Storage** | Supabase Storage | Archivos, fotos, documentos |
 | **Vector store** | pgvector (en Supabase) | Solo para contenido no estructurado |
@@ -65,6 +66,23 @@ CREATE POLICY "tenant_isolation" ON students
 Si un tenant requiere aislamiento físico (regulación específica, contrato enterprise), se puede
 mover a schema-per-tenant o DB dedicada sin cambiar el modelo de datos — solo la capa de
 routing de conexión.
+
+### Portabilidad de la capa de datos
+
+**Decisión:** las queries de negocio se escriben con **Drizzle ORM** — no con el cliente de Supabase. Esto garantiza que la lógica de datos es portable a cualquier host Postgres (Neon, Railway, RDS, self-hosted) con un cambio de `DATABASE_URL`, sin refactoring.
+
+| Capa | Herramienta | Acoplamiento a Supabase | Portabilidad |
+|------|------------|------------------------|--------------|
+| Queries de negocio | Drizzle ORM | Ninguno — SQL estándar | Alta: cambio de connection string |
+| RLS policies | Postgres nativo | Ninguno — SQL estándar | Alta: se migran con las migraciones |
+| pgvector embeddings | Postgres extension | Ninguno | Alta: extensión disponible en cualquier Postgres |
+| Auth (magic link, OTP) | Supabase Auth | Alto | Media: reemplazable por Clerk/Auth0 como módulo |
+| Storage (archivos) | Supabase Storage | Medio | Alta: API compatible S3, migración scripteable |
+| Edge Functions | Supabase Edge Functions | Alto | Media: migrar a Vercel Edge Functions o API routes |
+
+**Regla:** `lib/supabase/` solo contiene clientes de Auth y Storage. Ninguna query SQL de negocio
+usa el cliente de Supabase — toda query pasa por `lib/db/` (Drizzle). El día que se migre
+el hosting de Postgres, solo cambia `DATABASE_URL` y el adaptador de conexión en `lib/db/index.ts`.
 
 ---
 
@@ -113,7 +131,11 @@ es obligatorio para evitar acceso accidental a datos del tenant incorrecto.
 │   │   └── chat/           # Endpoint principal del asistente
 │   └── ...
 ├── lib/
-│   ├── supabase/           # Cliente de Supabase (server + client)
+│   ├── db/                 # Drizzle ORM — data access (portable a cualquier Postgres)
+│   │   ├── index.ts        # conexión (DATABASE_URL)
+│   │   ├── schema.ts       # schema tipado compartido
+│   │   └── queries/        # queries por dominio
+│   ├── supabase/           # Supabase SDK — solo Auth y Storage
 │   ├── llm/                # LLM Provider — adaptador configurable (ver §6)
 │   └── whatsapp/           # Cliente Meta Cloud API (WhatsApp)
 └── packages/
