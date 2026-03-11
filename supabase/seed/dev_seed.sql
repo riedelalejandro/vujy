@@ -71,13 +71,55 @@ DECLARE
   student_uid UUID := 'b0000000-0000-0000-0000-000000000004';
   school_id   UUID := 'a0000000-0000-0000-0000-000000000001';
 BEGIN
-  -- Insertar en auth.users (solo funciona en entorno local de Supabase)
-  INSERT INTO auth.users (id, email, email_confirmed_at, created_at, updated_at, raw_app_meta_data, raw_user_meta_data)
+  -- Insertar en auth.users con todos los campos requeridos por Supabase Auth
+  -- instance_id = '00000000...' es el valor estándar para entorno local
+  -- aud = 'authenticated', role = 'authenticated' son requeridos para magic link
+  INSERT INTO auth.users (
+    instance_id, id, aud, role,
+    email, email_confirmed_at,
+    encrypted_password,
+    confirmation_token, recovery_token,
+    email_change_token_new, email_change,
+    raw_app_meta_data, raw_user_meta_data,
+    created_at, updated_at
+  )
   VALUES
-    (admin_id,    'admin@demo.vujy.app',    now(), now(), now(), '{"provider":"email","providers":["email"],"school_id":"a0000000-0000-0000-0000-000000000001","role":"admin"}',    '{}'),
-    (teacher_id,  'docente@demo.vujy.app',  now(), now(), now(), '{"provider":"email","providers":["email"],"school_id":"a0000000-0000-0000-0000-000000000001","role":"teacher"}',  '{}'),
-    (guardian_id, 'padre@demo.vujy.app',    now(), now(), now(), '{"provider":"email","providers":["email"],"school_id":"a0000000-0000-0000-0000-000000000001","role":"guardian"}', '{}'),
-    (student_uid, 'alumno@demo.vujy.app',   now(), now(), now(), '{"provider":"email","providers":["email"],"school_id":"a0000000-0000-0000-0000-000000000001","role":"student"}',  '{}')
+    (
+      '00000000-0000-0000-0000-000000000000', admin_id, 'authenticated', 'authenticated',
+      'admin@demo.vujy.app', now(),
+      '',
+      '', '',
+      '', '',
+      '{"provider":"email","providers":["email"],"school_id":"a0000000-0000-0000-0000-000000000001","role":"admin"}', '{}',
+      now(), now()
+    ),
+    (
+      '00000000-0000-0000-0000-000000000000', teacher_id, 'authenticated', 'authenticated',
+      'docente@demo.vujy.app', now(),
+      '',
+      '', '',
+      '', '',
+      '{"provider":"email","providers":["email"],"school_id":"a0000000-0000-0000-0000-000000000001","role":"teacher"}', '{}',
+      now(), now()
+    ),
+    (
+      '00000000-0000-0000-0000-000000000000', guardian_id, 'authenticated', 'authenticated',
+      'padre@demo.vujy.app', now(),
+      '',
+      '', '',
+      '', '',
+      '{"provider":"email","providers":["email"],"school_id":"a0000000-0000-0000-0000-000000000001","role":"guardian"}', '{}',
+      now(), now()
+    ),
+    (
+      '00000000-0000-0000-0000-000000000000', student_uid, 'authenticated', 'authenticated',
+      'alumno@demo.vujy.app', now(),
+      '',
+      '', '',
+      '', '',
+      '{"provider":"email","providers":["email"],"school_id":"a0000000-0000-0000-0000-000000000001","role":"student"}', '{}',
+      now(), now()
+    )
   ON CONFLICT (id) DO NOTHING;
 
   -- Perfiles
