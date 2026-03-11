@@ -1,10 +1,26 @@
 // Dashboard placeholder — será implementado en features 004–006
-// Por ahora sirve como verificación de que el auth flow funciona
+// También actúa como landing para el PKCE auth callback (/?code=...)
 
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
-export default async function DashboardPage() {
+interface Props {
+  searchParams: Promise<{ code?: string; error?: string }>;
+}
+
+export default async function DashboardPage({ searchParams }: Props) {
+  const params = await searchParams;
+
+  // PKCE magic link callback: Supabase redirige a /?code=... cuando el
+  // emailRedirectTo no está en el allowlist. Reenviamos al callback route.
+  if (params.code) {
+    redirect(`/auth/callback?code=${params.code}`);
+  }
+
+  if (params.error) {
+    redirect(`/login?error=${encodeURIComponent(params.error)}`);
+  }
+
   const supabase = await createClient();
   const {
     data: { user },

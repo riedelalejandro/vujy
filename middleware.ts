@@ -38,7 +38,10 @@ export async function middleware(request: NextRequest) {
       request.nextUrl.pathname === route || request.nextUrl.pathname.startsWith(route + "/")
   );
 
-  if (isPublicRoute) {
+  // Magic link PKCE flow: Supabase redirects to /?code=... — let it through
+  const hasAuthCode = request.nextUrl.searchParams.has("code");
+
+  if (isPublicRoute || hasAuthCode) {
     return supabaseResponse;
   }
 
