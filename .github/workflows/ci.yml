@@ -1,0 +1,77 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: [main]
+
+env:
+  NODE_VERSION: "22"
+  PNPM_VERSION: "10"
+
+jobs:
+  ci:
+    name: Lint · Typecheck · Audit · Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      # -----------------------------------------------------------------------
+      # SECURITY GATE — bloqueante
+      # Si este step falla, el PR no puede mergearse.
+      # Para omitir una vulnerabilidad específica con justificación técnica,
+      # usar .npmrc con audit-level o pnpm audit exceptions (documentar el motivo).
+      # -----------------------------------------------------------------------
+      - name: Security audit (BLOCKING)
+        run: |
+          echo "Running security audit — high severity vulnerabilities will fail the build"
+          pnpm audit --audit-level=high
+        # Si el audit falla, el job falla y bloquea el merge
+
+      - name: Build
+        run: pnpm build
+        env:
+          # Dummy env vars for build — las reales van en Vercel/producción
+          NEXT_PUBLIC_SUPABASE_URL: "http://127.0.0.1:54321"
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: "dummy-anon-key-for-build"
+          DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1:5432/postgres"
+          LLM_PROVIDER: "claude"
+          LLM_MODEL: "claude-sonnet-4-6"
+          LLM_API_KEY: "dummy-key-for-build"
+          SUPABASE_SERVICE_ROLE_KEY: "dummy-service-role-for-build"
+          NEXT_PUBLIC_APP_URL: "http://localhost:3000"
+
+  # ---------------------------------------------------------------------------
+  # REMINDER: PRs que toquen los siguientes paths DEBEN correr /vulnerability-scanner
+  # antes del merge:
+  #   - app/api/**
+  #   - lib/supabase/**
+  #   - supabase/migrations/**
+  #   - middleware.ts
+  #   - app/api/webhooks/**
+  # Ver docs/05-ARCHITECTURE.md §8 Security Gates
+  # ---------------------------------------------------------------------------
