@@ -31,7 +31,7 @@
 | **Deployment web** | Vercel | Auto-deploy desde GitHub |
 | **Mobile** | React Native + Expo | iOS + Android |
 | **Mobile builds** | Expo EAS | CI para App Store / Play Store |
-| **IA — LLM** | Claude API (Anthropic) | Todos los perfiles |
+| **IA — LLM** | LLM configurable (Claude por defecto) | Adaptador por proveedor — ver §6 |
 | **IA — acción** | Function calling / MCPs | Acceso a datos en tiempo real |
 | **WhatsApp** | Meta Cloud API directo | Sin BSP — número virtual por escuela (Opción A) |
 | **Pagos** | Mercado Pago | — |
@@ -114,7 +114,7 @@ es obligatorio para evitar acceso accidental a datos del tenant incorrecto.
 │   └── ...
 ├── lib/
 │   ├── supabase/           # Cliente de Supabase (server + client)
-│   ├── claude/             # Cliente de Claude API + MCPs
+│   ├── llm/                # LLM Provider — adaptador configurable (ver §6)
 │   └── whatsapp/           # Cliente Meta Cloud API (WhatsApp)
 └── packages/
     └── types/              # Tipos compartidos con React Native
@@ -194,6 +194,55 @@ query SQL posible:
 
 **Modelo de embeddings:** OpenAI `text-embedding-3-small` (bajo costo, calidad suficiente
 para el volumen por escuela).
+
+### Abstracción de proveedor LLM
+
+**Decisión:** la integración con el LLM es configurable vía variables de entorno. El código de negocio (system prompts, tools, lógica de conversación) nunca llama directamente a un SDK de proveedor — llama a la interfaz `LLMProvider`. Cambiar de modelo o proveedor es solo configuración.
+
+```
+lib/llm/
+├── provider.ts          # Interfaz LLMProvider (contrato)
+├── adapters/
+│   ├── claude.ts        # Anthropic SDK — implementación por defecto
+│   ├── openai.ts        # OpenAI SDK — stub inicial, producción si se requiere
+│   └── local.ts         # Ollama / modelo self-hosted (infra argentina)
+├── tools.ts             # Traducción de schemas canónicos → formato de cada proveedor
+└── index.ts             # Factory: instancia el adaptador según LLM_PROVIDER
+```
+
+**Configuración (`.env`):**
+
+```
+LLM_PROVIDER=claude            # claude | openai | local
+LLM_MODEL=claude-sonnet-4-6    # nombre del modelo dentro del proveedor
+LLM_API_KEY=sk-ant-...         # API key del proveedor activo
+LLM_BASE_URL=                  # solo para local (ej. http://localhost:11434)
+```
+
+**Interfaz `LLMProvider`:**
+
+```typescript
+interface LLMProvider {
+  chat(params: ChatParams): Promise<ChatResponse>
+  stream(params: ChatParams): AsyncIterable<ChatChunk>
+  formatTools(tools: CanonicalTool[]): ProviderTool[]
+}
+```
+
+**Tool schemas:** las 48 tools se definen en formato canónico (`docs/10-MCP-SCHEMAS.md`).
+Cada adaptador implementa `formatTools()` para traducir al formato nativo del proveedor
+(Anthropic tools vs OpenAI functions). La lógica de negocio no necesita saber el formato destino.
+
+**Invariante de seguridad:** el `school_id` del contexto de sesión MUST propagarse a través
+del adaptador en todo momento — es responsabilidad de la capa de negocio, no del adaptador.
+El adaptador no tiene acceso al `school_id` y no debe agregarlo ni quitarlo.
+
+**Por qué esta decisión:**
+- Desacopla el riesgo regulatorio (si Argentina requiere datos en infraestructura local, se activa `local`) sin cambiar código de negocio
+- Permite comparar calidad entre modelos sin refactoring
+- El costo de implementar la abstracción al inicio es ~1 día; refactorizarla después sería semanas
+
+---
 
 ### System prompts y configuración por perfil
 
