@@ -15,7 +15,9 @@
 5. [Mobile](#5-mobile)
 6. [Inteligencia artificial](#6-inteligencia-artificial)
 7. [Infraestructura y CI/CD](#7-infraestructura-y-cicd)
-8. [Pendientes](#8-pendientes)
+8. [Security Gates](#8-security-gates)
+9. [Pendientes](#9-pendientes)
+10. [Enterprise Roadmap — SSO + Data Federation](#10-enterprise-roadmap--sso--data-federation)
 
 ---
 
@@ -102,6 +104,8 @@ el hosting de Postgres, solo cambia `DATABASE_URL` y el adaptador de conexión e
 
 **SSO institucional** (Google Workspace / Microsoft del colegio): diferido a tier Enterprise.
 No forma parte del MVP. La estrategia de autenticación del MVP está resuelta.
+
+> **Enterprise roadmap — SSO + Data Federation:** ver §10.
 
 **Implementación:** Supabase Auth maneja magic links, OTP por SMS y OAuth2. El JWT incluye
 `school_id` y `role` para que las políticas de RLS puedan aplicarse automáticamente.
@@ -318,6 +322,7 @@ npm audit → Expo EAS build (iOS + Android) → submit a App Store / Play Store
 
 ## 8. Security Gates
 
+
 ### Principio general
 
 **Ningún build ni push puede ejecutarse sin pasar los gates de seguridad.** Esto aplica a frontend (Next.js), backend (API routes), mobile (Expo) y migraciones (Supabase).
@@ -375,6 +380,7 @@ Obligatorio cuando el cambio afecta cualquiera de estas áreas:
 Usar `/vulnerability-scanner` en PRs que toquen las áreas listadas arriba.
 Usar `/code-review-checklist` como check complementario en todo PR.
 
+
 ## 9. Pendientes
 
 | ID | Descripción | Prioridad |
@@ -388,6 +394,58 @@ Usar `/code-review-checklist` como check complementario en todo PR.
 | `TODO(DATA_REGULATION)` | Investigar normativa argentina sobre datos de menores — impacta diseño de RLS y retención | Alta |
 
 ---
+
+---
+
+## 10. Enterprise Roadmap — SSO + Data Federation
+
+> **Estado:** decisión diferida — no forma parte del MVP. Documentado para no tomar decisiones de implementación que lo cierren.
+
+### Contexto
+
+Algunas escuelas (principalmente medianas y grandes) tienen su propia base de alumnos y staff en un SIS (Student Information System) propio y quieren autenticar a su personal con sus credenciales institucionales. Esto implica dos problemas distintos:
+
+### Auth SSO
+
+La escuela usa Google Workspace, Microsoft Entra ID u otro IdP. El staff entra con sus credenciales institucionales en lugar de magic link.
+
+**Arquitectura:** Supabase Auth soporta OAuth2 y SAML nativo — es configuración, no código. El JWT resultante incluye `school_id` y `role` de la misma forma que hoy. No requiere cambios en RLS ni en la lógica de negocio.
+
+**Cuándo activar:** cuando una escuela lo exija como condición contractual. El MVP usa magic link para todos los perfiles staff.
+
+### School Data Connector
+
+La escuela tiene su propio SIS con la base de alumnos y staff y no quiere cargar datos manualmente en Vujy.
+
+**Interfaz prevista:**
+
+```
+lib/connectors/
+├── connector.ts           # Interfaz SchoolDataConnector
+├── adapters/
+│   ├── manual.ts          # CSV import / carga manual (default MVP)
+│   ├── webhook.ts         # Webhook push desde SIS de la escuela (cambios en tiempo real)
+│   └── rest-api.ts        # REST API pull (escuelas con SIS moderno)
+```
+
+**Estrategias por madurez del SIS de la escuela:**
+
+| SIS de la escuela | Estrategia recomendada | Complejidad |
+|-------------------|----------------------|-------------|
+| Excel / sin sistema | Import CSV manual desde admin panel | Baja |
+| Sistema heredado con exportación | Import CSV programado (cron) | Baja |
+| Sistema con webhooks | Webhook push → Vujy sincroniza | Media |
+| Sistema con REST API | API pull periódico o event-driven | Media-alta |
+| Sin SIS (escuelas pequeñas) | Carga directa en Vujy | Ninguna |
+
+**Realidad del mercado argentino:** la mayoría de las escuelas privadas no tienen APIs ni SIS modernos. El default del MVP (carga manual o CSV) cubre el 80% de los casos iniciales.
+
+**Invariante de seguridad:** independientemente de la fuente de datos, todos los registros importados MUST tener el `school_id` del tenant correcto antes de ser escritos en la DB. El conector no puede escribir datos sin `school_id` explícito.
+
+### Decisiones que el MVP no debe cerrar
+
+- La tabla `students` y `profiles` deben tener un campo `external_id` nullable — identificador en el SIS de origen, para poder hacer upsert en sync sin duplicados.
+- El admin panel de cada escuela debe permitir trigger manual de re-sync (independientemente del conector activo).
 
 *Vujy · vujy.app — Arquitectura Técnica v1.0 · Marzo 2026*
 
