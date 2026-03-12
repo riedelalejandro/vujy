@@ -11,7 +11,7 @@ const PUBLIC_ROUTES = [
   "/api/webhooks", // webhooks use signature verification, not session auth
 ];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
   const supabase = createServerClient(

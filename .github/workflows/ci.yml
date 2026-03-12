@@ -48,8 +48,8 @@ jobs:
       # -----------------------------------------------------------------------
       - name: Security audit (BLOCKING)
         run: |
-          echo "Running security audit — high severity vulnerabilities will fail the build"
-          pnpm audit --audit-level=high
+          echo "Running security audit — moderate+ severity vulnerabilities will fail the build"
+          pnpm audit --audit-level=moderate
         # Si el audit falla, el job falla y bloquea el merge
 
       - name: Build

@@ -69,6 +69,16 @@ La constitución supersede cualquier otra guía. Ver detalle completo en `.speci
 - Artefactos técnicos (código, APIs, JSON, schemas, tablas, columnas, variables): **inglés**
 - Commits: formato convencional `type: descripción`
 
+## Dependencias
+
+**Reglas de mantenimiento de dependencias:**
+
+- Antes de cualquier PR a `main`, correr `pnpm update --latest` y fijar los cambios
+- Si hay dependencias con versión major incompatible (peer warnings), resolver antes de mergear
+- Vulnerabilidades `moderate` o superior bloquean el CI — deben resolverse o documentarse con override + justificación en `package.json` (`pnpm.overrides`)
+- Al forzar una versión con override: agregar comentario inline explicando el motivo y el advisory (ej. `"esbuild": ">=0.25.0" // GHSA-67mh-4wv8-2f99`)
+- `npm audit --audit-level=moderate` MUST pasar en CI; `pnpm audit` localmente antes de push
+
 ## Seguridad (NON-NEGOTIABLE)
 
 > Fuente canónica: `docs/05-ARCHITECTURE.md §8 Security Gates`. Ante divergencia, ese documento prevalece.
