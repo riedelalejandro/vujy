@@ -1,6 +1,17 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
+function mapCallbackErrorCode(error: { message?: string; status?: number }) {
+  const message = (error.message ?? "").toLowerCase();
+  if (message.includes("expired") || message.includes("invalid") || message.includes("otp")) {
+    return "otp_expired";
+  }
+  if (error.status === 403 || message.includes("access denied")) {
+    return "access_denied";
+  }
+  return "auth_callback_failed";
+}
+
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
@@ -19,8 +30,9 @@ export async function GET(request: Request) {
   const { error } = await supabase.auth.exchangeCodeForSession(code);
 
   if (error) {
+    const errorCode = mapCallbackErrorCode(error);
     return NextResponse.redirect(
-      `${origin}/login?error=${encodeURIComponent(error.message)}`
+      `${origin}/login?error=${encodeURIComponent(errorCode)}`
     );
   }
 

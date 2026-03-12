@@ -42,6 +42,14 @@ export default async function DashboardPage({ searchParams }: Props) {
           <p className="text-gray-500 text-sm mt-4">
             El asistente conversacional se implementa en features 004–006.
           </p>
+          <form action="/logout" method="post">
+            <button
+              type="submit"
+              className="inline-flex text-sm font-medium text-red-600 hover:text-red-700"
+            >
+              Cerrar sesión
+            </button>
+          </form>
         </div>
       </div>
     </div>
