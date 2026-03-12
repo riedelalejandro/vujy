@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
 interface ErrorParams {
@@ -54,31 +54,34 @@ function buildLoginErrorMessage(params: URLSearchParams) {
   return null;
 }
 
+function getInitialErrorMessage(initialErrorParams?: ErrorParams) {
+  const base = new URLSearchParams();
+  if (initialErrorParams?.error) base.set("error", initialErrorParams.error);
+  if (initialErrorParams?.error_code) base.set("error_code", initialErrorParams.error_code);
+  if (initialErrorParams?.error_description) {
+    base.set("error_description", initialErrorParams.error_description);
+  }
+
+  const queryErrorMessage = buildLoginErrorMessage(base);
+
+  if (typeof window === "undefined") {
+    return queryErrorMessage;
+  }
+
+  const hash = window.location.hash;
+  if (!hash || hash.length <= 1) {
+    return queryErrorMessage;
+  }
+
+  const hashParams = new URLSearchParams(hash.slice(1));
+  return buildLoginErrorMessage(hashParams) ?? queryErrorMessage;
+}
+
 export default function LoginForm({ initialErrorParams }: Props) {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState<string | null>(() => {
-    const base = new URLSearchParams();
-    if (initialErrorParams?.error) base.set("error", initialErrorParams.error);
-    if (initialErrorParams?.error_code) base.set("error_code", initialErrorParams.error_code);
-    if (initialErrorParams?.error_description) {
-      base.set("error_description", initialErrorParams.error_description);
-    }
-    return buildLoginErrorMessage(base);
-  });
+  const [error, setError] = useState<string | null>(() => getInitialErrorMessage(initialErrorParams));
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const hash = window.location.hash;
-    if (!hash || hash.length <= 1) return;
-
-    const hashParams = new URLSearchParams(hash.slice(1));
-    const hashErrorMessage = buildLoginErrorMessage(hashParams);
-
-    if (hashErrorMessage) {
-      setError(hashErrorMessage);
-    }
-  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
