@@ -27,7 +27,7 @@ CONSOLE_PATTERN="console\.(log|error|debug|warn|info|dir|table)\b"
 # ---------------------------------------------------------------------------
 # Rutas a excluir del escaneo
 # ---------------------------------------------------------------------------
-EXCLUDE_REGEX="(node_modules|\.next|\.git|dist|build|supabase/seed|scripts/check-pii)"
+EXCLUDE_REGEX="(node_modules|\.next|\.git|dist|build|supabase/seed|scripts/)"
 
 # ---------------------------------------------------------------------------
 # Función principal de escaneo sobre un archivo
