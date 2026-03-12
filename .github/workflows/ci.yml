@@ -66,12 +66,76 @@ jobs:
           NEXT_PUBLIC_APP_URL: "http://localhost:3000"
 
   # ---------------------------------------------------------------------------
+  # secret-scan: detecta secrets hardcodeados y logs con PII
+  # Corre en paralelo con el job ci para no agregar latencia al pipeline.
+  # ---------------------------------------------------------------------------
+  secret-scan:
+    name: Secret & PII scan (BLOCKING)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout (con historial completo para gitleaks)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install gitleaks
+        run: |
+          GITLEAKS_VERSION="8.27.2"
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
+            | tar -xz -C /usr/local/bin gitleaks
+          gitleaks version
+
+      # Escanea los commits del PR (o el último push en branches sin PR)
+      - name: Scan secrets — commits de este PR
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            gitleaks detect \
+              --source . \
+              --config .gitleaks.toml \
+              --log-opts "origin/${{ github.base_ref }}..HEAD" \
+              --redact \
+              --verbose
+          else
+            # push directo: escanear solo el último commit
+            gitleaks detect \
+              --source . \
+              --config .gitleaks.toml \
+              --log-opts "HEAD~1..HEAD" \
+              --redact \
+              --verbose
+          fi
+
+      # Escanea el working tree completo (archivos no commiteados no aplica en CI,
+      # pero valida que ningún archivo rastreado tenga secrets)
+      - name: Scan secrets — working tree
+        run: |
+          gitleaks detect \
+            --source . \
+            --config .gitleaks.toml \
+            --no-git \
+            --redact
+
+      - name: Setup Node.js (para el script PII)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      # -----------------------------------------------------------------------
+      # PII en logs: busca console.log/error/debug que referencien campos
+      # sensibles (email, dni, nombre, phone, etc.)
+      # -----------------------------------------------------------------------
+      - name: Scan PII in console logs (BLOCKING)
+        run: bash scripts/check-pii-logs.sh
+
+  # ---------------------------------------------------------------------------
   # REMINDER: PRs que toquen los siguientes paths DEBEN correr /vulnerability-scanner
   # antes del merge:
   #   - app/api/**
   #   - lib/supabase/**
   #   - supabase/migrations/**
-  #   - middleware.ts
+  #   - proxy.ts
   #   - app/api/webhooks/**
   # Ver docs/05-ARCHITECTURE.md §8 Security Gates
   # ---------------------------------------------------------------------------
