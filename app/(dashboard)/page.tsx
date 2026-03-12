@@ -12,9 +12,9 @@ export default async function DashboardPage({ searchParams }: Props) {
   const params = await searchParams;
 
   // PKCE magic link callback: Supabase redirige a /?code=... cuando el
-  // emailRedirectTo no está en el allowlist. Reenviamos al callback route.
+      // emailRedirectTo no está en el allowlist. Reenviamos al callback route.
   if (params.code) {
-    redirect(`/auth/callback?code=${params.code}`);
+    redirect(`/auth/callback?code=${encodeURIComponent(params.code)}`);
   }
 
   if (params.error) {

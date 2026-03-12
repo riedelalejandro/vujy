@@ -32,7 +32,11 @@ function buildLoginErrorMessage(params: URLSearchParams) {
   }
 
   if (errorDescription) {
-    return errorDescription;
+    const normalized = errorDescription.toLowerCase();
+    if (normalized.includes("expired") || normalized.includes("invalid")) {
+      return "El link de acceso venció o fue invalidado. Pedí uno nuevo.";
+    }
+    return "No se pudo iniciar sesión. Pedí un nuevo link de acceso.";
   }
 
   if (error === "no_code") {
