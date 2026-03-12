@@ -1,14 +1,18 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
-function mapCallbackErrorCode(error: { message?: string; status?: number }) {
+function mapCallbackErrorCode(error: { message?: string; code?: string; status?: number }) {
+  // Prefer matching on structured code/status over message string parsing
+  if (error.code === "otp_expired" || error.code === "otp_invalid") return "otp_expired";
+  if (error.status === 403 || error.code === "access_denied") return "access_denied";
+
+  // Fallback: substring match on message for older SDK versions
   const message = (error.message ?? "").toLowerCase();
   if (message.includes("expired") || message.includes("invalid") || message.includes("otp")) {
     return "otp_expired";
   }
-  if (error.status === 403 || message.includes("access denied")) {
-    return "access_denied";
-  }
+  if (message.includes("access denied")) return "access_denied";
+
   return "auth_callback_failed";
 }
 
@@ -16,11 +20,14 @@ export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
 
-  // Validate next is a safe relative path — prevent open redirect
+  // Validate next is a safe relative path — prevent open redirect.
+  // Decode first to catch URL-encoded bypasses like /%2F%2Fevil.com.
   const rawNext = searchParams.get("next") ?? "/";
-  const next = rawNext.startsWith("/") && !rawNext.startsWith("//") && !rawNext.includes("://")
-    ? rawNext
-    : "/";
+  const decodedNext = (() => { try { return decodeURIComponent(rawNext); } catch { return "/"; } })();
+  const next =
+    decodedNext.startsWith("/") && !decodedNext.startsWith("//") && !decodedNext.includes("://")
+      ? decodedNext
+      : "/";
 
   if (!code) {
     return NextResponse.redirect(`${origin}/login?error=no_code`);

@@ -17,8 +17,14 @@ interface Entry {
 
 const store = new Map<string, Entry>();
 
-// Limpiar entradas expiradas periódicamente para evitar memory leaks
-const CLEANUP_INTERVAL_MS = 5 * 60 * 1000; // cada 5 min
+// Limpiar entradas expiradas periódicamente para evitar memory leaks.
+// El intervalo se ajusta al tamaño de ventana configurado para que no se borren
+// entradas activas antes de que expire su ventana.
+const configuredWindowMs = parseInt(process.env.SESSION_RATE_LIMIT_WINDOW_MS ?? "", 10);
+const CLEANUP_INTERVAL_MS = Math.max(
+  Number.isFinite(configuredWindowMs) && configuredWindowMs > 0 ? configuredWindowMs : 60_000,
+  5 * 60 * 1000
+);
 setInterval(() => {
   const now = Date.now();
   for (const [key, entry] of store.entries()) {

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { db } from "@/lib/db";
 import { profiles } from "@/lib/db/schema";
-import { eq, and, isNull } from "drizzle-orm";
+import { eq, and, isNull, asc } from "drizzle-orm";
 import { checkRateLimit, rateLimitConfig } from "@/lib/rate-limit";
 
 export async function POST(request: Request) {
@@ -39,6 +39,7 @@ export async function POST(request: Request) {
     .where(
       and(eq(profiles.id, user.id), eq(profiles.schoolId, schoolId), isNull(profiles.deletedAt))
     )
+    .orderBy(asc(profiles.createdAt))
     .limit(1);
 
   if (!profile.length) {
@@ -50,7 +51,13 @@ export async function POST(request: Request) {
 
   // Set school_id and role as custom claims in the user's JWT
   // These claims are read by get_my_school_id() for RLS
-  const adminClient = createAdminClient();
+  let adminClient;
+  try {
+    adminClient = createAdminClient();
+  } catch (e) {
+    console.error("[session] createAdminClient failed:", e);
+    return NextResponse.json({ error: "Service unavailable" }, { status: 503 });
+  }
   const { error } = await adminClient.auth.admin.updateUserById(user.id, {
     app_metadata: {
       school_id: schoolId,
@@ -65,7 +72,9 @@ export async function POST(request: Request) {
   // Force session refresh so the new claims take effect immediately
   const { error: refreshError } = await supabase.auth.refreshSession();
   if (refreshError) {
-    // Claims were updated, but token refresh failed in this request.
+    // Claims were updated in app_metadata but the client cookie won't reflect
+    // the new school_id until the next token refresh (handled automatically by Supabase).
+    console.warn("[session] refreshSession failed after updateUserById:", refreshError.message);
   }
 
   return NextResponse.json({ ok: true, schoolId, role: profile[0].role });
