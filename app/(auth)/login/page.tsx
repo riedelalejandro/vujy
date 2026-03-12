@@ -23,7 +23,7 @@ export default function LoginPage() {
     });
 
     if (error) {
-      setError(error.message);
+      setError("Hubo un problema al enviar el link. Intentá de nuevo.");
     } else {
       setSubmitted(true);
     }

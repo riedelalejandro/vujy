@@ -19,7 +19,12 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Too many requests" }, { status: 429 });
   }
 
-  const body = await request.json();
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
   const { schoolId } = body as { schoolId?: unknown };
 
   const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -59,7 +64,10 @@ export async function POST(request: Request) {
   }
 
   // Force session refresh so the new claims take effect immediately
-  await supabase.auth.refreshSession();
+  const { error: refreshError } = await supabase.auth.refreshSession();
+  if (refreshError) {
+    console.warn("[session] Session refresh failed (claims updated, token may be stale):", refreshError.message);
+  }
 
   return NextResponse.json({ ok: true, schoolId, role: profile[0].role });
 }

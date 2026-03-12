@@ -17,9 +17,10 @@ export async function createClient() {
             cookiesToSet.forEach(({ name, value, options }) =>
               cookieStore.set(name, value, options)
             );
-          } catch {
-            // Called from a Server Component — cookies can't be set.
-            // Handled by middleware.
+          } catch (e) {
+            // Expected in Server Components (read-only cookies).
+            // The proxy handles cookie propagation in those contexts.
+            console.warn("[supabase/server] Could not set cookies:", e);
           }
         },
       },

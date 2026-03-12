@@ -4,7 +4,12 @@ import { createClient } from "@/lib/supabase/server";
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
-  const next = searchParams.get("next") ?? "/";
+
+  // Validate next is a safe relative path — prevent open redirect
+  const rawNext = searchParams.get("next") ?? "/";
+  const next = rawNext.startsWith("/") && !rawNext.startsWith("//") && !rawNext.includes("://")
+    ? rawNext
+    : "/";
 
   if (!code) {
     return NextResponse.redirect(`${origin}/login?error=no_code`);
@@ -43,11 +48,15 @@ export async function GET(request: Request) {
   if (profiles.length === 1) {
     // Single school — set school_id in session and proceed
     const schoolId = profiles[0].school_id;
-    await fetch(`${origin}/api/auth/session`, {
+    const sessionRes = await fetch(`${origin}/api/auth/session`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ schoolId }),
     });
+    if (!sessionRes.ok) {
+      console.error("[callback] Failed to set session school_id:", await sessionRes.text());
+      return NextResponse.redirect(`${origin}/login?error=session_error`);
+    }
     return NextResponse.redirect(`${origin}${next}`);
   }
 

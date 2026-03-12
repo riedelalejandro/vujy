@@ -1,5 +1,5 @@
 /**
- * In-memory sliding window rate limiter.
+ * In-memory fixed window rate limiter.
  *
  * LIMITACIÓN: funciona solo dentro de una misma instancia del proceso.
  * En Vercel (serverless), cada invocación puede ser una instancia distinta,

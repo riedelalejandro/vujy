@@ -14,6 +14,7 @@ export default function SelectSchoolPage() {
   const [profiles, setProfiles] = useState<SchoolProfile[]>([]);
   const [loading, setLoading] = useState(true);
   const [selecting, setSelecting] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -43,12 +44,24 @@ export default function SelectSchoolPage() {
 
   async function selectSchool(schoolId: string) {
     setSelecting(schoolId);
-    await fetch("/api/auth/session", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ schoolId }),
-    });
-    router.push("/dashboard");
+    setError(null);
+    try {
+      const res = await fetch("/api/auth/session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ schoolId }),
+      });
+      if (!res.ok) {
+        setError("No se pudo seleccionar la escuela. Intentá de nuevo.");
+        setSelecting(null);
+        return;
+      }
+    } catch {
+      setError("Error de conexión. Verificá tu internet e intentá de nuevo.");
+      setSelecting(null);
+      return;
+    }
+    router.push("/");
   }
 
   if (loading) {
@@ -66,6 +79,10 @@ export default function SelectSchoolPage() {
         <p className="text-gray-600 mb-6">
           Tenés acceso a más de una institución. ¿Con cuál querés trabajar ahora?
         </p>
+
+        {error && (
+          <p className="text-sm text-red-600 bg-red-50 px-3 py-2 rounded mb-4">{error}</p>
+        )}
 
         <div className="space-y-3">
           {profiles.map((profile) => (

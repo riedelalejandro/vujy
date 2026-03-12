@@ -38,10 +38,12 @@ export async function proxy(request: NextRequest) {
       request.nextUrl.pathname === route || request.nextUrl.pathname.startsWith(route + "/")
   );
 
-  // Magic link PKCE flow: Supabase redirects to /?code=... — let it through
-  const hasAuthCode = request.nextUrl.searchParams.has("code");
+  // Magic link PKCE flow: Supabase redirects to /?code=... — let root through only.
+  // Restricting to pathname === "/" prevents ?code= from bypassing auth on protected routes.
+  const isRootWithAuthCode =
+    request.nextUrl.pathname === "/" && request.nextUrl.searchParams.has("code");
 
-  if (isPublicRoute || hasAuthCode) {
+  if (isPublicRoute || isRootWithAuthCode) {
     return supabaseResponse;
   }
 
