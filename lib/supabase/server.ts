@@ -20,7 +20,7 @@ export async function createClient() {
           } catch (e) {
             // Expected in Server Components (read-only cookies).
             // The proxy handles cookie propagation in those contexts.
-            console.warn("[supabase/server] Could not set cookies:", e);
+            console.warn("[supabase/server] Could not set cookies:"/*, e*/);
           }
         },
       },

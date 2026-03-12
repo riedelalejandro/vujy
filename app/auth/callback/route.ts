@@ -54,7 +54,7 @@ export async function GET(request: Request) {
       body: JSON.stringify({ schoolId }),
     });
     if (!sessionRes.ok) {
-      console.error("[callback] Failed to set session school_id:", await sessionRes.text());
+      console.error("[callback] Failed to set session school_id:" /*, await sessionRes.text() */);
       return NextResponse.redirect(`${origin}/login?error=session_error`);
     }
     return NextResponse.redirect(`${origin}${next}`);
