@@ -31,10 +31,15 @@ setInterval(() => {
  * SESSION_RATE_LIMIT_MAX    — máximo de requests permitidos por ventana (default: 10)
  * SESSION_RATE_LIMIT_WINDOW_MS — tamaño de la ventana en ms (default: 60000)
  */
+function parsePositiveInt(value: string | undefined, fallback: number): number {
+  const parsed = parseInt(value ?? "", 10);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+}
+
 export const rateLimitConfig = {
   session: {
-    max: parseInt(process.env.SESSION_RATE_LIMIT_MAX ?? "10", 10),
-    windowMs: parseInt(process.env.SESSION_RATE_LIMIT_WINDOW_MS ?? "60000", 10),
+    max: parsePositiveInt(process.env.SESSION_RATE_LIMIT_MAX, 10),
+    windowMs: parsePositiveInt(process.env.SESSION_RATE_LIMIT_WINDOW_MS, 60_000),
   },
 } as const;
 

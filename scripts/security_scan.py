@@ -34,6 +34,16 @@ except AttributeError:
 #  CONFIGURATION
 # ============================================================================
 
+# Lines containing any of these substrings are skipped by the secret scanner.
+# Covers env-var references (e.g. Supabase config.toml) and obvious placeholders.
+SECRET_ALLOWLIST = [
+    'env(',           # env(VARIABLE_NAME) — reference, not a real value
+    'dummy',          # dummy-key-for-build, dummy-anon-key, etc.
+    'your-key-here',
+    'placeholder',
+    'example',
+]
+
 SECRET_PATTERNS = [
     # API Keys & Tokens
     (r'api[_-]?key\s*[=:]\s*["\'][^"\']{10,}["\']', "API Key", "high"),
@@ -85,7 +95,7 @@ DANGEROUS_PATTERNS = [
     (r'yaml\.load\s*\([^)]*\)(?!\s*,\s*Loader)', "Unsafe YAML load", "high", "Deserialization risk"),
 ]
 
-SKIP_DIRS = {'node_modules', '.git', 'dist', 'build', '__pycache__', '.venv', 'venv', '.next'}
+SKIP_DIRS = {'node_modules', '.git', 'dist', 'build', '__pycache__', '.venv', 'venv', '.next', 'scripts'}
 CODE_EXTENSIONS = {'.js', '.ts', '.jsx', '.tsx', '.py', '.go', '.java', '.rb', '.php'}
 CONFIG_EXTENSIONS = {'.json', '.yaml', '.yml', '.toml', '.env', '.env.local', '.env.development'}
 
@@ -112,11 +122,28 @@ def scan_dependencies(project_path: str) -> Dict[str, Any]:
     found_locks = []
     missing_locks = []
     
-    for manager, files in lock_files.items():
-        pkg_file = "package.json" if manager in ["npm", "yarn", "pnpm"] else "setup.py"
-        pkg_path = Path(project_path) / pkg_file
-        
-        if pkg_path.exists() or (manager == "pip" and (Path(project_path) / "requirements.txt").exists()):
+    # For JS projects, any one lock file is sufficient — projects use one package manager
+    js_managers = {m: f for m, f in lock_files.items() if m in ("npm", "yarn", "pnpm")}
+    pip_managers = {m: f for m, f in lock_files.items() if m == "pip"}
+
+    if (Path(project_path) / "package.json").exists():
+        has_any_js_lock = any(
+            any((Path(project_path) / f).exists() for f in files)
+            for files in js_managers.values()
+        )
+        if has_any_js_lock:
+            found_locks.append("js")
+        else:
+            missing_locks.append("js")
+            results["findings"].append({
+                "type": "Missing Lock File",
+                "severity": "high",
+                "message": "No JS lock file found (package-lock.json / yarn.lock / pnpm-lock.yaml). Supply chain integrity at risk."
+            })
+
+    for manager, files in pip_managers.items():
+        pkg_path = Path(project_path) / "requirements.txt"
+        if pkg_path.exists():
             has_lock = any((Path(project_path) / f).exists() for f in files)
             if has_lock:
                 found_locks.append(manager)
@@ -207,7 +234,11 @@ def scan_secrets(project_path: str) -> Dict[str, Any]:
                     content = f.read()
                     
                     for pattern, secret_type, severity in SECRET_PATTERNS:
-                        matches = re.findall(pattern, content, re.IGNORECASE)
+                        raw_matches = re.findall(pattern, content, re.IGNORECASE)
+                        matches = [
+                            m for m in raw_matches
+                            if not any(a in m.lower() for a in SECRET_ALLOWLIST)
+                        ]
                         if matches:
                             results["findings"].append({
                                 "file": str(filepath.relative_to(project_path)),
@@ -341,7 +372,7 @@ def scan_configuration(project_path: str) -> Dict[str, Any]:
                 pass
     
     # Check for security header configurations
-    header_files = ["next.config.js", "next.config.mjs", "middleware.ts", "nginx.conf"]
+    header_files = ["next.config.js", "next.config.mjs", "next.config.ts", "proxy.ts", "nginx.conf"]
     for hf in header_files:
         hf_path = Path(project_path) / hf
         if hf_path.exists():

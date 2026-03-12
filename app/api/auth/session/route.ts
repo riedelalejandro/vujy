@@ -20,10 +20,11 @@ export async function POST(request: Request) {
   }
 
   const body = await request.json();
-  const { schoolId } = body as { schoolId?: string };
+  const { schoolId } = body as { schoolId?: unknown };
 
-  if (!schoolId) {
-    return NextResponse.json({ error: "schoolId is required" }, { status: 400 });
+  const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  if (typeof schoolId !== "string" || !UUID_RE.test(schoolId)) {
+    return NextResponse.json({ error: "schoolId must be a valid UUID" }, { status: 400 });
   }
 
   // Validate the user actually has a profile in this school
