@@ -59,14 +59,20 @@ export async function POST(request: Request) {
   });
 
   if (error) {
-    console.error("[session] Failed to update JWT claims for user", user.id/*, ":", error.message*/);
+    console.error("[session] Failed to update JWT claims", {
+      userId: user.id,
+      schoolId,
+    });
     return NextResponse.json({ error: "Failed to update session" }, { status: 500 });
   }
 
   // Force session refresh so the new claims take effect immediately
   const { error: refreshError } = await supabase.auth.refreshSession();
   if (refreshError) {
-    console.warn("[session] Session refresh failed (claims updated, token may be stale):"/*, refreshError.message*/);
+    console.warn("[session] Session refresh failed after claims update", {
+      userId: user.id,
+      schoolId,
+    });
   }
 
   return NextResponse.json({ ok: true, schoolId, role: profile[0].role });
