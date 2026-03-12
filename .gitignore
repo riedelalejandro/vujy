@@ -40,3 +40,4 @@ coverage/
 
 # Claude Code session/memory (not for version control)
 .claude/projects/
+tsconfig.tsbuildinfo

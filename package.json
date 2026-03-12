@@ -1,14 +1,59 @@
 {
-  "name": "vujy-docs",
+  "name": "vujy",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=22",
+    "pnpm": ">=10"
+  },
   "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "seed": "tsx scripts/seed.ts",
     "validate:mcp-schemas": "node scripts/validate-mcp-schemas.js",
     "test:e2e:p0": "node --test tests/e2e/p0/**/*.test.mjs",
     "test:e2e:p0:clean": "rm -rf tests/e2e/p0/.artifacts"
   },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.78.0",
+    "@supabase/ssr": "^0.9.0",
+    "@supabase/supabase-js": "^2.99.1",
+    "drizzle-orm": "^0.45.1",
+    "next": "^16.1.6",
+    "postgres": "^3.4.8",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "zod": "^4.3.6"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
+    ],
+    "overrides": {
+      "esbuild": ">=0.25.0"
+    }
+  },
   "devDependencies": {
-    "ajv": "^8.17.1",
-    "ajv-formats": "^3.0.0"
+    "@types/node": "^25.4.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.57.0",
+    "@typescript-eslint/parser": "^8.57.0",
+    "ajv": "^8.18.0",
+    "ajv-formats": "^3.0.1",
+    "drizzle-kit": "^0.31.9",
+    "eslint": "^10.0.3",
+    "eslint-config-next": "^16.1.6",
+    "prettier": "^3.8.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
   }
 }

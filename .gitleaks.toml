@@ -1,0 +1,67 @@
+title = "Vujy — gitleaks secret detection"
+
+[extend]
+# Extiende el ruleset base de gitleaks (incluye AWS, GCP, GitHub, etc.)
+useDefault = true
+
+# ---------------------------------------------------------------------------
+# Reglas custom para el stack de Vujy
+# ---------------------------------------------------------------------------
+
+[[rules]]
+id = "supabase-anon-key"
+description = "Supabase publishable/anon key"
+regex = '''sb_publishable_[A-Za-z0-9_-]{20,}'''
+tags = ["supabase", "key"]
+
+[[rules]]
+id = "supabase-service-role"
+description = "Supabase service role key — nunca exponer en cliente"
+regex = '''sb_secret_[A-Za-z0-9_-]{20,}'''
+tags = ["supabase", "key", "critical"]
+
+[[rules]]
+id = "anthropic-api-key"
+description = "Anthropic / Claude API key"
+regex = '''sk-ant-[A-Za-z0-9_-]{20,}'''
+tags = ["anthropic", "key", "critical"]
+
+[[rules]]
+id = "mercadopago-access-token"
+description = "Mercado Pago access token (producción)"
+regex = '''APP_USR-[0-9a-f]{32}-[0-9]{6}-[0-9a-f]{32}-[0-9]+'''
+tags = ["mercadopago", "key", "critical"]
+
+[[rules]]
+id = "meta-access-token"
+description = "Meta (Facebook/WhatsApp) long-lived access token"
+regex = '''EAA[A-Za-z0-9]{100,}'''
+tags = ["meta", "key", "critical"]
+
+[[rules]]
+id = "meta-app-secret"
+description = "Meta App Secret (32 hex chars)"
+regex = '''META_APP_SECRET\s*=\s*[0-9a-f]{32}'''
+tags = ["meta", "key", "critical"]
+
+# ---------------------------------------------------------------------------
+# Allowlist global
+# ---------------------------------------------------------------------------
+
+[allowlist]
+description = "Valores de ejemplo y fixtures de test conocidos"
+paths = [
+  '''.env\.example''',
+  '''.gitleaks\.toml''',
+  '''pnpm-lock\.yaml''',
+]
+regexes = [
+  # Placeholders obvios
+  '''your-key-here''',
+  '''dummy[-_]''',
+  '''dummy$''',
+  '''placeholder''',
+  '''sk-ant-your''',
+  # UUIDs de seed fijos (conocidos, no datos reales)
+  '''a0000000-0000-0000-0000-000000000000''',
+]

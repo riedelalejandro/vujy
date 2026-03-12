@@ -1,0 +1,141 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  NODE_VERSION: "22"
+  PNPM_VERSION: "10"
+
+jobs:
+  ci:
+    name: Lint · Typecheck · Audit · Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      # -----------------------------------------------------------------------
+      # SECURITY GATE — bloqueante
+      # Si este step falla, el PR no puede mergearse.
+      # Para omitir una vulnerabilidad específica con justificación técnica,
+      # usar .npmrc con audit-level o pnpm audit exceptions (documentar el motivo).
+      # -----------------------------------------------------------------------
+      - name: Security audit (BLOCKING)
+        run: |
+          echo "Running security audit — moderate+ severity vulnerabilities will fail the build"
+          pnpm audit --audit-level=moderate
+        # Si el audit falla, el job falla y bloquea el merge
+
+      - name: Build
+        run: pnpm build
+        env:
+          # Dummy env vars for build — las reales van en Vercel/producción
+          NEXT_PUBLIC_SUPABASE_URL: "http://127.0.0.1:54321"
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: "dummy-anon-key-for-build"
+          DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1:5432/postgres"
+          LLM_PROVIDER: "claude"
+          LLM_MODEL: "claude-sonnet-4-6"
+          LLM_API_KEY: "dummy-key-for-build"
+          SUPABASE_SERVICE_ROLE_KEY: "dummy-service-role-for-build"
+          NEXT_PUBLIC_APP_URL: "http://localhost:3000"
+
+  # ---------------------------------------------------------------------------
+  # secret-scan: detecta secrets hardcodeados y logs con PII
+  # Corre en paralelo con el job ci para no agregar latencia al pipeline.
+  # ---------------------------------------------------------------------------
+  secret-scan:
+    name: Secret & PII scan (BLOCKING)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout (con historial completo para gitleaks)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install gitleaks
+        run: |
+          GITLEAKS_VERSION="8.27.2"
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
+            | tar -xz -C /usr/local/bin gitleaks
+          gitleaks version
+
+      # Escanea los commits del PR (o el último push en branches sin PR)
+      - name: Scan secrets — commits de este PR
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            gitleaks detect \
+              --source . \
+              --config .gitleaks.toml \
+              --log-opts "origin/${{ github.base_ref }}..HEAD" \
+              --redact \
+              --verbose
+          else
+            # push directo: escanear solo el último commit
+            gitleaks detect \
+              --source . \
+              --config .gitleaks.toml \
+              --log-opts "HEAD~1..HEAD" \
+              --redact \
+              --verbose
+          fi
+
+      # Escanea el working tree completo (archivos no commiteados no aplica en CI,
+      # pero valida que ningún archivo rastreado tenga secrets)
+      - name: Scan secrets — working tree
+        run: |
+          gitleaks detect \
+            --source . \
+            --config .gitleaks.toml \
+            --no-git \
+            --redact
+
+      - name: Setup Node.js (para el script PII)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      # -----------------------------------------------------------------------
+      # PII en logs: busca console.log/error/debug que referencien campos
+      # sensibles (email, dni, nombre, phone, etc.)
+      # -----------------------------------------------------------------------
+      - name: Scan PII in console logs (BLOCKING)
+        run: bash scripts/check-pii-logs.sh
+
+  # ---------------------------------------------------------------------------
+  # REMINDER: PRs que toquen los siguientes paths DEBEN correr /vulnerability-scanner
+  # antes del merge:
+  #   - app/api/**
+  #   - lib/supabase/**
+  #   - supabase/migrations/**
+  #   - proxy.ts
+  #   - app/api/webhooks/**
+  # Ver docs/05-ARCHITECTURE.md §8 Security Gates
+  # ---------------------------------------------------------------------------
