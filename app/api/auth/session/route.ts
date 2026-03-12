@@ -55,7 +55,7 @@ export async function POST(request: Request) {
   try {
     adminClient = createAdminClient();
   } catch (e) {
-    console.error("[session] createAdminClient failed:", e);
+    console.error("[auth] createAdminClient failed:", e);
     return NextResponse.json({ error: "Service unavailable" }, { status: 503 });
   }
   const { error } = await adminClient.auth.admin.updateUserById(user.id, {
@@ -74,7 +74,7 @@ export async function POST(request: Request) {
   if (refreshError) {
     // Claims were updated in app_metadata but the client cookie won't reflect
     // the new school_id until the next token refresh (handled automatically by Supabase).
-    console.warn("[session] refreshSession failed after updateUserById:", refreshError.message);
+    console.warn("[auth] Token refresh failed after app_metadata update:", refreshError.message);
   }
 
   return NextResponse.json({ ok: true, schoolId, role: profile[0].role });
