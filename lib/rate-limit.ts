@@ -27,6 +27,18 @@ setInterval(() => {
 }, CLEANUP_INTERVAL_MS).unref();
 
 /**
+ * Configuración leída desde env vars con defaults.
+ * SESSION_RATE_LIMIT_MAX    — máximo de requests permitidos por ventana (default: 10)
+ * SESSION_RATE_LIMIT_WINDOW_MS — tamaño de la ventana en ms (default: 60000)
+ */
+export const rateLimitConfig = {
+  session: {
+    max: parseInt(process.env.SESSION_RATE_LIMIT_MAX ?? "10", 10),
+    windowMs: parseInt(process.env.SESSION_RATE_LIMIT_WINDOW_MS ?? "60000", 10),
+  },
+} as const;
+
+/**
  * Verifica si la key está dentro del límite.
  * @returns true si la request está permitida, false si debe ser bloqueada
  */

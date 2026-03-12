@@ -3,7 +3,7 @@ import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { db } from "@/lib/db";
 import { profiles } from "@/lib/db/schema";
 import { eq, and, isNull } from "drizzle-orm";
-import { checkRateLimit } from "@/lib/rate-limit";
+import { checkRateLimit, rateLimitConfig } from "@/lib/rate-limit";
 
 export async function POST(request: Request) {
   const supabase = await createClient();
@@ -15,8 +15,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  // 10 requests por minuto por usuario — protege contra spam de JWT updates
-  if (!checkRateLimit(`session:${user.id}`, 10, 60_000)) {
+  if (!checkRateLimit(`session:${user.id}`, rateLimitConfig.session.max, rateLimitConfig.session.windowMs)) {
     return NextResponse.json({ error: "Too many requests" }, { status: 429 });
   }
 
