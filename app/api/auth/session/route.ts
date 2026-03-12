@@ -3,6 +3,7 @@ import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { db } from "@/lib/db";
 import { profiles } from "@/lib/db/schema";
 import { eq, and, isNull } from "drizzle-orm";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 export async function POST(request: Request) {
   const supabase = await createClient();
@@ -12,6 +13,11 @@ export async function POST(request: Request) {
 
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // 10 requests por minuto por usuario — protege contra spam de JWT updates
+  if (!checkRateLimit(`session:${user.id}`, 10, 60_000)) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
   }
 
   const body = await request.json();
@@ -48,7 +54,8 @@ export async function POST(request: Request) {
   });
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("[session] Failed to update JWT claims for user", user.id, ":", error.message);
+    return NextResponse.json({ error: "Failed to update session" }, { status: 500 });
   }
 
   // Force session refresh so the new claims take effect immediately
